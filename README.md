@@ -4,11 +4,11 @@ A cluster ([Bramble](http://elinux.org/Bramble)) of 5 Raspberry Pis on which Dru
 
 ## Why
 
-I'm doing presentations on Ansible, and how easy it makes infrastructure configuration, even for high-performance/high-availability Drupal sites. WiFi/Internet access is spotty at most conferences, so deploying to AWS, DigitalOcean, or other live public cloud instances is a Bad Idea™.
+I'm doing presentations on Ansible, and how easy it makes infrastructure configuration, even for high-performance/high-availability Drupal sites. WiFi/Internet access is spotty at most conferences, so deploying to AWS, DigitalOcean, or other live public cloud instances that require a stable Internet connection is a Bad Idea™.
 
-Deploying to VMs on my own presentation laptop is an option (and I've done this in the past), but it's not quite as impactful as deploying to real, live, 'in-the-flesh' servers.
+Deploying to VMs on my own presentation laptop is an option (and I've done this in the past), but it's not quite as impactful as deploying to real, live, 'in-the-flesh' servers. Especially if you can say you're carrying around a datacenter in your bag!
 
-Plus, it's cool. A server cluster, in my hand, at the presentation. With blinking lights and everything!
+A cluster of servers, in my hand, at the presentation. With blinking LEDs!
 
 ## Getting the Pis (and other accessories)
 
@@ -71,6 +71,25 @@ TODO.
 ### Deploying Drupal to the Raspberry Pis
 
 TODO.
+
+## TODO
+
+This project is a work in progress. Here are some items on my todo list:
+
+  - Convert this TODO list into GitHub issues (once the project is on GitHub).
+  - Plan architecture (5 Raspberry Pis):
+    - 1 - Git server, Nginx load balance/proxy caching
+    - 2 - Web server (Apache + PHP)
+    - 3 - Web server (Apache + PHP)
+    - 4 - Cache server (Memcached)
+    - 5 - Database server (MySQL single master)
+  - RGB LED control:
+    - [Control an RGB LED with the Raspberry Pi](http://youtu.be/b4_R1eX9K6s).
+    - [RGB-LED Lesson 1 - Python Libraries and Colors](https://pihw.wordpress.com/lessons/rgb-led-lessons/rgb-led-lesson-1-creating-python-libraries-colours/)
+    - [Controlling an RGB LED with a Raspberry Pi](http://www.henryleach.com/2013/05/controlling-rgb-led-with-raspberry-pi.html)
+  - Nginx Load Balancing:
+    - [Runtime Reconfiguration](http://nginx.com/resources/admin-guide/load-balancer/#upstream_conf) (during deployment)
+    - [Nginx Load Balancing, Content proxying/caching](https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching)
 
 ## Author
 
