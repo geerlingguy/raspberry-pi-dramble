@@ -77,12 +77,17 @@ TODO.
 This project is a work in progress. Here are some items on my todo list:
 
   - Convert this TODO list into GitHub issues (once the project is on GitHub).
-  - Plan architecture (5 Raspberry Pis):
-    - 1 - Git server, Nginx load balance/proxy caching
-    - 2 - Web server (Apache + PHP)
-    - 3 - Web server (Apache + PHP)
-    - 4 - Cache server (Memcached)
-    - 5 - Database server (MySQL single master)
+  - Plan architecture (for 5 Raspberry Pis)
+    - Initial idea:
+      - 1 - Git server, Nginx load balance/reverse proxy
+      - 2 - Web server (Apache + PHP), Memcached
+      - 3 - Web server (Apache + PHP), Memcached
+      - 4 - Web server (Apache + PHP), Memcached
+      - 5 - Database server (MySQL single master)
+    - Architectural questions:
+      - Memcached on dedicated server (#4) instead of distributed? (Do a few benchmarks to see what's fastest).
+      - Varnish instead of Nginx for load balance and reverse proxy? (Maybe just whatever's quicker/simpler).
+      - Should we go master/slave for MySQL instead of single server? (Might add too much complexity).
   - RGB LED control:
     - [Control an RGB LED with the Raspberry Pi](http://youtu.be/b4_R1eX9K6s).
     - [RGB-LED Lesson 1 - Python Libraries and Colors](https://pihw.wordpress.com/lessons/rgb-led-lessons/rgb-led-lesson-1-creating-python-libraries-colours/)
