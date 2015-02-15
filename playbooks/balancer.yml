@@ -1,0 +1,11 @@
+---
+- hosts: balancer
+  sudo: yes
+
+  vars_files:
+    - vars/main.yml
+    - vars/balancer.yml
+
+  roles: []
+
+  tasks: []

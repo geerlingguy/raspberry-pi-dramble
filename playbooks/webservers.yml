@@ -1,0 +1,11 @@
+---
+- hosts: webservers
+  sudo: yes
+
+  vars_files:
+    - vars/main.yml
+    - vars/webservers.yml
+
+  roles: []
+
+  tasks: []
