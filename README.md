@@ -72,30 +72,6 @@ TODO.
 
 TODO.
 
-## TODO
-
-This project is a work in progress. Here are some items on my todo list:
-
-  - Convert this TODO list into GitHub issues (once the project is on GitHub).
-  - Plan architecture (for 5 Raspberry Pis)
-    - Initial idea:
-      - 1 - Git server, Nginx load balance/reverse proxy
-      - 2 - Web server (Apache + PHP), Memcached
-      - 3 - Web server (Apache + PHP), Memcached
-      - 4 - Web server (Apache + PHP), Memcached
-      - 5 - Database server (MySQL single master)
-    - Architectural questions:
-      - Memcached on dedicated server (#4) instead of distributed? (Do a few benchmarks to see what's fastest).
-      - Varnish instead of Nginx for load balance and reverse proxy? (Maybe just whatever's quicker/simpler).
-      - Should we go master/slave for MySQL instead of single server? (Might add too much complexity).
-  - RGB LED control:
-    - [Control an RGB LED with the Raspberry Pi](http://youtu.be/b4_R1eX9K6s).
-    - [RGB-LED Lesson 1 - Python Libraries and Colors](https://pihw.wordpress.com/lessons/rgb-led-lessons/rgb-led-lesson-1-creating-python-libraries-colours/)
-    - [Controlling an RGB LED with a Raspberry Pi](http://www.henryleach.com/2013/05/controlling-rgb-led-with-raspberry-pi.html)
-  - Nginx Load Balancing:
-    - [Runtime Reconfiguration](http://nginx.com/resources/admin-guide/load-balancer/#upstream_conf) (during deployment)
-    - [Nginx Load Balancing, Content proxying/caching](https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching)
-
 ## Author
 
 This project was started in 2015 by [Jeff Geerling](http://jeffgeerling.com/), author of [Ansible for DevOps](http://ansiblefordevops.com/).
