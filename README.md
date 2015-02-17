@@ -71,6 +71,12 @@ The last command copies the Raspbian disk image, byte-for-byte, to the microSD c
 
 ### Preparing the Raspberry Pis
 
+Assuming you've cloned a `diet-raspbian`-based image, you shouldn't need to configure the Pis directly (via terminal session with a connected display/keyboard). However, if you use the default Raspbian image, and still need to perform the initial configuration steps (e.g. `raspi-config`), you can still do so headless via SSH:
+
+  1. Find the Raspberry Pi's IP address, and connect via SSH: `ssh pi@[IP-ADDRESS]`
+  2. Default username is `pi` and default password is `raspberry`.
+  3. Once logged in, run `sudo raspi-config`, and follow the prompts.
+
 TODO.
 
 ### Racking the Raspberry Pis
