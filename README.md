@@ -67,6 +67,8 @@ The last command copies the Raspbian disk image, byte-for-byte, to the microSD c
 
 > Note that copying the image will only fill the microSD card as much as the original raspbian image. Once you boot a Pi with the card the first time, you can use the `raspi-config` utility on the Pi to expand the partition to fill up the card's remaining space.
 
+> See `setup/diet-raspbian` if you'd like a more minimal Raspbian installation.
+
 ### Preparing the Raspberry Pis
 
 TODO.
