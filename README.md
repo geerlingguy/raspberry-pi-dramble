@@ -60,7 +60,7 @@ Then (assuming you're using a Mac), insert the microSD card into your card reade
     # Unmount the microSD card (get the path from the `list` command above).
     $ diskutil unmountDisk /dev/disk3
 
-    # Copy the image to the microSD card (this will take 10+ minutes).
+    # Copy the image to the microSD card (this will take ~20 minutes).
     $ sudo dd bs=1m if=/path/to/2015-01-31-raspbian.img of=/dev/disk3
 
 The last command copies the Raspbian disk image, byte-for-byte, to the microSD card. Generally, this takes 10-20 minutes for a typical Class 10 microSD card. Timing will vary based on how fast/slow your card is for writes.
