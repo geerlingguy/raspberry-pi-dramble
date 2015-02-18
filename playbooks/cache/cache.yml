@@ -9,5 +9,3 @@
   roles:
     - geerlingguy.firewall
     - geerlingguy.redis
-
-  tasks: []

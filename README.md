@@ -92,6 +92,8 @@ Once all the Pis are booted, and you are able to log into them over the network 
 
 TODO.
 
+> To un-provision a Pi, you can either use `apt-get remove --purge [package]` and `apt-get autoremove` to remove installed packages/configuration, then reboot... or you can reimage the microSD cards from a fresh copy of Raspbian or `diet-raspbian`. I prefer the latter, but for quick testing/experimentation will do the former.
+
 ### Deploying Drupal to the Raspberry Pis
 
 After all the Raspberry Pis are provisioned, it's time to deploy our brand new Drupal 8 site to them!
