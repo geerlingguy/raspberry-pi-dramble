@@ -88,9 +88,13 @@ Even if you *did* use the `diet-raspbian` image, you may wish to expand the file
 
 ### Provisioning the Raspberry Pis
 
-Once all the Pis are booted, we'll run the 
+Once all the Pis are booted, and you are able to log into them over the network via SSH, we'll run the `provision.yml` playbook to provision them (installing the appropriate software packages to run Drupal).
+
+TODO.
 
 ### Deploying Drupal to the Raspberry Pis
+
+After all the Raspberry Pis are provisioned, it's time to deploy our brand new Drupal 8 site to them!
 
 TODO.
 
