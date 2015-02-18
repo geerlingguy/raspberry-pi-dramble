@@ -3,8 +3,8 @@
   sudo: yes
 
   vars_files:
-    - vars/main.yml
-    - vars/balancer.yml
+    - ../../vars.yml
+    - vars.yml
 
   roles: []
 

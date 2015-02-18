@@ -51,24 +51,21 @@ Other accessories, optional but helpful for general Pi development:
 
 ### Preparing the microSD cards (with Raspbian)
 
-Download Raspbian from the [Raspberry Pi Operating System Images](http://www.raspberrypi.org/downloads/) page, and expand the .zip file after it's finished downloading. This should result in a `.img` file that you'll copy to all your microSD cards.
+Download Raspbian from the [Raspberry Pi Operating System Images](http://www.raspberrypi.org/downloads/) page, and expand the .zip file after it's finished downloading.
 
-Then (assuming you're using a Mac), insert the microSD card into your card reader, then open up Terminal and enter the following commands.
+You could copy this image file to each of your microSD cards directly using `diskutil unmountDisk /dev/diskX` and `sudo dd bs=1m if=/path/to/2015-01-31-raspbian.img of=/dev/diskX` (where `X` is the number for the microSD card on your Mac - found with `diskutil list`), however, I recommend using [`diet-raspbian`](https://github.com/geerlingguy/diet-raspbian) to build a minimal image based off Raspbian.
 
-    # Get a list of all connected disks.
-    $ diskutil list
+[`diet-raspbian`](https://github.com/geerlingguy/diet-raspbian) is included as a git submodule inside the `setup` folder, but you should read the instructions included in that project's [README](https://github.com/geerlingguy/diet-raspbian/blob/master/README.md).
 
-    # Unmount the microSD card (get the path from the `list` command above).
-    $ diskutil unmountDisk /dev/disk3
+The basic process is as follows:
 
-    # Copy the image to the microSD card (this will take ~20 minutes).
-    $ sudo dd bs=1m if=/path/to/2015-01-31-raspbian.img of=/dev/disk3
+  1. Clone the official Raspbian image to a microSD card and boot a Pi with it.
+  2. Trim the fat from the distribution using the included `diet.yml` Ansible playbook.
+  3. Resize the partition to a much smaller size (from ~3GB to ~1.25GB).
+  4. Clone the new, minified Raspbian image to your Mac.
+  5. Copy this new, minified image to all your microSD cards.
 
-The last command copies the Raspbian disk image, byte-for-byte, to the microSD card. Generally, this takes 10-20 minutes for a typical Class 10 microSD card. Timing will vary based on how fast/slow your card is for writes.
-
-> Note that copying the image will only fill the microSD card as much as the original raspbian image. Once you boot a Pi with the card the first time, you can use the `raspi-config` utility on the Pi to expand the partition to fill up the card's remaining space.
-
-> See `setup/diet-raspbian` if you'd like a more minimal Raspbian installation.
+`diet-raspbian`'s instructions are very thorough and it should work with the latest build of Raspbian.
 
 ### Preparing the Raspberry Pis
 
@@ -78,15 +75,20 @@ Assuming you've cloned a `diet-raspbian`-based image, you shouldn't need to conf
   2. Default username is `pi` and default password is `raspberry`.
   3. Once logged in, run `sudo raspi-config`, and follow the prompts.
 
-TODO.
+Even if you *did* use the `diet-raspbian` image, you may wish to expand the filesystem to fill the entire microSD card on each Pi using the first option in `sudo raspi-config`. You could set hostnames at this point, too, but we'll do that as part of the automated provisioning.
 
 ### Racking the Raspberry Pis
 
-TODO.
+  1. Mount one Pi per tier of the stackable case.
+  2. Mount the stack to a board, and mount the network switch and USB power supply as well.
+  3. Plug each Pi into one of the power supply's jacks, ensuring any Pis that will be powering extra USB devices (e.g. the database server) is plugged into a 2A port.
+  4. Create custom-sized Cat 5e/Cat 6 cables, one-per-Pi, to connect to the network switch.
+  5. Run power to the switch and to the USB power supply.
+  6. Profit!
 
 ### Provisioning the Raspberry Pis
 
-TODO.
+Once all the Pis are booted, we'll run the 
 
 ### Deploying Drupal to the Raspberry Pis
 
