@@ -1,1 +1,13 @@
 ---
+firewall_allowed_tcp_ports:
+  - 22
+  - 6379
+
+# TODO: Add a rule to limit port 6379 to only the application servers.
+firewall_additional_rules: []
+
+redis_port: 6379
+redis_bind_interface: 0.0.0.0
+
+# Disable Redis data persistence - SD card may be a bottleneck.
+redis_save: []

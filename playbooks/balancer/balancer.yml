@@ -3,7 +3,7 @@
   sudo: yes
 
   vars_files:
-    - ../../vars.yml
+    - ../vars.yml
     - vars.yml
 
   roles: []

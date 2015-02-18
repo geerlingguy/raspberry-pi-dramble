@@ -3,9 +3,11 @@
   sudo: yes
 
   vars_files:
-    - ../../vars.yml
+    - ../vars.yml
     - vars.yml
 
-  roles: []
+  roles:
+    - geerlingguy.firewall
+    - geerlingguy.redis
 
   tasks: []
