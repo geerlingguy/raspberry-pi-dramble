@@ -12,12 +12,12 @@ A cluster of servers, in my hand, at the presentation. With blinking LEDs!
 
 ## Specs
 
-  - 20 ARMv7 CPU Cores
-  - 4.5 GHz combined compute power
-  - 5 GB RAM
-  - 80 GB microSD-based storage
+  - 24 ARMv7 CPU Cores
+  - 5.4 GHz combined compute power
+  - 6 GB RAM
+  - 96 GB microSD-based storage
   - 64 GB SSD-based storage
-  - 1 Gbps network with mixed 10/100 and Gigabit connectivity
+  - 1 Gbps private network
 
 As you can see from the above specs; it takes 5+ Raspberry Pis to equal the capacity of one moderate workstation nowadays. Raspberry Pis are not the most economical or power-saving way to build Drupal infrastructure, but they are great for educational purposes, and it's a fun project to build 'bare metal' infrastructure with your own hands!
 
