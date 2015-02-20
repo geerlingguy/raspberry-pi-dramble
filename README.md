@@ -152,6 +152,20 @@ This should return something like:
 
 If you get a `pong` for each Pi, you're good to go!
 
+Some other interesting Ansible commands you could run to manage your Pis:
+
+    # Get current disk usage.
+    $ ansible all -i inventory -a "df -h"
+    
+    # Get current memory usage.
+    $ ansible all -i inventory -a "free -m"
+    
+    # Reboot all the Pis.
+    $ ansible all -i inventory -a "shutdown -r now" -s
+    
+    # Shut down all the Pis.
+    $ ansible all -i inventory -a "shutdown -h now" -s
+
 #### Running `provision.yml`
 
 TODO.
