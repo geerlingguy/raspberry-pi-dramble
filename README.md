@@ -75,7 +75,7 @@ Assuming you've cloned a `diet-raspbian`-based image, you shouldn't need to conf
   2. Default username is `pi` and default password is `raspberry`.
   3. Once logged in, run `sudo raspi-config`, and follow the prompts.
 
-Even if you *did* use the `diet-raspbian` image, you may wish to expand the filesystem to fill the entire microSD card on each Pi using the first option in `sudo raspi-config`. You could set hostnames at this point, too, but we'll do that as part of the automated provisioning.
+Even if you *did* use the `diet-raspbian` image, you may wish to expand the filesystem to fill the entire microSD card on each Pi using the first option in `sudo raspi-config`. We'll go through these steps in detail later.
 
 ### Racking the Raspberry Pis
 
@@ -88,7 +88,48 @@ Even if you *did* use the `diet-raspbian` image, you may wish to expand the file
 
 ### Provisioning the Raspberry Pis
 
-Once all the Pis are booted, and you are able to log into them over the network via SSH, we'll run the `provision.yml` playbook to provision them (installing the appropriate software packages to run Drupal).
+Once all the Pis are booted, and you are able to log into them over the network via SSH, there are a few steps you need to perform before you'll be ready to run the `provision.yml` playbook to provision software to them.
+
+#### Finish Pi configuration with `raspi-config`
+
+The first thing you need to do is finish basic Pi configuration for each Pi:
+
+  1. Log into the Pi directly or via SSH, and run `sudo raspi-config`.
+  2. Select 'Expand Filesystem' and then Ok when it's complete.
+  3. Select 'Change User Password' if you would like to set a password for the 'pi' account.
+  4. Set Overclocking options if you so desire.
+  5. Select 'Finish' and restart the Pi so the filesystem is expanded.
+
+> You may also need to run `sudo swapoff --all && sudo rm -rf /var/swap` if you get an 'out of disk space' error in any of the preceding steps.
+
+#### Setting up networking
+
+On each Pi, you will need to log in and do the following:
+
+  1. Set a unique hostname (e.g. `www1.dramble` for the first webserver, and `db1.dramble` for the database server):
+    1. Edit `/etc/hostname` and replace the existing hostname with the new hostname.
+    2. Enter `hostname [new-hostname]` to update the hostname immediately.
+    3. Edit `/etc/hosts` and replace the existing hostname with the new hostname.
+  2. Set up the network settings for our Pi network:
+    1. Edit `/etc/network/interfaces` and change the `iface eth0 inet dhcp` block to (IP address specific to the server):
+        iface eth0 inet static
+          address 10.0.1.60/24
+          gateway 10.0.1.1
+    2. Restart the Pi: `sudo reboot`
+    3. You'll need to reconnect to the Pi on its new static IP address.
+
+> The networking configuration may need to be different depending on the environment in which you're using your own Dramble (whether it's on an isolated private network, connected to another network/router, using bridged WiFi interfaces, etc.).
+
+> I used the following hostnames and IP addresses for my Dramble:
+>
+>   - `bal1.dramble` (10.0.1.60)
+>   - `www1.dramble` (10.0.1.61)
+>   - `www2.dramble` (10.0.1.62)
+>   - `www3.dramble` (10.0.1.63)
+>   - `cache1.dramble` (10.0.1.64)
+>   - `db1.dramble` (10.0.1.65)
+
+#### Running `provision.yml`
 
 TODO.
 
