@@ -25,10 +25,11 @@ As you can see from the above specs; it takes 5+ Raspberry Pis to equal the capa
 
 For the Dramble, I purchased the following:
 
-  - 5x Raspberry Pi 2 Model B
+  - 6x Raspberry Pi 2 Model B
   - 1x [50W 6-port USB desktop charger](http://www.amazon.com/gp/product/B00KHP6UVQ/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B00KHP6UVQ&linkCode=as2&tag=httpwwwmidw06-20&linkId=YEKQEOUTP3WTLSJJ) (to provide juice to the Pis)
   - 1x [6-pack micro USB cables](http://www.amazon.com/gp/product/B00N8VHW72/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B00N8VHW72&linkCode=as2&tag=httpwwwmidw06-20&linkId=63VSGWYRPJFO4IZO) (plugs from charger to Pis - cheap in bulk!)
   - 1x [5-pack 8GB microSD cards](http://www.amazon.com/gp/product/B00KI16OOW/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B00KI16OOW&linkCode=as2&tag=httpwwwmidw06-20&linkId=JM2T4CPMOOJA44AW) (one for each Pi, cheap in bulk!)
+    - Note that I'm actually using a hodgepodge of different microSD cards for different servers, as I've found pretty wide performance gaps in real-world usage on the Pi. My current top contender for price-performance is the SanDisk Extreme microSD card.
   - 1x [8-port unmanaged Gigabit network switch](http://www.amazon.com/gp/product/B001QUA6RA/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B001QUA6RA&linkCode=as2&tag=httpwwwmidw06-20&linkId=24SPP5YZJR6KK7GH) (for inter-Pi networking)
   - 1x [Raspberry Pi B+ Stackable Case Triplestack](http://www.ebay.com/itm/271648357906)
   - 2x [Raspberry Pi B+ Case, Stackable - Additional Level](http://www.ebay.com/itm/271614825269)
@@ -36,7 +37,7 @@ For the Dramble, I purchased the following:
 Other necessities, which I already had on-hand (but you might need to purchase):
 
   - Cat 5e or Cat 6 network cable for making patch cords. (I have hundreds of feet of the stuff, and can quickly punch down a patch cable, so I just made my own).
-  - A power outlet.
+  - A power outlet. (I am planning on adding an inline UPS at some point in the future, and could run the cluster off this for a few minutes at least... so the power outlet is somewhat optional :)
   - A computer to run the Ansible playbooks (you can do it all on the Pis themselves, but I prefer working on my Mac workstation and leaving all the Pis headless).
 
 Other accessories, optional but helpful for general Pi development:
