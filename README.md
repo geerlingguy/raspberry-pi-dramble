@@ -129,6 +129,29 @@ On each Pi, you will need to log in and do the following:
 >   - `cache1.dramble` (10.0.1.64)
 >   - `db1.dramble` (10.0.1.65)
 
+#### Testing Ansible configuration
+
+Once you have all your Pis configured, and the `inventory` file has all the right IP addresses, you can run the following command (within this directory) to test Ansible's ability to see all the Pis:
+
+    $ ansible all -i inventory -m ping
+
+This should return something like:
+
+    $ ansible all -i inventory -m ping
+    10.0.1.60 | success >> {
+        "changed": false,
+        "ping": "pong"
+    }
+    
+    ...
+    
+    10.0.1.64 | success >> {
+        "changed": false,
+        "ping": "pong"
+    }
+
+If you get a `pong` for each Pi, you're good to go!
+
 #### Running `provision.yml`
 
 TODO.
