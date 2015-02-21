@@ -1,4 +1,5 @@
 ---
-- include: playbooks/balancer.yml
-- include: playbooks/webservers.yml
-- include: playbooks/database.yml
+- include: playbooks/balancer/balancer.yml
+- include: playbooks/cache/cache.yml
+- include: playbooks/web/web.yml
+- include: playbooks/database/database.yml

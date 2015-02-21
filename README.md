@@ -179,9 +179,24 @@ Some other interesting Ansible commands you could run to manage your Pis:
 
 #### Running `provision.yml`
 
-TODO.
+Once all the Pis are online and operational, all you need to do to get them provisioned is run the following command (in the same directory as this README), then sit back for a few minutes while all the software is installed and configured:
 
-> To un-provision a Pi, you can either use `apt-get remove --purge [package]` and `apt-get autoremove` to remove installed packages/configuration, then reboot... or you can reimage the microSD cards from a fresh copy of Raspbian or `diet-raspbian`. I prefer the latter, but for quick testing/experimentation will do the former.
+    $ ansible-playbook -i inventory main.yml
+
+After 5-10 minutes, you should see a summary of the completed tasks:
+
+    PLAY RECAP *****************************************************************
+    
+    10.0.1.60                  : ok=3    changed=13    unreachable=0    failed=0
+    10.0.1.61                  : ok=3    changed=15    unreachable=0    failed=0
+    10.0.1.62                  : ok=3    changed=15    unreachable=0    failed=0
+    10.0.1.63                  : ok=3    changed=15    unreachable=0    failed=0
+    10.0.1.64                  : ok=7    changed=12    unreachable=0    failed=0
+    10.0.1.65                  : ok=2    changed=10    unreachable=0    failed=0
+
+At this point, all the software that will support your Drupal site is installed. The next step is to deploy Drupal to the infrastructure.
+
+> To un-provision a Pi, you can either use `apt-get remove --purge [package]` and `apt-get autoremove` to remove installed packages/configuration, then reboot... or you can reimage the microSD cards from a fresh copy of Raspbian or `diet-raspbian`. I prefer the latter, but for quick testing/experimentation will do the former (or create Ansible playbooks to back out all the changes).
 
 ### Deploying Drupal to the Raspberry Pis
 
