@@ -185,14 +185,13 @@ Once all the Pis are online and operational, all you need to do to get them prov
 
 After 5-10 minutes, you should see a summary of the completed tasks:
 
-    PLAY RECAP *****************************************************************
-    
-    10.0.1.60                  : ok=3    changed=13    unreachable=0    failed=0
-    10.0.1.61                  : ok=3    changed=15    unreachable=0    failed=0
-    10.0.1.62                  : ok=3    changed=15    unreachable=0    failed=0
-    10.0.1.63                  : ok=3    changed=15    unreachable=0    failed=0
-    10.0.1.64                  : ok=7    changed=12    unreachable=0    failed=0
-    10.0.1.65                  : ok=2    changed=10    unreachable=0    failed=0
+    PLAY RECAP ****************************************************************
+    10.0.1.60               : ok=4   changed=7    unreachable=0    failed=0
+    10.0.1.61               : ok=3   changed=8    unreachable=0    failed=0
+    10.0.1.62               : ok=3   changed=8    unreachable=0    failed=0
+    10.0.1.63               : ok=3   changed=8    unreachable=0    failed=0
+    10.0.1.64               : ok=3   changed=5    unreachable=0    failed=0
+    10.0.1.65               : ok=4   changed=9    unreachable=0    failed=0
 
 At this point, all the software that will support your Drupal site is installed. The next step is to deploy Drupal to the infrastructure.
 
