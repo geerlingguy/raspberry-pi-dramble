@@ -113,13 +113,23 @@ On each Pi, you will need to log in and do the following:
     3. Edit `/etc/hosts` and replace the existing hostname with the new hostname.
   2. Set up the network settings for our Pi network:
     1. Edit `/etc/network/interfaces` and change the `iface eth0 inet dhcp` block to (IP address specific to the server):
+        ```
         iface eth0 inet static
           address 10.0.1.60/24
           gateway 10.0.1.1
-    2. Restart the Pi: `sudo reboot`
-    3. You'll need to reconnect to the Pi on its new static IP address.
+        ```
 
-> The networking configuration may need to be different depending on the environment in which you're using your own Dramble (whether it's on an isolated private network, connected to another network/router, using bridged WiFi interfaces, etc.).
+    2. Set up DNS resolution in `/etc/resolv.conf` by adding the following lines (using Google DNS, for example):
+        ```
+        nameserver 8.8.8.8
+        nameserver 8.8.4.4
+        ```
+        (handy one-liner: `printf '%s\n%s\n' 'nameserver 8.8.8.8' 'nameserver 8.8.4.4' >> /etc/resolv.conf`).
+
+    3. Restart the Pi: `sudo reboot`
+    4. You'll need to reconnect to the Pi on its new static IP address.
+
+The networking configuration may need to be a little different depending on the environment in which you're using your own Dramble (whether it's on an isolated private network, connected to another network/router, using bridged WiFi interfaces, etc.).
 
 > I used the following hostnames and IP addresses for my Dramble:
 >
