@@ -1,10 +1,10 @@
 ---
 firewall_allowed_tcp_ports:
   - 22
-  - 3306
 
-# TODO: Add a rule to limit port 3306 to only the application servers.
-firewall_additional_rules: []
+# Limit access to MySQL port (3306) to local private network.
+firewall_additional_rules:
+  - "iptables -A INPUT -p tcp --dport 3306 -s 10.0.1.1/24 -j ACCEPT"
 
 mysql_root_password: supersecure
 mysql_users:
@@ -25,8 +25,8 @@ mysql_databases:
 
 mysql_bind_address: "{{ ansible_default_ipv4.address }}"
 
-# TODO - Consider using external drive.
-mysql_datadir: /var/lib/mysql
+# Use an external SSD for data store (for much better random access).
+mysql_datadir: /ssd/mysql
 
 # Memory settings.
 mysql_key_buffer_size: "32M"

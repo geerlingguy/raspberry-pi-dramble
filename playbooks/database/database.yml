@@ -6,6 +6,15 @@
     - ../vars.yml
     - vars.yml
 
+  pre_tasks:
+    - name: Ensure the data directory for mysql exists.
+      file:
+        path: mysql_datadir
+        state: directory
+        owner: mysql
+        group: mysql
+        mode: 0755
+
   roles:
     - geerlingguy.firewall
     - geerlingguy.mysql
