@@ -11,5 +11,15 @@ nginx_keepalive_timeout: "65"
 # TODO: Set up vhost and proxy settings for load balancing.
 # nginx_proxy_cache_path: ""
 
-nginx_remove_default_vhost: false
+nginx_remove_default_vhost: true
 nginx_vhosts: []
+nginx_upstreams:
+  - {
+    name: dramble,
+    # strategy: "least_conn", # Requries 1.2.2 or later.
+    servers: {
+      "10.0.1.61",
+      "10.0.1.62",
+      "10.0.1.63"
+    }
+  }

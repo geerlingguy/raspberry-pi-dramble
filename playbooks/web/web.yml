@@ -10,4 +10,9 @@
     - geerlingguy.firewall
     - geerlingguy.nginx
 
-  tasks: []
+  tasks:
+    - name: Copy default server-specific html file in place.
+      template:
+        src: index.html.j2
+        dest: /usr/share/nginx/www/index.html
+        mode: 0644

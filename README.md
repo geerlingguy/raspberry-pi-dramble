@@ -198,6 +198,12 @@ At this point, all the software that will support your Drupal site is installed.
 
 > To un-provision a Pi, you can either use `apt-get remove --purge [package]` and `apt-get autoremove` to remove installed packages/configuration, then reboot... or you can reimage the microSD cards from a fresh copy of Raspbian or `diet-raspbian`. I prefer the latter, but for quick testing/experimentation will do the former (or create Ansible playbooks to back out all the changes).
 
+#### Testing the default balancer configuration
+
+At this point, the infrastructure should already be serving http requests through the load balancer, and you can verify this by opening your browser and pointing it at the IP address of your balancer (in my case, `http://10.0.1.60/`).
+
+Refresh the page a few times (if you're using Chrome, use Shift + Command + R to refresh the cached page), and you should see the IP address on the page switch between the three different webserver IP addresses.
+
 ### Deploying Drupal to the Raspberry Pis
 
 After all the Raspberry Pis are provisioned, it's time to deploy our brand new Drupal 8 site to them!
