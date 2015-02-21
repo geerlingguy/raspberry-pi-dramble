@@ -6,6 +6,8 @@
     - ../vars.yml
     - vars.yml
 
-  roles: []
+  roles:
+    - geerlingguy.firewall
+    - geerlingguy.nginx
 
   tasks: []

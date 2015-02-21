@@ -1,10 +1,10 @@
 ---
 firewall_allowed_tcp_ports:
   - 22
-  - 6379
 
-# TODO: Add a rule to limit port 6379 to only the application servers.
-firewall_additional_rules: []
+# Limit access to MySQL port (6379) to local private network.
+firewall_additional_rules:
+  - "iptables -A INPUT -p tcp --dport 6379 -s 10.0.1.1/24 -j ACCEPT"
 
 redis_port: 6379
 redis_bind_interface: 0.0.0.0
