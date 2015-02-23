@@ -203,6 +203,12 @@ After all the Raspberry Pis are provisioned, it's time to deploy our brand new D
 
 TODO.
 
+Set up your local hosts file:
+
+    10.0.1.60  pidramble.com
+
+TODO.
+
 ## Author
 
 This project was started in 2015 by [Jeff Geerling](http://jeffgeerling.com/), author of [Ansible for DevOps](http://ansiblefordevops.com/).

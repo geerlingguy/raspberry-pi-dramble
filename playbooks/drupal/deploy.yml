@@ -28,6 +28,7 @@
     dest: "{{ drupal_docroot }}/sites/default/settings.php"
     owner: www-data
     group: www-data
+  notify: restart nginx
 
 - name: Set permissions on settings.php (pre-install).
   file:
