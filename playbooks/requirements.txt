@@ -3,6 +3,7 @@ geerlingguy.nginx
 geerlingguy.mysql
 geerlingguy.php
 geerlingguy.php-mysql
+geerlingguy.composer
 geerlingguy.drush
 geerlingguy.redis
 geerlingguy.nfs

@@ -7,8 +7,6 @@
     - ../vars.yml
     - vars.yml
 
-  roles: []
-
   tasks:
     - name: Check if Drupal has already been installed.
       stat: path=/var/local/drupal_install_complete
