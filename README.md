@@ -107,12 +107,12 @@ The first thing you need to do is finish basic Pi configuration for each Pi:
 
 There is an included playbook (inside `setup/networking`) which will set up all the Pi networking configuration following the below network layout:
 
-  - `bal1.dramble` (10.0.1.60)
-  - `www1.dramble` (10.0.1.61)
-  - `www2.dramble` (10.0.1.62)
-  - `www3.dramble` (10.0.1.63)
-  - `cache1.dramble` (10.0.1.64)
-  - `db1.dramble` (10.0.1.65)
+  - `bal1.pidramble.com` (10.0.1.60)
+  - `www1.pidramble.com` (10.0.1.61)
+  - `www2.pidramble.com` (10.0.1.62)
+  - `www3.pidramble.com` (10.0.1.63)
+  - `cache1.pidramble.com` (10.0.1.64)
+  - `db1.pidramble.com` (10.0.1.65)
 
 To use it, you will need to know the IP addresses and MAC addresses for all six Pis as they are currently set up. Map each MAC address to the new structures inside the networking `vars.yml`, and add all the Pi IP addresses under the `[pis]` group inside the networking `inventory` file. Then run (within the `setup/networking` directory):
 

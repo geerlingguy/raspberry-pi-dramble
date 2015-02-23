@@ -12,7 +12,7 @@ To run the playbook, after you have all your Pi IP addresses listed in the `inve
 
 Reboot the Raspberry Pis after this playbook runs (once you're ready to start accessing them via their new IP addresses):
 
-    $ ansible -i inventory -a "shutdown -r now" -s
+    $ ansible pis -i inventory -a "shutdown -r now" -s
 
 Now you should be able to run the main Dramble playbooks on your Pi cluster!
 
@@ -24,7 +24,7 @@ If you ever need to change active Dramble networking info, it's easy! Just chang
 
 _If you don't want to use the automated playbook, you can do the following on each Raspberry Pi individually_:
 
-  1. Set a unique hostname (e.g. `www1.dramble` for the first webserver, and `db1.dramble` for the database server):
+  1. Set a unique hostname (e.g. `www1.pidramble.com` for the first webserver, and `db1.pidramble.com` for the database server):
     1. Edit `/etc/hostname` and replace the existing hostname with the new hostname.
     2. Enter `hostname [new-hostname]` to update the hostname immediately.
     3. Edit `/etc/hosts` and replace the existing hostname with the new hostname.
