@@ -1,0 +1,14 @@
+---
+- name: Ensure the www-data group exists for NFS share.
+  group:
+    gid: 5000
+    name: www-data
+    state: present
+
+- name: Ensure the NFS shared directory for Drupal files exists.
+  file:
+    path: "{{ drupal_nfs_share }}"
+    state: directory
+    owner: root
+    group: www-data
+    mode: 0775

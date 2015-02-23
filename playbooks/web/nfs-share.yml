@@ -1,0 +1,33 @@
+---
+- name: Install NFS package.
+  apt: name=nfs-common state=installed
+
+- name: Ensure the www-data group has correct gid for NFS share.
+  group:
+    gid: 5000
+    name: www-data
+    state: present
+
+- name: Ensure share mount point exists.
+  file:
+    path: "{{ drupal_nfs_mount }}"
+    state: directory
+    owner: root
+    group: www-data
+    mode: 0775
+
+- name: Update fstab to include NFS mount.
+  lineinfile:
+    dest: /etc/fstab
+    regexp: '^10\.0\.1\.65'
+    line: '{{ groups.cache[0] }}:{{ drupal_nfs_share }} {{ drupal_nfs_mount }} nfs rw,bg,sync,soft,intr 0 0'
+
+- name: Check if NFS share is mounted.
+  shell: "grep -qs '{{ drupal_nfs_mount }}' /proc/mounts"
+  changed_when: false
+  failed_when: false
+  register: nfsmount
+
+- name: Mount the NFS share.
+  command: "mount {{ drupal_nfs_mount }}"
+  when: nfsmount.rc != 0

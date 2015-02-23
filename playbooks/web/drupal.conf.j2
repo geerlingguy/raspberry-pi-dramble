@@ -1,0 +1,53 @@
+server {
+    listen 80;
+    server_name {{ inventory_hostname }};
+    root {{ drupal_docroot }};
+
+    gzip_static on;
+    access_log off; # Save a ton of precious disk I/O.
+
+    location = /favicon.ico {
+        log_not_found off;
+    }
+
+    location = /robots.txt {
+        allow all;
+        log_not_found off;
+    }
+
+    location ~ \..*/.*\.php$ {
+        return 403;
+    }
+
+    location ~ (^|/)\. {
+        return 403;
+    }
+
+    location / {
+        try_files $uri @rewrite;
+    }
+
+    location @rewrite {
+        # Clean URLs are handled in drupal_environment_initialize().
+        rewrite ^ /index.php;
+    }
+
+    location ~ \.php$ {
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        #NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $request_filename;
+        fastcgi_intercept_errors on;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_read_timeout 120s;
+    }
+
+    location ~ ^/sites/.*/files/styles/ {
+        try_files $uri @rewrite;
+    }
+
+    location ~* \.(jpg|jpeg|gif|css|png|js|ico|eot|svg|ttf|woff)$ {
+        expires max;
+        log_not_found off; # Save a ton of precious disk I/O.
+    }
+}
