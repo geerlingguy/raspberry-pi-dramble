@@ -1,5 +1,5 @@
 ---
-- name: Install Drupal (if this is the first deployment).
+- name: Install Drupal.
   command: >
     drush si {{ drupal_install_profile }} -y
     --site-name="{{ site_name }}"

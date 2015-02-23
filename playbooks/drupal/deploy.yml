@@ -28,4 +28,15 @@
     dest: "{{ drupal_docroot }}/sites/default/settings.php"
     owner: www-data
     group: www-data
+
+- name: Set permissions on settings.php (pre-install).
+  file:
+    path: "{{ drupal_docroot }}/sites/default/settings.php"
     mode: 0664
+  when: not drupal_install_complete.stat.exists
+
+- name: Ensure settings.php has proper permissions.
+  file:
+    path: "{{ drupal_docroot }}/sites/default/settings.php"
+    mode: 0644
+  when: drupal_install_complete.stat.exists
