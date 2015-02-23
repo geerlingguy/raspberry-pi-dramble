@@ -1,0 +1,5 @@
+[pis]
+10.0.1.60
+
+[pis:vars]
+ansible_ssh_user=pi

@@ -105,32 +105,26 @@ The first thing you need to do is finish basic Pi configuration for each Pi:
 
 #### Setting up networking
 
-On each Pi, you will need to log in and do the following:
+There is an included playbook (inside `setup/networking`) which will set up all the Pi networking configuration following the below network layout:
 
-  1. Set a unique hostname (e.g. `www1.dramble` for the first webserver, and `db1.dramble` for the database server):
-    1. Edit `/etc/hostname` and replace the existing hostname with the new hostname.
-    2. Enter `hostname [new-hostname]` to update the hostname immediately.
-    3. Edit `/etc/hosts` and replace the existing hostname with the new hostname.
-  2. Set up the network settings for our Pi network:
-    1. Edit `/etc/network/interfaces` and change the `iface eth0 inet dhcp` block to (IP address specific to the server):
-        ```
-        iface eth0 inet static
-          address 10.0.1.60/24
-          gateway 10.0.1.1
-        ```
-    2. Restart the Pi: `sudo reboot`
-    3. You'll need to reconnect to the Pi on its new static IP address.
+  - `bal1.dramble` (10.0.1.60)
+  - `www1.dramble` (10.0.1.61)
+  - `www2.dramble` (10.0.1.62)
+  - `www3.dramble` (10.0.1.63)
+  - `cache1.dramble` (10.0.1.64)
+  - `db1.dramble` (10.0.1.65)
 
-The networking configuration may need to be a little different depending on the environment in which you're using your own Dramble (whether it's on an isolated private network, connected to another network/router, using bridged WiFi interfaces, etc.).
+To use it, you will need to know the IP addresses and MAC addresses for all six Pis as they are currently set up. Map each MAC address to the new structures inside the networking `vars.yml`, and add all the Pi IP addresses under the `[pis]` group inside the networking `inventory` file. Then run (within the `setup/networking` directory):
 
-> I used the following hostnames and IP addresses for my Dramble:
->
->   - `bal1.dramble` (10.0.1.60)
->   - `www1.dramble` (10.0.1.61)
->   - `www2.dramble` (10.0.1.62)
->   - `www3.dramble` (10.0.1.63)
->   - `cache1.dramble` (10.0.1.64)
->   - `db1.dramble` (10.0.1.65)
+    $ ansible-playbook -i inventory main.yml
+
+After this, you will need to reboot all the Pis, which can be done from inside the same directory (since those IP addresses will still be active until after the reboot) using:
+
+    $ ansible -i inventory -a "shutdown -r now" -s
+
+Once rebooted, you should be able to follow the next steps to set up the Pis.
+
+> This networking configuration works for me and my local network setup. If you'd like to adjust the private network range used, or the IP addresses, etc., you'll need to do that on your own :)
 
 #### Testing Ansible configuration
 

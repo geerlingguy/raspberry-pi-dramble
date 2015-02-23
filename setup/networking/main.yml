@@ -1,0 +1,31 @@
+---
+- hosts: pis
+  sudo: yes
+
+  vars_files:
+    - vars.yml
+
+  tasks:
+    - name: Set the current MAC address for eth0.
+      set_fact:
+        dramble_mac_address: "{{ hostvars[inventory_hostname].ansible_default_ipv4.macaddress }}"
+
+    - name: Set variables based on eth0 MAC address.
+      set_fact:
+        dramble_hostname: "{{ mac_address_mapping[dramble_mac_address].name }}"
+        dramble_ip_address: "{{ mac_address_mapping[dramble_mac_address].ip }}"
+
+    - name: Set up networking-related files.
+      template:
+        src: "templates/{{ item.template }}"
+        dest: "{{ item.dest }}"
+        mode: 0644
+      with_items:
+        - { template: hostname.j2, dest: /etc/hostname }
+        - { template: hosts.j2, dest: /etc/hosts }
+        - { template: interfaces.j2, dest: /etc/network/interfaces }
+      notify: update hostname
+
+  handlers:
+    - name: update hostname
+      command: "hostname {{ dramble_hostname }}"
