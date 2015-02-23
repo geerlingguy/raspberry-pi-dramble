@@ -1,0 +1,5 @@
+---
+# TODO: Make this run appropriate commands like drush cr, etc.
+- name: Update Drupal (if this is not the first deployment).
+  command: /bin/true
+  when: "inventory_hostname == groups.webservers[0]"

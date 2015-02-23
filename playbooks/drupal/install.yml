@@ -1,0 +1,17 @@
+---
+- name: Install Drupal (if this is the first deployment).
+  command: >
+    drush si {{ drupal_install_profile }} -y
+    --site-name="{{ site_name }}"
+    --account-name={{ drupal_admin_name }}
+    --account-pass={{ drupal_admin_password }}
+    chdir={{ drupal_docroot }}
+  when: "inventory_hostname == groups.webservers[0]"
+
+- name: Ensure settings.php has proper permissions.
+  file:
+    path: "{{ drupal_docroot }}/sites/default/settings.php"
+    mode: 0644
+
+- name: Indicate Drupal has been installed.
+  file: path=/var/local/drupal_install_complete state=touch mode=0644

@@ -1,0 +1,15 @@
+---
+- name: Ensure Drupal files folder exists.
+  file:
+    path: "{{ drupal_nfs_mount }}/files"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: 0755
+
+- name: Symlink Drupal files folder into place.
+  file:
+    src: "{{ drupal_nfs_mount }}/files"
+    dest: "{{ drupal_docroot }}/sites/default/files"
+    state: link
+    force: yes

@@ -1,3 +1,9 @@
 geerlingguy.firewall
-geerlingguy.redis
+geerlingguy.nginx
 geerlingguy.mysql
+geerlingguy.php
+geerlingguy.php-mysql
+geerlingguy.drush
+geerlingguy.redis
+geerlingguy.nfs
+geerlingguy.git

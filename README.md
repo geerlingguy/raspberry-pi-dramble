@@ -97,7 +97,7 @@ The first thing you need to do is finish basic Pi configuration for each Pi:
 
   1. Log into the Pi directly or via SSH, and run `sudo raspi-config`.
   2. Select 'Expand Filesystem' and then Ok when it's complete.
-  3. Select 'Change User Password' if you would like to set a password for the 'pi' account.
+  3. Select 'Change User Password' if you would like to set a different password for the 'pi' account.
   4. Set Overclocking options if you so desire.
   5. Select 'Finish' and restart the Pi so the filesystem is expanded.
 
@@ -118,16 +118,8 @@ On each Pi, you will need to log in and do the following:
           address 10.0.1.60/24
           gateway 10.0.1.1
         ```
-
-    2. Set up DNS resolution in `/etc/resolv.conf` by adding the following lines (using Google DNS, for example):
-        ```
-        nameserver 8.8.8.8
-        nameserver 8.8.4.4
-        ```
-        (handy one-liner: `printf '%s\n%s\n' 'nameserver 8.8.8.8' 'nameserver 8.8.4.4' >> /etc/resolv.conf`).
-
-    3. Restart the Pi: `sudo reboot`
-    4. You'll need to reconnect to the Pi on its new static IP address.
+    2. Restart the Pi: `sudo reboot`
+    3. You'll need to reconnect to the Pi on its new static IP address.
 
 The networking configuration may need to be a little different depending on the environment in which you're using your own Dramble (whether it's on an isolated private network, connected to another network/router, using bridged WiFi interfaces, etc.).
 
@@ -156,7 +148,7 @@ This should return something like:
     
     ...
     
-    10.0.1.64 | success >> {
+    10.0.1.65 | success >> {
         "changed": false,
         "ping": "pong"
     }
@@ -177,9 +169,9 @@ Some other interesting Ansible commands you could run to manage your Pis:
     # Shut down all the Pis.
     $ ansible all -i inventory -a "shutdown -h now" -s
 
-#### Running `provision.yml`
+#### Running `main.yml`
 
-Once all the Pis are online and operational, all you need to do to get them provisioned is run the following command (in the same directory as this README), then sit back for a few minutes while all the software is installed and configured:
+Once all the Pis are online and operational, all you need to do to get them provisioned is run the command below (in the same directory as this README), then sit back for a few minutes while all the software is installed and configured (note that you may need to run `ansible-galaxy -r playbooks/requirements.txt` to install Ansible role dependencies if they're not already on your system):
 
     $ ansible-playbook -i inventory main.yml
 
@@ -206,6 +198,8 @@ Refresh the page a few times (if you're using Chrome, use Shift + Command + R to
 ### Deploying Drupal to the Raspberry Pis
 
 After all the Raspberry Pis are provisioned, it's time to deploy our brand new Drupal 8 site to them!
+
+    $ ansible-playbook -i inventory playbooks/drupal/main.yml
 
 TODO.
 

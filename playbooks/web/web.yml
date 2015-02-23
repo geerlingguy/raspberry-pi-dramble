@@ -9,10 +9,17 @@
   roles:
     - geerlingguy.firewall
     - geerlingguy.nginx
+    - geerlingguy.php
+    - geerlingguy.php-mysql
+    - geerlingguy.drush
+    - geerlingguy.git
 
   tasks:
-    - name: Copy default server-specific html file in place.
+    - name: Copy vhost configuration into place.
       template:
-        src: index.html.j2
-        dest: /usr/share/nginx/www/index.html
+        src: drupal.conf.j2
+        dest: /etc/nginx/sites-enabled/drupal.conf
         mode: 0644
+      notify: restart nginx
+
+    - include: nfs-share.yml

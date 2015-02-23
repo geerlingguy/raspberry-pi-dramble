@@ -1,11 +1,21 @@
 ---
 firewall_allowed_tcp_ports:
   - 22
+  - 111
+  - 2049
+firewall_allowed_udp_ports:
+  - 111
+  - 2049
 
-# Limit access to MySQL port (6379) to local private network.
+# Limit access to Redis port (6379) to local private network.
 firewall_additional_rules:
   - "iptables -A INPUT -p tcp --dport 6379 -s 10.0.1.1/24 -j ACCEPT"
 
+# NFS settings.
+nfs_exports:
+  - "{{ drupal_nfs_share }} 10.0.1.0/24(rw,async,no_subtree_check,no_root_squash)"
+
+# Redis configuration.
 redis_port: 6379
 redis_bind_interface: 0.0.0.0
 

@@ -1,0 +1,8 @@
+---
+# - name: Add Drupal cron job.
+#   cron:
+#     name: "Dramble Drupal cron"
+#     minute: "*/15"
+#     user: pi
+#     job: "curl --silent --compressed http://{{ site_url }}/cron/S7wGvU0nTFSTJ0_8R9-sRPdktfM2p_S2cliDt2J-hcmo-m-PQLQ2Qc94XZS3d7gC0RhHH_Nedg"
+#   when: "inventory_hostname == groups.webservers[0]"

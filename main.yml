@@ -1,5 +1,5 @@
 ---
 - include: playbooks/balancer/balancer.yml
+- include: playbooks/database/database.yml
 - include: playbooks/cache/cache.yml
 - include: playbooks/web/web.yml
-- include: playbooks/database/database.yml

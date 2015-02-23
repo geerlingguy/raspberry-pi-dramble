@@ -1,0 +1,31 @@
+---
+- name: Ensure /var/www directory exists.
+  file:
+    path: /var/www
+    state: directory
+    mode: 0755
+
+- name: Ensure drupal_docroot exists.
+  file:
+    path: "{{ drupal_docroot }}"
+    state: directory
+    mode: 0755
+    owner: www-data
+    group: www-data
+
+- name: Check out our Drupal 8 project to the docroot.
+  git:
+    repo: "{{ drupal_repo }}"
+    version: "{{ drupal_version }}"
+    update: yes
+    dest: "{{ drupal_docroot }}"
+  notify: restart nginx
+  sudo_user: www-data
+
+- name: Copy settings.php file into place.
+  template:
+    src: settings.php.j2
+    dest: "{{ drupal_docroot }}/sites/default/settings.php"
+    owner: www-data
+    group: www-data
+    mode: 0664

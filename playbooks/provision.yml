@@ -1,5 +1,0 @@
----
-include: balancer/balancer.yml
-include: web/web.yml
-include: database/database.yml
-include: cache/cache.yml
