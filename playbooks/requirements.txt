@@ -6,5 +6,5 @@ geerlingguy.php-mysql
 geerlingguy.composer
 geerlingguy.drush
 geerlingguy.redis
-geerlingguy.nfs
+geerlingguy.glusterfs
 geerlingguy.git

@@ -13,6 +13,7 @@
     - geerlingguy.php-mysql
     - geerlingguy.drush
     - geerlingguy.git
+    - geerlingguy.glusterfs
 
   tasks:
     - name: Copy vhost configuration into place.
@@ -22,4 +23,4 @@
         mode: 0644
       notify: restart nginx
 
-    - include: nfs-share.yml
+    - include: gluster.yml

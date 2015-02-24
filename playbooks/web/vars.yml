@@ -2,6 +2,18 @@
 firewall_allowed_tcp_ports:
   - 22
   - 80
+  # For GlusterFS.
+  - 111
+  - 24007
+  - 24008
+  - 24009
+  - 24010
+  - 24011
+  - 49152
+  - 49153
+  - 49154
+firewall_allowed_udp_ports:
+  - 111
 
 # Nginx configuration.
 nginx_worker_processes: "4" # Set to number of CPU cores on Pi.
@@ -25,3 +37,13 @@ php_packages:
   - php-pear
   - php-apc
 php_enable_php_fpm: true
+
+# GlusterFS configuration.
+glusterfs_brick_dir: /srv/gluster/brick
+glusterfs_mount_dir: /mnt/gluster
+glusterfs_brick_name: gluster
+glusterfs_brick_config:
+  "replica 3 transport tcp
+  {{ groups.webservers[0] }}:{{ glusterfs_brick_dir }}
+  {{ groups.webservers[1] }}:{{ glusterfs_brick_dir }}
+  {{ groups.webservers[2] }}:{{ glusterfs_brick_dir }}"
