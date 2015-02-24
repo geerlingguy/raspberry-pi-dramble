@@ -6,10 +6,6 @@
     - ../vars.yml
     - vars.yml
 
-  pre_tasks:
-    - include: nfs-share.yml
-
   roles:
     - geerlingguy.firewall
     - geerlingguy.redis
-    - geerlingguy.nfs
