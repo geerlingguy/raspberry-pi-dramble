@@ -1,0 +1,24 @@
+---
+# To run:
+#   $ ansible-playbook -i ../../inventory drupal.yml
+
+- hosts: webservers
+  sudo: yes
+
+  tasks:
+    - name: Remove /var/www/drupal contents.
+      shell: "rm -rf /var/www/drupal"
+
+    - name: Remove /mnt/drupal/files contents.
+      shell: "rm -rf /mnt/drupal/files/*"
+      when: "inventory_hostname == groups.webservers[0]"
+
+    - name: Remove drupal_install_complete file.
+      shell: "rm -rf /var/local/drupal_install_complete"
+
+- hosts: database
+  sudo: yes
+
+  tasks:
+    - name: Empty the drupal database.
+      shell: "echo 'DROP DATABASE drupal; CREATE DATABASE drupal;' | mysql -u root -psupersecure"
