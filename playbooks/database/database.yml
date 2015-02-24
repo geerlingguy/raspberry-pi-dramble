@@ -7,6 +7,8 @@
     - vars.yml
 
   pre_tasks:
+    - include: mounts.yml
+
     - name: Ensure the data directory for mysql exists.
       file:
         path: "{{ mysql_datadir }}"
