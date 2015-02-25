@@ -4,7 +4,7 @@ firewall_allowed_tcp_ports:
 
 # Limit access to MySQL port (3306) to local private network.
 firewall_additional_rules:
-  - "iptables -A INPUT -p tcp --dport 3306 -s 10.0.1.1/24 -j ACCEPT"
+  - "iptables -A INPUT -p tcp --dport 3306 -s {{ networking_default_gateway }}/24 -j ACCEPT"
 
 mysql_root_password: supersecure
 mysql_users:
