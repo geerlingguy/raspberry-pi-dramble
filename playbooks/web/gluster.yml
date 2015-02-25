@@ -1,7 +1,7 @@
 ---
 - name: Ensure Gluster brick and mount directories exist.
   file:
-    path: "{{ glusterfs_brick_dir }}"
+    path: "{{ item }}"
     state: directory
     owner: root
     group: www-data

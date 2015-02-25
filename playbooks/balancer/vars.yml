@@ -6,8 +6,9 @@ firewall_allowed_tcp_ports:
 # Nginx configuration.
 nginx_worker_processes: "4" # Set to number of CPU cores on Pi.
 nginx_worker_connections: "512"
-nginx_client_max_body_size: "64m"
-nginx_keepalive_timeout: "65"
+nginx_access_log: "off"
+nginx_keepalive_timeout: "30"
+nginx_keepalive_requests: "250"
 nginx_proxy_cache_path: "/var/cache/nginx keys_zone=cache:32m max_size=1g inactive=15m"
 nginx_remove_default_vhost: true
 nginx_vhosts: []

@@ -6,6 +6,11 @@
     - ../vars.yml
     - vars.yml
 
+  pre_tasks:
+    # Add backports so we can install a newer version of Nginx.
+    # TODO: Test this!
+    - include: ../wheezy-backports.yml
+
   roles:
     - geerlingguy.firewall
     - geerlingguy.nginx

@@ -34,13 +34,14 @@ php_packages:
   - php5-dev
   - php5-gd
   - php5-mcrypt
+  - php5-redis
   - php-pear
   - php-apc
 php_enable_php_fpm: true
 
 # GlusterFS configuration.
 glusterfs_brick_dir: /srv/gluster/brick
-glusterfs_mount_dir: /mnt/gluster
+# glusterfs_mount_dir: "" # Defined in global vars file.
 glusterfs_brick_name: gluster
 glusterfs_brick_config:
   "replica 3 transport tcp

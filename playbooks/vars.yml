@@ -2,5 +2,6 @@
 site_name: Dramble
 site_url: pidramble.com
 drupal_docroot: /var/www/drupal
-drupal_nfs_share: /var/drupal
-drupal_nfs_mount: /mnt/drupal
+
+# Drupal filesystem configuration.
+glusterfs_mount_dir: /mnt/gluster
