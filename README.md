@@ -4,7 +4,7 @@ A cluster ([Bramble](http://elinux.org/Bramble)) of Raspberry Pis on which Drupa
 
 Here's the overall architecture of the Dramble:
 
-<img src="http://github.com/geerlingguy/raspberry-pi-dramble/raw/master/images/raspberry-pi-dramble-lemp-redis-architecture.png" alt="Raspberry Pi Dramble - Server Architecture Diagram" />
+<img src="https://raw.githubusercontent.com/geerlingguy/raspberry-pi-dramble/master/images/raspberry-pi-dramble-lemp-redis-architecture.png" alt="Raspberry Pi Dramble - Server Architecture Diagram" />
 
 ## Why
 
