@@ -4,6 +4,7 @@ firewall_allowed_tcp_ports:
   - 80
 
 # Nginx configuration.
+nginx_default_release: wheezy-backports # For Nginx 1.6.x instead of 1.2.x.
 nginx_worker_processes: "4" # Set to number of CPU cores on Pi.
 nginx_worker_connections: "512"
 nginx_access_log: "off"
