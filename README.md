@@ -1,6 +1,10 @@
 # Raspberry Pi Dramble
 
-A cluster ([Bramble](http://elinux.org/Bramble)) of 5 Raspberry Pis on which Drupal will be deployed using Ansible.
+A cluster ([Bramble](http://elinux.org/Bramble)) of Raspberry Pis on which Drupal will be deployed using Ansible.
+
+Here's the overall architecture of the Dramble:
+
+<img src="http://github.com/geerlingguy/raspberry-pi-dramble/raw/master/images/raspberry-pi-dramble-lemp-redis-architecture.png" alt="Raspberry Pi Dramble - Server Architecture Diagram" />
 
 ## Why
 
@@ -206,3 +210,5 @@ TODO.
 ## Author
 
 This project was started in 2015 by [Jeff Geerling](http://jeffgeerling.com/), author of [Ansible for DevOps](http://ansiblefordevops.com/).
+
+Raspberry Pi image used in architecture diagram by [Multicherry](http://commons.wikimedia.org/wiki/User:Multicherry), downloaded from [Wikipedia](http://en.m.wikipedia.org/wiki/File:Raspberry_Pi_2_Model_B_v1.1_top_new_(bg_cut_out).jpg). All other logos are copyright their respective owners.
