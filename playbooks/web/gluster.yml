@@ -5,7 +5,6 @@
     state: directory
     owner: root
     group: www-data
-    recurse: yes
     mode: 0775
   with_items:
     - "{{ glusterfs_brick_dir }}"

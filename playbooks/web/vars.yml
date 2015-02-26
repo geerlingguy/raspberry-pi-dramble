@@ -40,7 +40,8 @@ php_packages:
   - php-apc
 php_enable_php_fpm: true
 php_memory_limit: "128M"
-php_apc_shm_size: "128M"
+php_apc_enabled_in_ini: true
+php_apc_stat: "0"
 
 # GlusterFS configuration.
 glusterfs_brick_dir: /srv/gluster/brick
