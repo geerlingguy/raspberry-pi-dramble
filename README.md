@@ -207,6 +207,21 @@ Set up your local hosts file:
 
 TODO.
 
+### Testing the performance of the Dramble
+
+There are a few tests I like to run to get a general feel for the speed of the entire cluster. When tweaking configuration, adding content, changing modules, etc., the Apache Bench tool (`ab`), built into every Mac for years (and a simple install away on most other platforms), lets you do a simple local-network load test on the Raspberry Pi cluster.
+
+Here are three of the tests I do most often:
+
+  1. Send 100 requests through 10 active connections to the home page, bypassing Nginx's cache (so the requests are routed to the backend webservers, which in turn connect to Redis and MySQL to get data). My Dramble currently gets around 9.7 requests/second.
+      $ ab -n 100 -c 10 http://pidramble.com/?nocache=true
+
+  2. Send 100 requests through 10 active connections to the home page, bypassing Nginx's cache and also testing Drupal's ability to serve authenticated visitor traffic. My Dramble currently gets around 1,500 requests/second. (`SESSKEY` is an active cookie session key ID, and `VALUE` is that session ID's value). My Dramble currently gets around 8.8 requests/second.
+      $ ab -n 100 -c 10 -C "SESSKEY=VALUE" http://pidramble.com/
+
+  3. Send 10,000 requests through 100 active connections to the home page, testing the balancer's ability to send as many requests per second as possible. My Dramble currently gets around 1,500 requests/second.
+      $ ab -n 10000 -c 100 http://pidramble.com/
+
 ## Author
 
 This project was started in 2015 by [Jeff Geerling](http://jeffgeerling.com/), author of [Ansible for DevOps](http://ansiblefordevops.com/).

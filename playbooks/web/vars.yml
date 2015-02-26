@@ -44,6 +44,7 @@ php_enable_php_fpm: true
 glusterfs_brick_dir: /srv/gluster/brick
 # glusterfs_mount_dir: "" # Defined in global vars file.
 glusterfs_brick_name: gluster
+# Note: This is hardcoded for 3 webservers. Adjust accordingly.
 glusterfs_brick_config:
   "replica 3 transport tcp
   {{ groups.webservers[0] }}:{{ glusterfs_brick_dir }}

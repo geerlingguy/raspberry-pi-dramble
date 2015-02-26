@@ -16,6 +16,7 @@
         owner: mysql
         group: mysql
         mode: 0755
+      when: "mysql_datadir != '/var/lib/mysql'"
 
   roles:
     - geerlingguy.firewall

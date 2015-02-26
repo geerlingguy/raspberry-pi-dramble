@@ -23,7 +23,7 @@ mysql_databases:
     replicate: 0
   }
 
-mysql_bind_address: "{{ ansible_default_ipv4.address }}"
+mysql_bind_address: "{{ groups.database[0] }}"
 
 # Use an external SSD for data store (for much better random access).
 mysql_datadir: /ssd/mysql

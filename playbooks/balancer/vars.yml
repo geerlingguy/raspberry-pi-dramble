@@ -13,7 +13,6 @@ nginx_keepalive_requests: "250"
 nginx_proxy_cache_path: "/var/cache/nginx keys_zone=cache:32m max_size=1g inactive=15m"
 nginx_remove_default_vhost: true
 nginx_vhosts: []
-# TODO: Use groups.webservers for 'servers' list here.
 nginx_upstreams:
   - {
     name: dramble,

@@ -21,6 +21,7 @@
   shell: "gluster peer probe {{ item }}"
   register: gluster_peer_probe
   changed_when: "'already in peer list' not in gluster_peer_probe.stdout"
+  failed_when: false
   with_items: groups.webservers
   when: "'Volume Name: gluster' not in gluster_volume_info.stdout"
 

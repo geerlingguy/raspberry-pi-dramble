@@ -1,0 +1,94 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  # TODO: Switch to geerlingguy/debian-7 at some point.
+  config.vm.box = "mokote/debian-7"
+  config.ssh.insert_key = false
+
+  # Balancer.
+  config.vm.define "bal1" do |bal1|
+    bal1.vm.network :private_network, ip: "192.168.77.2"
+
+    # VirtualBox.
+    bal1.vm.provider :virtualbox do |v|
+      v.name = "bal1.pidramble.com"
+      v.memory = 1024
+      v.cpus = 2
+    end
+  end
+
+  # Web 1.
+  config.vm.define "www1" do |www1|
+    www1.vm.network :private_network, ip: "192.168.77.3"
+
+    # VirtualBox.
+    www1.vm.provider :virtualbox do |v|
+      v.name = "www1.pidramble.com"
+      v.memory = 1024
+      v.cpus = 2
+    end
+  end
+
+  # Web 2.
+  config.vm.define "www2" do |www2|
+    www2.vm.network :private_network, ip: "192.168.77.4"
+
+    # VirtualBox.
+    www2.vm.provider :virtualbox do |v|
+      v.name = "www2.pidramble.com"
+      v.memory = 1024
+      v.cpus = 2
+    end
+  end
+
+  # Web 3.
+  config.vm.define "www3" do |www3|
+    www3.vm.network :private_network, ip: "192.168.77.5"
+
+    # VirtualBox.
+    www3.vm.provider :virtualbox do |v|
+      v.name = "www3.pidramble.com"
+      v.memory = 1024
+      v.cpus = 2
+    end
+  end
+
+  # Cache 1.
+  config.vm.define "cache1" do |cache1|
+    cache1.vm.network :private_network, ip: "192.168.77.6"
+
+    # VirtualBox.
+    cache1.vm.provider :virtualbox do |v|
+      v.name = "cache1.pidramble.com"
+      v.memory = 1024
+      v.cpus = 2
+    end
+  end
+
+  # Database 1.
+  config.vm.define "db1" do |db1|
+    db1.vm.network :private_network, ip: "192.168.77.7"
+
+    # VirtualBox.
+    db1.vm.provider :virtualbox do |v|
+      v.name = "db1.pidramble.com"
+      v.memory = 1024
+      v.cpus = 2
+    end
+
+    # Run ansible provisioner for all VMs at the end.
+    db1.vm.provision "ansible" do |ansible|
+      ansible.playbook = "../../main.yml"
+      ansible.inventory_path = "inventory"
+      ansible.limit = "all"
+      ansible.extra_vars = {
+        mysql_datadir: "/var/lib/mysql",
+        networking_default_gateway: "192.168.77.1"
+      }
+    end
+  end
+
+end
