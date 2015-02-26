@@ -220,9 +220,9 @@ Here are three of the tests I do most often:
   2. Send 100 requests through 10 active connections to the home page, bypassing Nginx's cache and also testing Drupal's ability to serve authenticated visitor traffic (`SESSKEY` is an active cookie session key ID, and `VALUE` is that session ID's value). My Dramble currently gets around 8.8 requests/second.
       $ ab -n 100 -c 10 -C "SESSKEY=VALUE" http://pidramble.com/
 
-  3. Send 10,000 requests through 100 active connections to the home page, testing the balancer's ability to send as many requests per second as possible. My Dramble currently gets around 1,800 requests/second.
+  3. Send 10,000 requests through 100 active connections to the home page, testing the balancer's ability to send as many requests per second as possible. My Dramble currently gets around 1,800 requests/second with the onboard LAN, or up to 3,200 requests/second [using a Gigabit USB 3.0 LAN adapter](http://www.midwesternmac.com/blogs/jeff-geerling/getting-gigabit-networking).
       $ ab -n 10000 -c 200 http://pidramble.com/
-      $ wrk -t4 -c200 -d30 http://pidramble.com/
+      $ wrk -t4 -c100 -d30 http://pidramble.com/
 
 ## Author
 

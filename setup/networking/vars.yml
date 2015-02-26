@@ -1,6 +1,11 @@
 ---
 # Mapping of what hardware MAC addresses should be configured with specific IPs.
 mac_address_mapping:
+  # Balancer over TRENDnet GigE adapter.
+  "d8:eb:97:b3:88:27":
+    name: bal1.pidramble.com
+    ip: "10.0.1.59"
+  # Balancer over built-in LAN.
   "b8:27:eb:a1:14:de":
     name: bal1.pidramble.com
     ip: "10.0.1.60"
