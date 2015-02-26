@@ -16,7 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     bal1.vm.provider :virtualbox do |v|
       v.name = "bal1.pidramble.com"
       v.memory = 1024
-      v.cpus = 1
+      v.cpus = 4
     end
   end
 
