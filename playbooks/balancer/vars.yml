@@ -13,13 +13,10 @@ nginx_keepalive_requests: "250"
 nginx_proxy_cache_path: "/var/cache/nginx keys_zone=cache:32m max_size=1g inactive=15m"
 nginx_remove_default_vhost: true
 nginx_vhosts: []
+# TODO: Use groups.webservers for 'servers' list here.
 nginx_upstreams:
   - {
     name: dramble,
-    # strategy: "least_conn", # Requries 1.2.2 or later.
-    servers: {
-      "10.0.1.61",
-      "10.0.1.62",
-      "10.0.1.63"
-    }
+    # strategy: "least_conn",
+    servers: "{{ groups.webservers }}"
   }

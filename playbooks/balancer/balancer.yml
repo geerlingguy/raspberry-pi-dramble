@@ -8,8 +8,10 @@
 
   pre_tasks:
     # Add backports so we can install a newer version of Nginx.
-    # TODO: Test this!
     - include: ../wheezy-backports.yml
+
+    - debug: var=groups.webservers
+    - debug: "var=nginx_upstreams[0].servers"
 
   roles:
     - geerlingguy.firewall
