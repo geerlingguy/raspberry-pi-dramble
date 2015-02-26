@@ -16,7 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     bal1.vm.provider :virtualbox do |v|
       v.name = "bal1.pidramble.com"
       v.memory = 1024
-      v.cpus = 2
+      v.cpus = 1
     end
   end
 
@@ -28,7 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     www1.vm.provider :virtualbox do |v|
       v.name = "www1.pidramble.com"
       v.memory = 1024
-      v.cpus = 2
+      v.cpus = 1
     end
   end
 
@@ -40,7 +40,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     www2.vm.provider :virtualbox do |v|
       v.name = "www2.pidramble.com"
       v.memory = 1024
-      v.cpus = 2
+      v.cpus = 1
     end
   end
 
@@ -52,7 +52,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     www3.vm.provider :virtualbox do |v|
       v.name = "www3.pidramble.com"
       v.memory = 1024
-      v.cpus = 2
+      v.cpus = 1
     end
   end
 
@@ -64,7 +64,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     cache1.vm.provider :virtualbox do |v|
       v.name = "cache1.pidramble.com"
       v.memory = 1024
-      v.cpus = 2
+      v.cpus = 1
     end
   end
 
@@ -76,7 +76,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     db1.vm.provider :virtualbox do |v|
       v.name = "db1.pidramble.com"
       v.memory = 1024
-      v.cpus = 2
+      v.cpus = 1
     end
 
     # Run ansible provisioner for all VMs at the end.
