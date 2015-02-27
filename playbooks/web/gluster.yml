@@ -7,8 +7,8 @@
     group: www-data
     mode: 0775
   with_items:
-    - "{{ glusterfs_brick_dir }}"
-    - "{{ glusterfs_mount_dir }}"
+    - "{{ gluster_brick_dir }}"
+    - "{{ gluster_mount_dir }}"
 
 # Gluster volume configuration.
 - name: Check if Gluster volumes already exist.
@@ -25,13 +25,13 @@
   when: "'Volume Name: gluster' not in gluster_volume_info.stdout"
 
 - name: Create Gluster volume.
-  shell: "gluster volume create {{ glusterfs_brick_name }} {{ glusterfs_brick_config }}"
+  shell: "gluster volume create {{ gluster_brick_name }} {{ gluster_brick_config }}"
   register: gluster_volume_create
   changed_when: "'successful' in gluster_volume_create.stdout"
   when: "inventory_hostname == groups.webservers[0] and 'Volume Name: gluster' not in gluster_volume_info.stdout"
 
 - name: Ensure Gluster volume is started.
-  shell: "gluster volume start {{ glusterfs_brick_name }}"
+  shell: "gluster volume start {{ gluster_brick_name }}"
   register: gluster_volume_start
   changed_when: "'successful' in gluster_volume_start.stdout"
   when: "inventory_hostname == groups.webservers[0] and 'Volume Name: gluster' not in gluster_volume_info.stdout"
@@ -39,8 +39,8 @@
 # Mount configuration.
 - name: Ensure the Gluster volume is mounted.
   mount:
-    name: "{{ glusterfs_mount_dir }}"
-    src: "{{ groups.webservers[0] }}:/{{ glusterfs_brick_name }}"
+    name: "{{ gluster_mount_dir }}"
+    src: "{{ groups.webservers[0] }}:/{{ gluster_brick_name }}"
     fstype: glusterfs
     opts: "defaults,_netdev"
     state: present

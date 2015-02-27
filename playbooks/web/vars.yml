@@ -2,7 +2,7 @@
 firewall_allowed_tcp_ports:
   - 22
   - 80
-  # For GlusterFS.
+  # For Gluster.
   - 111
   - 24007
   - 24008
@@ -43,13 +43,13 @@ php_memory_limit: "128M"
 php_apc_enabled_in_ini: true
 php_apc_stat: "0"
 
-# GlusterFS configuration.
-glusterfs_brick_dir: /srv/gluster/brick
-# glusterfs_mount_dir: "" # Defined in global vars file.
-glusterfs_brick_name: gluster
+# Gluster configuration.
+gluster_brick_dir: /srv/gluster/brick
+# gluster_mount_dir: "" # Defined in global vars file.
+gluster_brick_name: gluster
 # Note: This is hardcoded for 3 webservers. Adjust accordingly.
-glusterfs_brick_config:
+gluster_brick_config:
   "replica 3 transport tcp
-  {{ groups.webservers[0] }}:{{ glusterfs_brick_dir }}
-  {{ groups.webservers[1] }}:{{ glusterfs_brick_dir }}
-  {{ groups.webservers[2] }}:{{ glusterfs_brick_dir }}"
+  {{ groups.webservers[0] }}:{{ gluster_brick_dir }}
+  {{ groups.webservers[1] }}:{{ gluster_brick_dir }}
+  {{ groups.webservers[2] }}:{{ gluster_brick_dir }}"
