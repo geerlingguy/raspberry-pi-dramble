@@ -37,18 +37,10 @@
   when: "inventory_hostname == groups.webservers[0] and 'Volume Name: gluster' not in gluster_volume_info.stdout"
 
 # Mount configuration.
-- name: Update fstab to include Gluster mount.
-  lineinfile:
-    dest: /etc/fstab
-    regexp: '{{ glusterfs_mount_dir }}'
-    line: '{{ groups.webservers[0] }}:/{{ glusterfs_brick_name }} {{ glusterfs_mount_dir }} glusterfs defaults,_netdev 0 0'
-
-- name: Check if Gluster volume is mounted.
-  shell: "grep -qs '{{ glusterfs_mount_dir }}' /proc/mounts"
-  changed_when: false
-  failed_when: false
-  register: gluster_mount
-
-- name: Mount the Gluster volume.
-  command: "mount {{ glusterfs_mount_dir }}"
-  when: gluster_mount.rc != 0
+- name: Ensure the Gluster volume is mounted.
+  mount:
+    name: "{{ glusterfs_mount_dir }}"
+    src: "{{ groups.webservers[0] }}:/{{ glusterfs_brick_name }}"
+    fstype: glusterfs
+    opts: "defaults,_netdev"
+    state: present
