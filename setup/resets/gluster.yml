@@ -1,0 +1,23 @@
+---
+# To run:
+#   $ ansible-playbook -i ../../inventory gluster.yml
+
+- hosts: webservers
+  sudo: yes
+
+  tasks:
+    # TODO - Work on this more... it doesn't quite work yet.
+    - name: Stop gluster volume.
+      shell: "yes | gluster volume stop gluster"
+      when: "inventory_hostname == groups.webservers[0]"
+
+    - name: Delete gluster volume.
+      shell: "yes | gluster volume delete gluster"
+      failed_when: false
+      when: "inventory_hostname == groups.webservers[0]"
+
+    - name: Stop gluster.
+      service: name=glusterfs-server state=stopped
+
+    - name: Clear out gluster brick.
+      shell: "rm -rf /srv/gluster/brick"

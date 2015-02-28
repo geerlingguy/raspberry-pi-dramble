@@ -16,6 +16,7 @@ nginx_vhosts: []
 nginx_upstreams:
   - {
     name: dramble,
-    # strategy: "least_conn",
+    # Options: 'least_conn', 'ip_hash' (if not set, round-robin will be used).
+    # strategy: "",
     servers: "{{ groups.webservers }}"
   }

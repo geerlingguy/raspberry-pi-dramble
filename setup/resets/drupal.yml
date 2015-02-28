@@ -9,8 +9,8 @@
     - name: Remove /var/www/drupal contents.
       shell: "rm -rf /var/www/drupal"
 
-    - name: Remove /mnt/drupal/files contents.
-      shell: "rm -rf /mnt/drupal/files/*"
+    - name: Remove /mnt/gluster/files contents.
+      shell: "rm -rf /mnt/gluster/files/*"
       when: "inventory_hostname == groups.webservers[0]"
 
     - name: Remove drupal_install_complete file.

@@ -20,6 +20,9 @@
     - geerlingguy.glusterfs
 
   tasks:
+    - name: Ensure sendmail is installed.
+      apt: name=sendmail state=present
+
     - name: Copy vhost configuration into place.
       template:
         src: drupal.conf.j2
