@@ -1,4 +1,6 @@
 ---
+networking_default_gateway: 10.0.1.1
+
 # Mapping of what hardware MAC addresses should be configured with specific IPs.
 mac_address_mapping:
   # Balancer over TRENDnet GigE adapter.
