@@ -5,7 +5,8 @@ map $http_cookie $drupal_logged_in {
 }
 
 server {
-    listen 80;
+    listen 80 default_server;
+    server_name {{ site_url }} www.{{ site_url }};
     access_log off; # Save a ton of precious disk I/O.
 
     # Enable proxy cache and specify cache key.
@@ -15,6 +16,7 @@ server {
     # Gzip saves bandwidth, but hurts on servers with slower CPU.
     # See: https://github.com/geerlingguy/raspberry-pi-dramble/issues/26
     gzip on;
+    gzip_static on;
     gzip_min_length 1400;
     gzip_comp_level 1;
     gzip_proxied expired no-cache no-store private auth;

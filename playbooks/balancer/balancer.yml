@@ -16,8 +16,8 @@
 
   tasks:
     - name: Copy vhost configuration into place.
-      copy:
-        src: balancer.conf
+      template:
+        src: balancer.conf.j2
         dest: /etc/nginx/sites-enabled/balancer.conf
         mode: 0644
       notify: restart nginx
