@@ -1,5 +1,18 @@
 ---
-# TODO: Make this run appropriate commands like drush cr, etc.
-- name: Update Drupal (if this is not the first deployment).
-  command: /bin/true
+- name: Run database updates.
+  command: >
+    drush updatedb -y
+    chdir={{ drupal_docroot }}
+  when: "inventory_hostname == groups.webservers[0]"
+
+- name: Import staging configuration.
+  command: >
+    drush config-import -y staging
+    chdir={{ drupal_docroot }}
+  when: "inventory_hostname == groups.webservers[0]"
+
+- name: Rebuild caches.
+  command: >
+    drush cache-rebuild --quiet
+    chdir={{ drupal_docroot }}
   when: "inventory_hostname == groups.webservers[0]"

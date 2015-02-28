@@ -39,7 +39,7 @@ server {
         fastcgi_param SCRIPT_FILENAME $request_filename;
         fastcgi_intercept_errors on;
         fastcgi_pass unix:/var/run/php5-fpm.sock;
-        fastcgi_read_timeout 120s;
+        fastcgi_read_timeout 240s;
         add_header X-Backend-Server $hostname;
     }
 

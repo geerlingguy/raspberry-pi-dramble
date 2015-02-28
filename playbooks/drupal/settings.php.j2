@@ -16,8 +16,9 @@ $databases['default']['default'] = array(
   'driver' => 'mysql',
 );
 
-$config_directories['active'] = 'sites/default/files/config_5bqTf_8rfM3CIgURZ7cw0Avl-P80BA20N078TuMSsDum1zzJ1CYEDMri_HVHHAKj-uh9O6Xhww/active';
-$config_directories['staging'] = 'sites/default/files/config_5bqTf_8rfM3CIgURZ7cw0Avl-P80BA20N078TuMSsDum1zzJ1CYEDMri_HVHHAKj-uh9O6Xhww/staging';
+# Configuration management settings.
+$config_directories['active'] = 'sites/default/config/active';
+$config_directories['staging'] = 'sites/default/config/staging';
 
 // General settings.
 $settings['install_profile'] = '{{ drupal_install_profile }}';
@@ -44,9 +45,11 @@ $config['system.performance']['fast_404']['html'] = '<!DOCTYPE html><html><head>
 $settings['container_yamls'][] = __DIR__ . '/services.yml';
 
 // Redis caching configuration.
-$settings['redis.connection']['interface'] = 'PhpRedis';
-$settings['redis.connection']['host'] = '{{ groups.cache[0] }}';
-// $settings['cache']['default'] = 'cache.backend.redis';
+if (class_exists('Drupal\redis\CacheBackendFactory')) {
+  $settings['redis.connection']['interface'] = 'PhpRedis';
+  $settings['redis.connection']['host'] = '{{ groups.cache[0] }}';
+  $settings['cache']['default'] = 'cache.backend.redis';
+}
 
 // Local settings files.
 if (file_exists(__DIR__ . '/settings.local.php')) {

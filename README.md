@@ -207,6 +207,12 @@ Set up your local hosts file:
 
 TODO.
 
+We made some improvements to the Drupal site; it's time to deploy them!
+
+    $ ansible-playbook -i inventory playbooks/drupal/main.yml --extra-vars "drupal_version=1.0.0"
+
+TODO.
+
 ### Testing the performance of the Dramble
 
 There are a few tests I like to run to get a general feel for the speed of the entire cluster. When tweaking configuration, adding content, changing modules, etc., it's good to test the overall performance of the cluster using tools like `ab` or `wrk`.

@@ -4,14 +4,18 @@ firewall_allowed_tcp_ports:
   - 80
   # For Gluster.
   - 111
+  # Port-mapper for Gluster 3.4+.
+  # - 2049
+  # Gluster Daemon.
   - 24007
-  - 24008
+  # 24009+ for Gluster <= 3.3; 49152+ for Gluster 3.4+ (one port per server).
   - 24009
   - 24010
   - 24011
-  - 49152
-  - 49153
-  - 49154
+  # Gluster inline NFS server.
+  - 38465
+  - 38466
+  - 38467
 firewall_allowed_udp_ports:
   - 111
 
@@ -40,6 +44,7 @@ php_packages:
   - php-apc
 php_enable_php_fpm: true
 php_memory_limit: "128M"
+php_max_execution_time: "240"
 php_apc_enabled_in_ini: true
 php_apc_stat: "0"
 

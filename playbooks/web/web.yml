@@ -20,8 +20,13 @@
     - geerlingguy.glusterfs
 
   tasks:
-    - name: Ensure sendmail is installed.
-      apt: name=sendmail state=present
+    - name: Ensure dependencies are installed.
+      apt: "name={{ item }} state=present"
+      with_items:
+        # Needed to complete Drupal installation.
+        - sendmail
+        # So drush can connect to MySQL.
+        - mysql-client
 
     - name: Copy vhost configuration into place.
       template:
