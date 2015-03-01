@@ -195,23 +195,31 @@ Refresh the page a few times (if you're using Chrome, use Shift + Command + R to
 
 ### Deploying Drupal to the Raspberry Pis
 
-After all the Raspberry Pis are provisioned, it's time to deploy our brand new Drupal 8 site to them!
-
-    $ ansible-playbook -i inventory playbooks/drupal/main.yml
-
-TODO.
-
-Set up your local hosts file:
+First, before we deploy our Drupal 8 site to the Raspberry Pis, you should set up your local workstation's hosts file so you can enter the web address `http://pidramble.com/` in your browser and load the site through the load balancer. You will need to add the following line to the end of your hosts file:
 
     10.0.1.60  pidramble.com
 
-TODO.
+Instructions: [editing your hosts file](http://www.rackspace.com/knowledge_center/article/how-do-i-modify-my-hosts-file).
 
-We made some improvements to the Drupal site; it's time to deploy them!
+Once you save the new version of the hosts file, go visit `http://pidramble.com/`. You should get a blank page that says "File not found." This means Nginx is ready to serve up your site, but the Drupal site isn't yet present.
+
+#### Perform the initial Drupal deployment and installation
+
+Deploy Drupal to the Dramble by running the following command (in this directory):
+
+    $ ansible-playbook -i inventory playbooks/drupal/main.yml
+
+Once the deployment is complete, you should be able to reload `http://pidramble.com/`, and see a pretty generic looking Drupal 8 installation, with a few links and a login screen (this is Drupal 8's default minimal installation look and feel).
+
+#### Deploy an update to the Drupal 8 site
+
+Let's assume that some time has passed, and you've done a bunch of great work on your Drupal site, and you've committed configuration changes and new code to the `demo-drupal-8` codebase. The initial version of the repository that was installed was 0.9.8, but now you have a slick new 1.0.0 release.
+
+To deploy this update, run the same command as above, but pass in the new `drupal_version` override using Ansible's `--extra-vars` command line option:
 
     $ ansible-playbook -i inventory playbooks/drupal/main.yml --extra-vars "drupal_version=1.0.0"
 
-TODO.
+Reload `http://pidramble.com/` again, and this time, you should see the site looking a lot nicer, using Drupal's default Bartik theme. If you log in, you'll notice the configuration in 1.0.0 of the `demo-drupal-8` project has been applied, and the site should be ready to use for simple content management.
 
 ### Testing the performance of the Dramble
 
