@@ -10,7 +10,7 @@
 
 - name: Override the generated site UUID with our own.
   command: >
-    drush config-set system.site uuid {{ drupal_site_uuid }}
+    drush config-set -y system.site uuid {{ drupal_site_uuid }}
     chdir={{ drupal_docroot }}
   when: "inventory_hostname == groups.webservers[0]"
 
