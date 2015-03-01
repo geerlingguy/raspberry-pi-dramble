@@ -6,7 +6,7 @@
   sudo: yes
 
   tasks:
-    # TODO - Work on this more... it doesn't quite work yet.
+    # TODO - Make the tasks below actually stop and delete the gluster volume.
     - name: Stop gluster volume.
       shell: "yes | gluster volume stop gluster"
       when: "inventory_hostname == groups.webservers[0]"

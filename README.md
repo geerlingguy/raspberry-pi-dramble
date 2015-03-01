@@ -221,6 +221,12 @@ To deploy this update, run the same command as above, but pass in the new `drupa
 
 Reload `http://pidramble.com/` again, and this time, you should see the site looking a lot nicer, using Drupal's default Bartik theme. If you log in, you'll notice the configuration in 1.0.0 of the `demo-drupal-8` project has been applied, and the site should be ready to use for simple content management.
 
+#### Enabling Redis cache backend
+
+After the update to `drupal_version` 1.0.0, the site should have the [Redis](https://www.drupal.org/project/redis) module present and installed, but it won't yet send requests to the Redis cache server. There's a variable you can set, `drupal_redis_enabled`, which tells Drupal to use Redis for caching (instead of the default Database backend). You can set it in `playbooks/drupal/vars.yml`, or via command line, e.g.:
+
+    $ ansible-playbook -i inventory playbooks/drupal/main.yml --extra-vars "drupal_version=1.0.0 drupal_redis_enabled=true"
+
 ### Testing the performance of the Dramble
 
 There are a few tests I like to run to get a general feel for the speed of the entire cluster. When tweaking configuration, adding content, changing modules, etc., it's good to test the overall performance of the cluster using tools like `ab` or `wrk`.

@@ -45,11 +45,11 @@ $config['system.performance']['fast_404']['html'] = '<!DOCTYPE html><html><head>
 $settings['container_yamls'][] = __DIR__ . '/services.yml';
 
 // Redis caching configuration.
-if (class_exists('Drupal\redis\CacheBackendFactory')) {
-  $settings['redis.connection']['interface'] = 'PhpRedis';
-  $settings['redis.connection']['host'] = '{{ groups.cache[0] }}';
-  $settings['cache']['default'] = 'cache.backend.redis';
-}
+$settings['redis.connection']['interface'] = 'PhpRedis';
+$settings['redis.connection']['host'] = '{{ groups.cache[0] }}';
+{% if drupal_redis_enabled %}
+$settings['cache']['default'] = 'cache.backend.redis';
+{% endif %}
 
 // Local settings files.
 if (file_exists(__DIR__ . '/settings.local.php')) {
