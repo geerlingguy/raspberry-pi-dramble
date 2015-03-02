@@ -186,15 +186,9 @@ At this point, all the software that will support your Drupal site is installed.
 
 > To un-provision a Pi, you can either use `apt-get remove --purge [package]` and `apt-get autoremove` to remove installed packages/configuration, then reboot... or you can reimage the microSD cards from a fresh copy of Raspbian or `diet-raspbian`. I prefer the latter, but for quick testing/experimentation will do the former (or create Ansible playbooks to back out all the changes).
 
-#### Testing the default balancer configuration
-
-At this point, the infrastructure should already be serving http requests through the load balancer, and you can verify this by opening your browser and pointing it at the IP address of your balancer (in my case, `http://10.0.1.60/`).
-
-Refresh the page a few times (if you're using Chrome, use Shift + Command + R to refresh the cached page), and you should see the IP address on the page switch between the three different webserver IP addresses.
-
 ### Deploying Drupal to the Raspberry Pis
 
-First, before we deploy our Drupal 8 site to the Raspberry Pis, you should set up your local workstation's hosts file so you can enter the web address `http://pidramble.com/` in your browser and load the site through the load balancer. You will need to add the following line to the end of your hosts file:
+Before we deploy our Drupal 8 site to the Raspberry Pis, you should set up your local workstation's hosts file so you can enter the web address `http://pidramble.com/` in your browser and load the site through the load balancer. You will need to add the following line to the end of your hosts file:
 
     10.0.1.60  pidramble.com
 
@@ -218,7 +212,9 @@ To deploy this update, run the same command as above, but pass in the new `drupa
 
     $ ansible-playbook -i inventory playbooks/drupal/main.yml --extra-vars "drupal_version=1.0.0"
 
-Reload `http://pidramble.com/` again, and this time, you should see the site looking a lot nicer, using Drupal's default Bartik theme. If you log in, you'll notice the configuration in 1.0.0 of the `demo-drupal-8` project has been applied, and the site should be ready to use for simple content management.
+Reload `http://pidramble.com/` again, and this time, you should see the site looking a lot nicer, using Drupal's Bartik theme and some default home page content. If you log in, you'll notice the configuration in 1.0.0 of the `demo-drupal-8` project has been applied, and the site should be ready to use for simple content management.
+
+> Note: Because Drupal 8.0.x is in active development, during the course of building the Dramble, I've been working with different sets of Drupal versions and Dramble configurations. The instructions here guide you through deploying Drupal 8.0.x beta 6. As time goes on, the default and update versions of the `demo-drupal-8` project will be updated as necessary for demonstration purposes.
 
 #### Enabling Redis cache backend
 
