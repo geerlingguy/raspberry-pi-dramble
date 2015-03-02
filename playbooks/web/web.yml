@@ -36,4 +36,11 @@
         mode: 0644
       notify: restart nginx
 
+    - name: Copy php5-fpm www pool configuration into place.
+      template:
+        src: www.conf.j2
+        dest: /etc/php5/fpm/pool.d/www.conf
+        mode: 0644
+      notify: restart php-fpm
+
     - include: gluster.yml

@@ -1,0 +1,14 @@
+[www]
+user = www-data
+group = www-data
+listen = /var/run/php5-fpm.sock
+listen.owner = www-data
+listen.group = www-data
+
+; Process manager configuration
+pm = dynamic
+pm.max_children = 7
+pm.start_servers = 4
+pm.min_spare_servers = 2
+pm.max_spare_servers = 4
+pm.max_requests = 500
