@@ -30,3 +30,9 @@
 
     - name: restart php-fpm
       service: name=php5-fpm state=restarted
+
+    - name: restart redis
+      service: name=redis-server state=restarted
+      delegate_to: "{{ item }}"
+      with_items: groups.cache
+      when: drupal_redis_enabled
