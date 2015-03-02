@@ -20,3 +20,14 @@ nginx_upstreams:
     # strategy: "",
     servers: "{{ groups.webservers }}"
   }
+
+# Munin configuration.
+munin_admin_user: admin
+munin_admin_password: secret
+munin_hosts:
+  - { name: "dramble;bal1.pidramble.com", address: "127.0.0.1", extra: [] }
+  - { name: "dramble;www1.pidramble.com", address: "{{ groups.webservers[0] }}", extra: [] }
+  - { name: "dramble;www2.pidramble.com", address: "{{ groups.webservers[1] }}", extra: [] }
+  - { name: "dramble;www3.pidramble.com", address: "{{ groups.webservers[2] }}", extra: [] }
+  - { name: "dramble;cache1.pidramble.com", address: "{{ groups.cache[0] }}", extra: [] }
+  - { name: "dramble;db1.pidramble.com", address: "{{ groups.database[0] }}", extra: [] }
