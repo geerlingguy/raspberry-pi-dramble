@@ -18,6 +18,7 @@
     - geerlingguy.drush
     - geerlingguy.git
     - geerlingguy.glusterfs
+    - geerlingguy.munin-node
 
   tasks:
     - name: Ensure dependencies are installed.

@@ -5,6 +5,7 @@ firewall_allowed_tcp_ports:
 # Limit access to MySQL port (3306) to local private network.
 firewall_additional_rules:
   - "iptables -A INPUT -p tcp --dport 3306 -s {{ networking_default_gateway }}/24 -j ACCEPT"
+  - "iptables -A INPUT -p tcp --dport 4949 -s {{ groups.balancer[0] }} -j ACCEPT"
 
 mysql_root_password: supersecure
 mysql_users:
@@ -45,3 +46,8 @@ mysql_innodb_additional_mem_pool_size: "20M"
 mysql_innodb_log_file_size: "64M"
 mysql_innodb_log_buffer_size: "8M"
 mysql_innodb_flush_log_at_trx_commit: "2"
+
+# Munin settings.
+munin_node_allowed_ips:
+  # TODO: Make this dynamic.
+  - '^10\.0\.1\.60$'

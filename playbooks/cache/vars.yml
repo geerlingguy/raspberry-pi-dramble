@@ -7,9 +7,10 @@ firewall_allowed_udp_ports:
   - 111
   - 2049
 
-# Limit access to Redis port (6379) to local private network.
 firewall_additional_rules:
+  # Limit access to Redis port (6379) to local private network.
   - "iptables -A INPUT -p tcp --dport 6379 -s {{ networking_default_gateway }}/24 -j ACCEPT"
+  - "iptables -A INPUT -p tcp --dport 4949 -s {{ groups.balancer[0] }} -j ACCEPT"
 
 # Redis configuration.
 redis_port: 6379
@@ -17,3 +18,8 @@ redis_bind_interface: 0.0.0.0
 
 # Disable Redis data persistence - SD card may be a bottleneck.
 redis_save: []
+
+# Munin settings.
+munin_node_allowed_ips:
+  # TODO: Make this dynamic.
+  - '^10\.0\.1\.60$'

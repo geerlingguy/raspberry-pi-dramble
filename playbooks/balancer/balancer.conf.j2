@@ -4,6 +4,7 @@ map $http_cookie $drupal_logged_in {
     ~SESS 1;
 }
 
+# Dramble Drupal 8 server configuration.
 server {
     listen 80 default_server;
     server_name {{ site_url }} www.{{ site_url }};
@@ -37,4 +38,12 @@ server {
         proxy_no_cache $drupal_logged_in $arg_nocache$arg_page;
         proxy_cache_use_stale error timeout invalid_header updating http_500 http_502 http_503 http_504;
     }
+}
+
+# Munin server configuration.
+server {
+    listen 80;
+    server_name munin.{{ site_url }};
+    root /var/cache/munin/www;
+    access_log off; # Save a ton of precious disk I/O.
 }

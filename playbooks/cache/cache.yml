@@ -9,3 +9,4 @@
   roles:
     - geerlingguy.firewall
     - geerlingguy.redis
+    - geerlingguy.munin-node
