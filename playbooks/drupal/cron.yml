@@ -4,5 +4,5 @@
     name: "Dramble Drupal cron"
     minute: "*/15"
     user: pi
-    job: "/usr/local/bin/drush --root=/var/www/drupal cron -y"
+    job: "/usr/local/bin/drush --quiet --root=/var/www/drupal cron -y"
   when: "inventory_hostname == groups.webservers[0]"
