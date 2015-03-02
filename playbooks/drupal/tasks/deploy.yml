@@ -24,7 +24,7 @@
 
 - name: Copy settings.php file into place.
   template:
-    src: settings.php.j2
+    src: ../templates/settings.php.j2
     dest: "{{ drupal_docroot }}/sites/default/settings.php"
     owner: www-data
     group: www-data

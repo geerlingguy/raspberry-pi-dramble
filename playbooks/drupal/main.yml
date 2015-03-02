@@ -5,39 +5,24 @@
 
   vars_files:
     - ../vars.yml
-    - vars.yml
+    - vars/main.yml
 
   tasks:
     - name: Check if Drupal has already been installed.
       stat: path=/var/local/drupal_install_complete
       register: drupal_install_complete
 
-    - include: deploy.yml
-    - include: files.yml
+    - include: tasks/deploy.yml
 
-    - include: install.yml
+    - include: tasks/files.yml
+
+    - include: tasks/install.yml
       when: not drupal_install_complete.stat.exists
 
-    - include: update.yml
+    - include: tasks/update.yml
       when: drupal_install_complete.stat.exists
 
-    - include: cron.yml
+    - include: tasks/cron.yml
 
   handlers:
-    - name: restart nginx
-      service: name=nginx state=restarted
-      notify: restart php-fpm
-
-    - name: restart php-fpm
-      service: name=php5-fpm state=restarted
-
-    - name: restart redis
-      service: name=redis-server state=restarted
-      delegate_to: "{{ item }}"
-      with_items: groups.cache
-      when: drupal_redis_enabled
-
-    - name: purge reverse proxy cache
-      shell: "rm -rf /var/cache/nginx/*"
-      delegate_to: "{{ item }}"
-      with_items: groups.balancer
+    - include: handlers/main.yml
