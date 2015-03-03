@@ -1,0 +1,49 @@
+---
+# Digital Ocean v1 API Usage notes:
+#   - Requests in form: https://api.digitalocean.com/v1/[method]/?client_id=[]&api_key=[]
+#   - Get all available images: https://api.digitalocean.com/v1/images/
+#   - Get all available sizes: https://api.digitalocean.com/v1/sizes/
+
+- hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    droplets:
+      - { name: bal1.pidramble.com, group: "balancer" }
+      - { name: www1.pidramble.com, group: "webservers" }
+      - { name: www2.pidramble.com, group: "webservers" }
+      - { name: www3.pidramble.com, group: "webservers" }
+      - { name: cache1.pidramble.com, group: "cache" }
+      - { name: db1.pidramble.com, group: "database" }
+
+  tasks:
+    - name: Provision DigitalOcean droplets.
+      digital_ocean:
+        state: "{{ item.state | default('present') }}"
+        command: droplet
+        name: "{{ item.name }}"
+        private_networking: yes
+        size_id: "{{ item.size | default(63) }}" # 1024 mb
+        image_id: "{{ item.image | default(10322059) }}" # Debian 7 x64
+        region_id: "{{ item.region | default(4) }}" # NYC2
+        ssh_key_ids: "{{ item.ssh_key | default('138954') }}" # geerlingguy
+        unique_name: yes
+      register: created_droplets
+      with_items: droplets
+
+    - name: Add DigitalOcean hosts to their respective inventory groups.
+      add_host:
+        name: "{{ item.1.droplet.ip_address }}"
+        groups: "do,{{ droplets[item.0].group }},{{ item.1.droplet.name }}"
+        # You can dynamically add inventory variables per-host.
+        ansible_ssh_user: root
+      when: item.1.droplet is defined
+      with_indexed_items: created_droplets.results
+
+- hosts: do
+  remote_user: root
+
+  tasks:
+    - name: Wait for port 22 to become available.
+      local_action: "wait_for port=22 host={{ inventory_hostname }}"
