@@ -49,5 +49,4 @@ mysql_innodb_flush_log_at_trx_commit: "2"
 
 # Munin settings.
 munin_node_allowed_ips:
-  # TODO: Make this dynamic.
-  - '^10\.0\.1\.60$'
+  - "^{{ groups.balancer[0] | replace('.', '\\.') }}$"
