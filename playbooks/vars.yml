@@ -5,6 +5,3 @@ drupal_docroot: /var/www/drupal
 
 # Drupal filesystem configuration.
 gluster_mount_dir: /mnt/gluster
-
-# Networking configuration.
-networking_default_gateway: 10.0.1.1

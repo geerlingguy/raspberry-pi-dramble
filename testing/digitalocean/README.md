@@ -35,8 +35,6 @@ After a few minutes (depending on DigitalOcean's current server provisioning spe
     ```
   2. After a few minutes, everything should be deployed, and the Dramble cluster will be serving up Drupal 8!
 
-> TODO: This currently fails due to IP-based configuration issues. See [issue #42](https://github.com/geerlingguy/raspberry-pi-dramble/issues/42) for more information.
-
 ## Destroying the DigitalOcean Droplets
 
 To destroy the droplets you used for testing, edit `provision.yml` and replace `present` with `absent` on the line that reads `state: "{{ item.state | default('present') }}"`, then run the `provision.yml` playbook again.

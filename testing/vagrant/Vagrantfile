@@ -85,8 +85,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.inventory_path = "inventory"
       ansible.limit = "all"
       ansible.extra_vars = {
-        mysql_datadir: "/var/lib/mysql",
-        networking_default_gateway: "192.168.77.1"
+        mysql_datadir: "/var/lib/mysql"
       }
     end
   end
