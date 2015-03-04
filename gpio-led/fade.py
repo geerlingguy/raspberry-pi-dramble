@@ -1,5 +1,8 @@
 # Fade an LED (or one color of an RGB LED) using GPIO's PWM capabilities.
 #
+# Usage:
+#   sudo python fade.py
+#
 # @author Jeff Geerling, 2015
 
 import time
