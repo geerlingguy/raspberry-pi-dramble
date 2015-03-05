@@ -2,9 +2,7 @@
 
 A cluster ([Bramble](http://elinux.org/Bramble)) of Raspberry Pis on which Drupal will be deployed using Ansible.
 
-Here's the overall architecture of the Dramble:
-
-<img src="https://raw.githubusercontent.com/geerlingguy/raspberry-pi-dramble/master/images/raspberry-pi-dramble-lemp-redis-architecture.png" alt="Raspberry Pi Dramble - Server Architecture Diagram" />
+<p align="center"><img src="https://raw.githubusercontent.com/geerlingguy/raspberry-pi-dramble/master/images/raspberry-pi-dramble-hero.png" alt="Raspberry Pi Dramble - Hero Image" /></p>
 
 ## Why
 
@@ -93,6 +91,10 @@ Even if you *did* use the `diet-raspbian` image, you may wish to expand the file
 ### Provisioning the Raspberry Pis
 
 Once all the Pis are booted, and you are able to log into them over the network via SSH, there are a few steps you need to perform before you'll be ready to run the `provision.yml` playbook to provision software to them.
+
+Here's the overall cluster architecture we're targeting:
+
+<p align="center"><img src="https://raw.githubusercontent.com/geerlingguy/raspberry-pi-dramble/master/images/raspberry-pi-dramble-lemp-redis-architecture.png" alt="Raspberry Pi Dramble - Server Architecture Diagram" /></p>
 
 #### Finish Pi configuration with `raspi-config`
 
