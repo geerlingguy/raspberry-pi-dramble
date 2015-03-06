@@ -22,8 +22,6 @@ A cluster of servers, in my hand, at the presentation. With blinking LEDs!
   - 96 GB microSD flash-based storage
   - 1 Gbps private network
 
-As you can see from the above specs; it takes 5+ Raspberry Pis to equal the capacity of one moderate workstation nowadays. Raspberry Pis are not the most economical or power-saving way to build Drupal infrastructure, but they are great for educational purposes, and it's a fun project to build 'bare metal' infrastructure with your own hands!
-
 ## Getting the Pis (and other accessories)
 
 Many people have asked for a basic list of components used in constructing the Dramble, or where I found particular parts. In the Wiki, I've added pages listing the following:
