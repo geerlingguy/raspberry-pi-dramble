@@ -14,6 +14,10 @@ The `diet-raspbian` project aims to trim the fat of the default Raspbian image. 
 
 Therefore `diet-raspbian` uses Ansible to take a system built with the official Raspbian image, and strip it of extraneous bits like default IDEs, languages, Wolfram, a window manager, etc.
 
+### gpio-led
+
+The scripts and documentation inside `gpio-led` help configure the GPIO pins on a Raspberry Pi to control LEDs. In the Dramble's case, an RGB LED can be added to indicate status for deployments, startup, etc.
+
 ### networking
 
 Set up Dramble networking by assigning a uniform set of IP addresses and hostnames based on Pi MAC addresses.
