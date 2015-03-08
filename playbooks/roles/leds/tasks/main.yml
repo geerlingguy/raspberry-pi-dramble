@@ -1,0 +1,23 @@
+---
+- name: Ensure gpio-leds folder exists.
+  file:
+    path: /opt/gpio-leds
+    state: directory
+    mode: 0755
+
+- name: Copy LED control scripts into place.
+  template:
+    src: "{{ item }}.j2"
+    dest: "/opt/gpio-leds/{{ item }}"
+    mode: 0755
+  with_items: leds_scripts
+
+- name: Make LED control scripts available in the user's PATH.
+  file:
+    path: "/usr/bin/{{ item }}"
+    src: "/opt/gpio-leds/{{ item }}"
+    state: link
+  with_items: leds_scripts
+
+- name: Set up cron job to switch to green on boot.
+  cron: name="Ready for action" special_time=reboot job="/usr/bin/rgb green"

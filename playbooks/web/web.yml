@@ -19,6 +19,7 @@
     - geerlingguy.git
     - geerlingguy.glusterfs
     - geerlingguy.munin-node
+    - ../roles/leds
 
   tasks:
     - name: Ensure dependencies are installed.

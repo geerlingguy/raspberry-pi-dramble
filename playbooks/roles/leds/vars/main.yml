@@ -1,0 +1,5 @@
+---
+leds_scripts:
+  - colors
+  - fade
+  - rgb

@@ -10,3 +10,4 @@
     - geerlingguy.firewall
     - geerlingguy.redis
     - geerlingguy.munin-node
+    - ../roles/leds

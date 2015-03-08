@@ -14,6 +14,7 @@
     - geerlingguy.firewall
     - geerlingguy.nginx
     - geerlingguy.munin
+    - ../roles/leds
 
   tasks:
     - name: Copy vhost configuration into place.

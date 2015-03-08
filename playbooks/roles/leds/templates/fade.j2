@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+#
 # Fade an LED (or one color of an RGB LED) using GPIO's PWM capabilities.
 #
 # Usage:
@@ -9,9 +11,9 @@ import time
 import RPi.GPIO as GPIO
 
 # LED pin mapping.
-red = 17
-green = 27
-blue = 18
+red = {{ leds_pin_red }}
+green = {{ leds_pin_green }}
+blue = {{ leds_pin_blue }}
 
 # Set which LED to use for fading.
 led = blue

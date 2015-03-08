@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+#
 # Set an RGB LED to either red, green, or blue.
 #
 # Usage:
@@ -15,9 +17,9 @@ parser.add_argument('color', metavar='color', type=str, nargs=1,
 args = parser.parse_args()
 
 # LED pin mapping.
-red = 17
-green = 27
-blue = 18
+red = {{ leds_pin_red }}
+green = {{ leds_pin_green }}
+blue = {{ leds_pin_blue }}
 
 # GPIO Setup.
 GPIO.setmode(GPIO.BCM)

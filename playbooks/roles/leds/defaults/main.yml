@@ -1,0 +1,4 @@
+---
+leds_pin_red: 17
+leds_pin_green: 27
+leds_pin_blue: 18

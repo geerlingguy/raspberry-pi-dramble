@@ -1,0 +1,15 @@
+---
+dependencies: []
+galaxy_info:
+  author: Jeff Geerling
+  description: GPIO LED control setup for Rasbperry Pi.
+  company: Midwestern Mac, LLC
+  license: license (MIT)
+  min_ansible_version: 1.4
+  platforms:
+    - name: Debian
+      versions:
+        - wheezy
+  categories:
+  - monitoring
+  - system

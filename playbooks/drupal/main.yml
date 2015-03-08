@@ -7,6 +7,10 @@
     - ../vars.yml
     - vars/main.yml
 
+  pre_tasks:
+    - name: Indicate Ansible is deploying to the server.
+      command: /usr/bin/rgb red
+
   tasks:
     - name: Check if Drupal has already been installed.
       stat: path=/var/local/drupal_install_complete
@@ -23,6 +27,9 @@
       when: drupal_install_complete.stat.exists
 
     - include: tasks/cron.yml
+
+    - name: Indicate Ansible is finished deploying to the server.
+      command: /usr/bin/rgb green
 
   handlers:
     - include: handlers/main.yml
