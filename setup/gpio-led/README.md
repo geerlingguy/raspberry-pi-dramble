@@ -16,6 +16,6 @@ In my case, since I am using a common cathode-style LED (where ground goes to th
 
 Each of the scripts has a unique purpose:
 
-  - `rgb.py`: Turn on one of the LED colors. Color stays set after the script exits. For example, `sudo python rgb.py red` would set red.
+  - `rgb.py`: Turn on one of the LED colors (or turn them all off with `off`. Color stays set after the script exits. For example, `sudo python rgb.py red` would set red.
   - `fade.py`: Fade colors on the LED (edit the file to choose which color to fade) using PWM. Fading stops when the script exits.
   - `colors.py`: Set arbitrary colors on the LED using individual red/green/blue values (using the common 0-255 format). For example, `sudo python colors.py 255 128 0` would set orange.

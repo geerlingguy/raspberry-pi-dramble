@@ -11,7 +11,7 @@ import RPi.GPIO as GPIO
 # Get RGB colors from command line arguments.
 parser = argparse.ArgumentParser(description = 'Add a little color to your life.')
 parser.add_argument('color', metavar='color', type=str, nargs=1,
-                   help='A color value of red, green, or blue.')
+                   help='A color value of red, green, blue, or off.')
 args = parser.parse_args()
 
 # LED pin mapping.
@@ -32,7 +32,7 @@ GPIO.output(red, 0)
 GPIO.output(green, 0)
 GPIO.output(blue, 0)
 
-# Set individual colors on or off.
+# Set individual colors.
 if args.color[0] == 'red':
   GPIO.output(red, 1)
 elif args.color[0] == 'green':
