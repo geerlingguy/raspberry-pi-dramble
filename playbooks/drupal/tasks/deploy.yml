@@ -19,6 +19,7 @@
     version: "{{ drupal_version }}"
     update: yes
     dest: "{{ drupal_docroot }}"
+  register: project_updated
   notify: restart nginx
   sudo_user: www-data
 

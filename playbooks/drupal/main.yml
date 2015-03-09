@@ -24,7 +24,7 @@
       when: not drupal_install_complete.stat.exists
 
     - include: tasks/update.yml
-      when: drupal_install_complete.stat.exists
+      when: drupal_install_complete.stat.exists and project_updated.changed
 
     - include: tasks/cron.yml
 
