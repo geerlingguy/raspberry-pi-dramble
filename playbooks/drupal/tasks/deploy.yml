@@ -13,6 +13,15 @@
     owner: www-data
     group: www-data
 
+- name: Ensure staging config directory has correct permissions.
+  file:
+    path: "{{ drupal_docroot }}/sites/default/config/staging"
+    state: directory
+    mode: 0755
+    owner: www-data
+    group: www-data
+  when: drupal_install_complete.stat.exists
+
 - name: Check out our Drupal 8 project to the docroot.
   git:
     repo: "{{ drupal_repo }}"

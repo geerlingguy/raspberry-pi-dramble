@@ -3,7 +3,7 @@
 drupal_repo: https://github.com/geerlingguy/demo-drupal-8.git
 
 # The tag or branch to check out from the above git repository.
-drupal_version: "0.9.8"
+drupal_version: "1.1.0"
 
 # User 1 credentials.
 drupal_admin_name: admin

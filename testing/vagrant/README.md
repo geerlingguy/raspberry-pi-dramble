@@ -21,3 +21,11 @@ After 10-20 minutes, you should have the infrastructure up and running (assuming
 Once the VMs are up and running, and Ansible provisioning is complete, run the following command (also in this directory):
 
     $ ansible-playbook -i inventory ../../playbooks/drupal/main.yml
+
+To update to a newer version of the `demo-drupal-8` project, use:
+
+    # Deploy 1.1.1.
+    $ ansible-playbook -i inventory ../../playbooks/drupal/main.yml --extra-vars "drupal_version=1.1.1"
+    
+    # Deploy 1.1.1 with Redis caching enabled.
+    $ ansible-playbook -i inventory ../../playbooks/drupal/main.yml --extra-vars "drupal_version=1.1.1 drupal_redis_enabled=true"
