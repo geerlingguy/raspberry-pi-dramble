@@ -10,6 +10,7 @@
 
 - name: Wait for Drupal to get bootstrapped.
   pause: seconds=5
+  when: "inventory_hostname == groups.webservers[0]"
 
 - name: Override the generated site UUID with our own.
   command: >
