@@ -20,3 +20,4 @@ database
 
 [dramble:vars]
 ansible_ssh_user=pi
+deploy_target=pi

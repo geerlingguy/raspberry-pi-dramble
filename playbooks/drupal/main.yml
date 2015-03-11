@@ -10,6 +10,7 @@
   pre_tasks:
     - name: Indicate Ansible is deploying to the server.
       command: /usr/bin/rgb red
+      when: deploy_target == 'pi'
 
   tasks:
     - name: Check if Drupal has already been installed.
@@ -30,6 +31,7 @@
 
     - name: Indicate Ansible is finished deploying to the server.
       command: /usr/bin/rgb green
+      when: deploy_target == 'pi'
 
   handlers:
     - include: handlers/main.yml
