@@ -1,0 +1,21 @@
+---
+- name: Copy vhost configuration into place.
+  template:
+    src: ../templates/drupal.conf.j2
+    dest: /etc/nginx/sites-enabled/drupal.conf
+    mode: 0644
+  notify: restart nginx
+
+- name: Copy php5-fpm www pool configuration into place.
+  template:
+    src: ../templates/www.conf.j2
+    dest: /etc/php5/fpm/pool.d/www.conf
+    mode: 0644
+  notify: restart php-fpm
+
+- name: Add line to hosts file so we can connect to git.pidramble.com.
+  lineinfile:
+    dest: /etc/hosts
+    regexp: 'git.pidramble.com$'
+    line: '{{ groups.balancer[0] }} git.pidramble.com'
+    state: present

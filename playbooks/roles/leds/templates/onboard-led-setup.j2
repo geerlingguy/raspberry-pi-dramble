@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# Raspberry Pi onboard LED control.
+#
+# This script controls the onboard Raspberry Pi LEDs for the Raspberry Pi 2 and
+# later models. Older models' PWR LEDs are hard-wired, so you'll have to grab a
+# soldering iron if you want to control them :-)
+#
+# The script must be run as root, or the `tee` commands need to be run as sudo.
+#
+# @author Jeff Geerling, 2015
+
+# Set the PWR LED to GPIO mode.
+echo gpio | tee /sys/class/leds/led1/trigger
+
+# (Optional) Turn on (1) or off (0) the PWR LED.
+#echo 1 | tee /sys/class/leds/led1/brightness
+#echo 0 | tee /sys/class/leds/led1/brightness
+
+# Revert the PWR LED back to 'under-voltage detect' mode.
+# echo input | tee /sys/class/leds/led1/trigger
+
+# Set the ACT LED to trigger on cpu0 instead of mmc0.
+echo cpu0 | tee /sys/class/leds/led0/trigger

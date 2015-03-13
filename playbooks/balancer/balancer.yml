@@ -17,6 +17,8 @@
     - ../roles/leds
 
   tasks:
+    - include: git-repo.yml
+
     - name: Copy vhost configuration into place.
       template:
         src: balancer.conf.j2

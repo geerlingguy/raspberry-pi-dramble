@@ -1,0 +1,25 @@
+---
+- name: Ensure demo-drupal-8 git directory exists.
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    owner: www-data
+    group: www-data
+  with_items:
+    - /opt/git
+    - /opt/git/demo-drupal-8.git
+
+- name: Ensure demo-drupal-8 project is cloned locally.
+  git:
+    repo: "https://github.com/geerlingguy/demo-drupal-8.git"
+    update: yes
+    bare: yes
+    dest: "/opt/git/demo-drupal-8.git"
+  register: demo_drupal_project_updated
+  notify: restart nginx
+  sudo_user: www-data
+
+- name: Run git update-server-info so repository is ready.
+  command: git update-server-info chdir=/opt/git/demo-drupal-8.git
+  when: demo_drupal_project_updated.changed
