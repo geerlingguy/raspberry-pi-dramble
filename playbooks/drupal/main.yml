@@ -10,6 +10,7 @@
   pre_tasks:
     - name: Indicate Ansible is deploying to the server.
       command: /usr/bin/rgb red
+      changed_when: false
       when: deploy_target == 'pi'
 
   tasks:
@@ -31,6 +32,7 @@
 
     - name: Indicate Ansible is finished deploying to the server.
       command: /usr/bin/rgb green
+      changed_when: false
       when: deploy_target == 'pi'
 
   handlers:
