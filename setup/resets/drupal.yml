@@ -3,6 +3,7 @@
 #   $ ansible-playbook -i ../../inventory drupal.yml
 
 - hosts: webservers
+  gather_facts: no
   sudo: yes
 
   tasks:
@@ -10,15 +11,33 @@
       shell: "rm -rf /var/www/drupal"
 
     - name: Remove /mnt/gluster/files contents.
-      shell: "rm -rf /mnt/gluster/files/*"
+      shell: "rm -rf /mnt/gluster/files"
       when: "inventory_hostname == groups.webservers[0]"
 
     - name: Remove drupal_install_complete file.
       shell: "rm -rf /var/local/drupal_install_complete"
 
+    - name: Restart php-fpm and nginx.
+      service: "name={{ item }} state=restarted"
+      with_items:
+        - php5-fpm
+        - nginx
+
 - hosts: database
+  gather_facts: no
   sudo: yes
 
   tasks:
     - name: Empty the drupal database.
       shell: "echo 'DROP DATABASE drupal; CREATE DATABASE drupal;' | mysql -u root -psupersecure"
+
+- hosts: balancer
+  gather_facts: no
+  sudo: yes
+
+  tasks:
+    - name: Empty nginx reverse proxy cache.
+      command: "rm -rf /var/cache/nginx/*"
+
+    - name: Restart nginx.
+      service: name=nginx state=restarted

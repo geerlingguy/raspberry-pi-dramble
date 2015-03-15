@@ -24,3 +24,8 @@ mac_address_mapping:
   "b8:27:eb:54:0c:d1":
     name: db1.pidramble.com
     ip: "10.0.1.65"
+
+# Nameservers to use in resolv.conf.
+dns_nameservers:
+  - "8.8.8.8"
+  - "8.8.4.4"

@@ -24,6 +24,7 @@
         - { template: hostname.j2, dest: /etc/hostname }
         - { template: hosts.j2, dest: /etc/hosts }
         - { template: interfaces.j2, dest: /etc/network/interfaces }
+        - { template: resolv.conf.j2, dest: /etc/resolv.conf }
       notify: update hostname
 
   handlers:
