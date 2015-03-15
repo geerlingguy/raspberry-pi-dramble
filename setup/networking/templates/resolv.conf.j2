@@ -1,0 +1,4 @@
+options timeout:1 attempts:1
+{% for nameserver in dns_nameservers %}
+nameserver {{ nameserver }}
+{% endfor %}
