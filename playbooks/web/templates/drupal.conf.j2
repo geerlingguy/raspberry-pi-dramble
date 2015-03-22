@@ -1,6 +1,6 @@
 server {
     listen 80;
-    server_name {{ inventory_hostname }};
+    server_name {{ inventory_hostname }} pidramble.com;
     root {{ drupal_docroot }};
 
     gzip_static on;
