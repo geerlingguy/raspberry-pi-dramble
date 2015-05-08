@@ -24,8 +24,5 @@ Once the VMs are up and running, and Ansible provisioning is complete, run the f
 
 To update to a newer version of the `demo-drupal-8` project, use:
 
-    # Deploy 1.1.1.
-    $ ansible-playbook -i inventory ../../playbooks/drupal/main.yml --extra-vars "drupal_version=1.1.1"
-    
-    # Deploy 1.1.1 with Redis caching enabled.
-    $ ansible-playbook -i inventory ../../playbooks/drupal/main.yml --extra-vars "drupal_version=1.1.1 drupal_redis_enabled=true"
+    # Deploy 1.2.1.
+    $ ansible-playbook -i inventory ../../playbooks/drupal/main.yml --extra-vars "drupal_version=1.2.1"

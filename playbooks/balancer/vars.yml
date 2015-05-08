@@ -30,5 +30,5 @@ munin_hosts:
   - { name: "dramble;www1.pidramble.com", address: "{{ groups.webservers[0] }}", extra: [] }
   - { name: "dramble;www2.pidramble.com", address: "{{ groups.webservers[1] }}", extra: [] }
   - { name: "dramble;www3.pidramble.com", address: "{{ groups.webservers[2] }}", extra: [] }
-  - { name: "dramble;cache1.pidramble.com", address: "{{ groups.cache[0] }}", extra: [] }
+  - { name: "dramble;www4.pidramble.com", address: "{{ groups.webservers[3] }}", extra: [] }
   - { name: "dramble;db1.pidramble.com", address: "{{ groups.database[0] }}", extra: [] }

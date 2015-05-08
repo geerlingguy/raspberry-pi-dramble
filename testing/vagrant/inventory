@@ -5,8 +5,6 @@
 192.168.77.3
 192.168.77.4
 192.168.77.5
-
-[cache]
 192.168.77.6
 
 [database]
@@ -15,7 +13,6 @@
 [dramble:children]
 balancer
 webservers
-cache
 database
 
 [dramble:vars]

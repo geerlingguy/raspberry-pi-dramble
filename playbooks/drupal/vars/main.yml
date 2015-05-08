@@ -16,4 +16,3 @@ drupal_db_password: supersecure
 drupal_install_profile: minimal
 drupal_hash_salt: nCZ3_LdhMkzH7MidhZ3Ac4sUyIbQP2FS9upOUbppzT9EtWp_gUmR8KZffhwm8rjmTr08oWLhjQ
 drupal_site_uuid: 73ee435f-88fd-4b45-9c00-c09c54510359
-drupal_redis_enabled: false

@@ -7,7 +7,7 @@
     - vars.yml
 
   pre_tasks:
-    # Add backports so we can install a newer version of Nginx and php5-redis.
+    # Add backports so we can install a newer version of Nginx.
     - include: ../wheezy-backports.yml
 
   roles:

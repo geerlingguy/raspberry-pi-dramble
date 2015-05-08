@@ -6,12 +6,6 @@
 - name: restart php-fpm
   service: name=php5-fpm state=restarted
 
-- name: restart redis
-  service: name=redis-server state=restarted
-  delegate_to: "{{ item }}"
-  with_items: groups.cache
-  when: drupal_redis_enabled
-
 - name: purge reverse proxy cache
   shell: "rm -rf /var/cache/nginx/*"
   delegate_to: "{{ item }}"

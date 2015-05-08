@@ -44,13 +44,6 @@ $config['system.performance']['fast_404']['html'] = '<!DOCTYPE html><html><head>
 // Load services definition file.
 $settings['container_yamls'][] = __DIR__ . '/services.yml';
 
-// Redis caching configuration.
-$settings['redis.connection']['interface'] = 'PhpRedis';
-$settings['redis.connection']['host'] = '{{ groups.cache[0] }}';
-{% if drupal_redis_enabled %}
-$settings['cache']['default'] = 'cache.backend.redis';
-{% endif %}
-
 // Local settings files.
 if (file_exists(__DIR__ . '/settings.local.php')) {
   include __DIR__ . '/settings.local.php';

@@ -56,13 +56,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  # Cache 1.
-  config.vm.define "cache1" do |cache1|
-    cache1.vm.network :private_network, ip: "192.168.77.6"
+  # Web 4.
+  config.vm.define "www4" do |www4|
+    www4.vm.network :private_network, ip: "192.168.77.6"
 
     # VirtualBox.
-    cache1.vm.provider :virtualbox do |v|
-      v.name = "cache1.pidramble.com"
+    www4.vm.provider :virtualbox do |v|
+      v.name = "www4.pidramble.com"
       v.memory = 1024
       v.cpus = 1
     end

@@ -5,8 +5,6 @@
 107.170.3.23
 107.170.54.218
 107.170.51.216
-
-[cache]
 107.170.27.137
 
 [database]
@@ -15,7 +13,6 @@
 [dramble:children]
 balancer
 webservers
-cache
 database
 
 [dramble:vars]

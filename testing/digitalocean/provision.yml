@@ -14,7 +14,7 @@
       - { name: www1.pidramble.com, group: "webservers" }
       - { name: www2.pidramble.com, group: "webservers" }
       - { name: www3.pidramble.com, group: "webservers" }
-      - { name: cache1.pidramble.com, group: "cache" }
+      - { name: www4.pidramble.com, group: "webservers" }
       - { name: db1.pidramble.com, group: "database" }
 
   tasks:

@@ -42,7 +42,6 @@ php_packages:
   - php5-dev
   - php5-gd
   - php5-mcrypt
-  - php5-redis
   - php-pear
   - php-apc
 php_enable_php_fpm: true
