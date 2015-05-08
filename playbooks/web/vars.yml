@@ -51,6 +51,9 @@ php_max_execution_time: "240"
 php_apc_enabled_in_ini: true
 php_apc_stat: "0"
 
+# Keep Drush running the latest version.
+drush_keep_updated: true
+
 # Gluster configuration.
 gluster_brick_dir: /srv/gluster/brick
 # gluster_mount_dir: "" # Defined in global vars file.
