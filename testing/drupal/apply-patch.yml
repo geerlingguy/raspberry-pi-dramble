@@ -1,0 +1,45 @@
+---
+# This playbook applies a given patch URL to the drupal codebase on each of the
+# webservers. It downloads the patch through the local machine since the Pis
+# may not have a reliable Internet connection.
+- hosts: webservers
+  sudo: yes
+  serial: 2
+
+  vars:
+    # The patch_url must point to a patch against Drupal core.
+    patch_url: https://www.drupal.org/files/issues/2429659_74.patch
+    patch_download_location: /tmp/patch-to-apply.patch
+    patch_apply_location: /var/www/drupal
+
+  pre_tasks:
+    - name: Indicate Ansible is deploying to the server.
+      command: /usr/bin/rgb red
+      changed_when: false
+      when: deploy_target == 'pi'
+
+  tasks:
+    - name: Download patch to local machine.
+      get_url:
+        url: "{{ patch_url }}"
+        dest: "{{ patch_download_location }}"
+      delegate_to: 127.0.0.1
+      sudo: no
+
+    - name: Copy patch to the Raspberry Pi.
+      copy:
+        src: "{{ patch_download_location }}"
+        dest: "{{ patch_download_location }}"
+        mode: 0644
+      sudo_user: www-data
+
+    - name: Apply patch to Drupal codebase.
+      command: >
+        git apply -v {{ patch_download_location }}
+        chdir={{ patch_apply_location }}
+      sudo_user: www-data
+
+    - name: Indicate Ansible is finished deploying to the server.
+      command: /usr/bin/rgb green
+      changed_when: false
+      when: deploy_target == 'pi'
