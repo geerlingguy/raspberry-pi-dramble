@@ -27,6 +27,7 @@
     repo: "{{ drupal_repo }}"
     version: "{{ drupal_version }}"
     update: yes
+    force: yes
     dest: "{{ drupal_docroot }}"
   register: project_updated
   notify: restart nginx
