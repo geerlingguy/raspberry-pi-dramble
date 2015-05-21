@@ -1,0 +1,13 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+
+  roles:
+    - geerlingguy.firewall
+    - geerlingguy.nginx
+    - geerlingguy.mysql
+    - geerlingguy.php
+    - geerlingguy.php-mysql
+    - geerlingguy.composer
+    - geerlingguy.drush
+    - geerlingguy.git
