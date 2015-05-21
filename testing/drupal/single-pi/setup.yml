@@ -1,6 +1,13 @@
 ---
 - hosts: 127.0.0.1
   connection: local
+  sudo: yes
+
+  vars_files:
+    - vars.yml
+
+  pre_tasks:
+    - include: ../../../playbooks/wheezy-backports.yml
 
   roles:
     - geerlingguy.firewall
