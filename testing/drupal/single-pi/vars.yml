@@ -53,7 +53,7 @@ php_apc_stat: "0"
 drush_version: "6.6.0"
 
 # Drupal configuration.
-drupal_repo: http://git.pidramble.com/demo-drupal-8.git
+drupal_repo: https://github.com/geerlingguy/demo-drupal-8.git
 
 # The tag or branch to check out from the above git repository.
 drupal_version: "1.2.0"
