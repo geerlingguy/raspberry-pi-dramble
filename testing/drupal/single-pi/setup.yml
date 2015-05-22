@@ -42,5 +42,7 @@
         - sendmail
         # So drush can connect to MySQL.
         - mysql-client
+        # For boris (drush requirement that uses missing php5-readline package).
+        - libedit-dev
 
     - include: drupal.yml
