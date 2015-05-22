@@ -37,3 +37,5 @@ Now that the Raspberry Pi is set up and ready to go, you need to download this r
   3. cd into this directory: `cd raspberry-pi-dramble-master/testing/drupal/single-pi/`
   4. Install required Ansible roles: `sudo ansible-galaxy install -r requirements.txt`
   4. Run the Ansible playbook: `ansible-playbook -i inventory setup.yml`
+
+After a few minutes, the playbook should complete successfully, and you should have Drupal running on your Raspberry Pi, accessible via `http://pidramble.com/` (make sure you [add an entry to your local hosts file](http://www.rackspace.com/knowledge_center/article/how-do-i-modify-my-hosts-file) for the Pi's address, e.g. `[PI_IP_ADDRESS]  pidramble.com`).
