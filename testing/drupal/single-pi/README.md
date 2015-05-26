@@ -6,7 +6,7 @@ This playbook/project makes setting up Drupal on a single Raspberry Pi a very ea
 
 ## Set up the Raspberry Pi
 
-Drupal requires as good a Raspberry Pi as you can afford. While Drupal will run okay on any Raspberry Pi, it's best to use a B+/A+ (which has a single core processor and 512MB RAM) or B model 2 (which has a four-core processor and 1GB RAM).
+Drupal requires as good a Raspberry Pi as you can afford. While Drupal will run okay on any Raspberry Pi, it's best to use a B+ (which has a single core processor and 512MB RAM) or B model 2 (which has a four-core processor and 1GB RAM).
 
 Once you have your Raspberry Pi and a good microSD card (the fastest/best one you can get!), you will need to do a few things to set up the Raspberry Pi and get it ready to run the Drupal installation playbook:
 
