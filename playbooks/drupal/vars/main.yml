@@ -1,4 +1,13 @@
 ---
+# The default configuration below installs a demonstration Drupal 8 site that
+# can be used to demonstrate initial deployment and updates to a Drupal 8 site
+# via Ansible and Drush.
+#
+# To install a copy of Drupal 8 HEAD instead, make the following changes:
+# drupal_repo: http://git.drupal.org/project/drupal.git
+# drupal_version: 8.0.x
+# drupal_install_profile: standard # or minimal, if desired
+
 # Drupal configuration.
 drupal_repo: http://git.pidramble.com/demo-drupal-8.git
 

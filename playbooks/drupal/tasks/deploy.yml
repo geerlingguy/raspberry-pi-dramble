@@ -22,7 +22,7 @@
     group: www-data
   when: drupal_install_complete.stat.exists
 
-- name: Check out our Drupal 8 project to the docroot.
+- name: Check out Drupal to the docroot.
   git:
     repo: "{{ drupal_repo }}"
     version: "{{ drupal_version }}"
