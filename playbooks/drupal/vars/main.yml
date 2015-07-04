@@ -7,7 +7,7 @@ drupal_version: "1.2.0"
 
 # User 1 credentials.
 drupal_admin_name: admin
-drupal_admin_password: secret
+drupal_admin_password: admin
 
 # settings.php configuration.
 drupal_db_name: drupal
