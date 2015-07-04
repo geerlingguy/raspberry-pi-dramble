@@ -34,8 +34,8 @@ Many people have asked for a basic list of components used in constructing the D
 
 The process for setting up all the Raspberry Pis is outlined in the Wiki:
 
-  1. [Create a base Raspbian image and clone it to all the microSD cards](https://github.com/geerlingguy/raspberry-pi-dramble/wiki/Base-Raspbian-Image)
-  2. [Prepare the Raspberry Pis for provisioning](https://github.com/geerlingguy/raspberry-pi-dramble/wiki/Preparing-the-Raspberry-Pis)
+  1. [Create a base Raspbian image and clone it to all the microSD cards](https://github.com/geerlingguy/raspberry-pi-dramble/wiki/Build-Diet-Raspbian-Image)
+  2. [Prepare the Raspberry Pis for provisioning](https://github.com/geerlingguy/raspberry-pi-dramble/wiki/Prepare-the-Raspberry-Pis)
   3. [Rack the Raspberry Pis](https://github.com/geerlingguy/raspberry-pi-dramble/wiki/Rack-the-Raspberry-Pis)
   4. [Network the Raspberry Pis](https://github.com/geerlingguy/raspberry-pi-dramble/wiki/Network-the-Raspberry-Pis)
   5. [Test the Ansible configuration](https://github.com/geerlingguy/raspberry-pi-dramble/wiki/Test-Ansible-configuration)
