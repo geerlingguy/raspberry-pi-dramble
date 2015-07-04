@@ -46,6 +46,10 @@ The process for setting up all the Raspberry Pis is outlined in the Wiki:
 
 See the 'Benchmarks' section of the [Dramble Wiki](https://github.com/geerlingguy/raspberry-pi-dramble/wiki/Home) for current benchmarks and statistics.
 
+## Drupal on a Single Pi - Drupal Pi
+
+If you have only a single Raspberry Pi (model 2 recommended, otherwise Drupal will run _really_ slow), you can use the [Drupal Pi](https://github.com/geerlingguy/drupal-pi) project to quickly get Drupal running on the single Pi.
+
 ## Author
 
 This project was started in 2015 by [Jeff Geerling](http://jeffgeerling.com/), author of [Ansible for DevOps](http://ansiblefordevops.com/).
