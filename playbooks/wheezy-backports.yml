@@ -8,12 +8,15 @@
     state: present
   register: wheezy_backports
 
-- name: Add wheezy-backports apt key.
+- name: Add wheezy-backports apt keys.
   apt_key:
     keyserver: pgpkeys.mit.edu
-    id: 8B48AD6246925553
+    id: "{{ item }}"
     state: present
   when: wheezy_backports.changed
+  with_items:
+    - 8B48AD6246925553
+    - 7638D0442B90D010
 
 - name: Update apt cache.
   apt: update_cache=yes
