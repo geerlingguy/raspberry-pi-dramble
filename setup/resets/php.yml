@@ -8,6 +8,7 @@
   tasks:
     - name: Ensure php-fpm is stopped.
       service: name=php5-fpm state=stopped
+      failed_when: false
 
     - name: Ensure PHP packages are completely removed.
       apt:
@@ -15,10 +16,13 @@
         state: absent
         purge: yes
 
-    - name: Ensure PHP source build is completely removed.
+    - name: Ensure PHP directories are completely removed.
       file:
         path: /opt/php
         state: absent
+      with_items:
+        - /opt/php
+        - /etc/php5
 
     - name: Restart nginx.
       service: name=nginx state=restarted
