@@ -5,16 +5,27 @@
 - hosts: webservers
   sudo: yes
 
-  tasks:
-    # TODO - Make the tasks below actually stop and delete the gluster volume.
-    - name: Stop gluster volume.
-      shell: "yes | gluster volume stop gluster"
-      when: "inventory_hostname == groups.webservers[0]"
+  vars_files:
+    - ../../playbooks/vars.yml
+    - ../../playbooks/web/vars.yml
 
-    - name: Delete gluster volume.
-      shell: "yes | gluster volume delete gluster"
+  tasks:
+    - name: Ensure the Gluster mount is absent.
+      mount:
+        name: "{{ gluster_mount_dir }}"
+        src: "{{ groups.webservers[0] }}:/{{ gluster_brick_name }}"
+        fstype: glusterfs
+        state: absent
+
+    - name: Ensure the Gluster volume is absent.
+      gluster_volume:
+        state: absent
+        name: "{{ gluster_brick_name }}"
+        brick: "{{ gluster_brick_dir }}"
+        host: "{{ inventory_hostname }}"
+        force: yes
+      run_once: true
       failed_when: false
-      when: "inventory_hostname == groups.webservers[0]"
 
     - name: Stop gluster.
       service: name=glusterfs-server state=stopped

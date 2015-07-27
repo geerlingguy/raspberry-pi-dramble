@@ -57,12 +57,6 @@ drush_keep_updated: false
 gluster_brick_dir: /srv/gluster/brick
 # gluster_mount_dir: "" # Defined in global vars file.
 gluster_brick_name: gluster
-# Note: This is hardcoded for 3 webservers. Adjust accordingly.
-gluster_brick_config:
-  "replica 3 transport tcp
-  {{ groups.webservers[0] }}:{{ gluster_brick_dir }}
-  {{ groups.webservers[1] }}:{{ gluster_brick_dir }}
-  {{ groups.webservers[2] }}:{{ gluster_brick_dir }}"
 
 # Munin settings.
 munin_node_allowed_ips:
