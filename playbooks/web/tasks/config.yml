@@ -6,6 +6,11 @@
     mode: 0644
   notify: restart nginx
 
+- name: Ensure php5-fpm www pool configuration directory exists.
+  file:
+    path: /etc/php5/fpm/pool.d
+    state: directory
+
 - name: Copy php5-fpm www pool configuration into place.
   template:
     src: ../templates/www.conf.j2

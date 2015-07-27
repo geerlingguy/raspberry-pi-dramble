@@ -32,23 +32,55 @@ nginx_remove_default_vhost: true
 nginx_vhosts: []
 
 # PHP configuration.
+php_install_from_source: true
+# Some example versions to try: php-5.5.27, php-5.6.11, php-7.0.0beta2.
+php_source_version: "php-5.6.11"
+php_source_make_command: "make --jobs={{ ansible_processor_count }}"
+php_source_configure_command: >
+  ./configure
+  --prefix={{ php_source_install_path }}
+  --with-config-file-path={{ php_conf_path }}
+  --with-config-file-scan-dir={{ php_conf_path }}/conf.d
+  --enable-mbstring
+  --enable-zip
+  --enable-bcmath
+  --enable-pcntl
+  --enable-ftp
+  --enable-fpm
+  --enable-exif
+  --enable-calendar
+  --enable-opcache
+  --enable-pdo
+  --enable-sysvmsg
+  --enable-sysvsem
+  --enable-sysvshm
+  --enable-wddx
+  --with-curl
+  --with-mcrypt
+  --with-iconv
+  --with-gmp
+  --with-pspell
+  --with-gd
+  --with-jpeg-dir=/usr
+  --with-png-dir=/usr
+  --with-zlib-dir=/usr
+  --with-xpm-dir=/usr
+  --with-freetype-dir=/usr
+  --enable-gd-native-ttf
+  --enable-gd-jis-conv
+  --with-openssl
+  --with-pdo-mysql=/usr
+  --with-gettext=/usr
+  --with-zlib=/usr
+  --with-bz2=/usr
+  --with-recode=/usr
+  --with-mysqli=/usr/bin/mysql_config
 php_webserver_daemon: "nginx"
-php_packages:
-  - php5
-  - php5-fpm
-  - php5-cli
-  - php5-common
-  - php5-curl
-  - php5-dev
-  - php5-gd
-  - php5-mcrypt
-  - php-pear
-  - php-apc
 php_enable_php_fpm: true
 php_memory_limit: "128M"
 php_max_execution_time: "240"
-php_apc_enabled_in_ini: true
-php_apc_stat: "0"
+php_opcache_enabled_in_ini: true
+php_opcache_memory_consumption: "128"
 
 # Don't keep updating Drush once installed.
 drush_keep_updated: false
