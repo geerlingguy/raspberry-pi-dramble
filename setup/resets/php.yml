@@ -1,0 +1,35 @@
+---
+# To run:
+#   $ ansible-playbook -i ../../inventory php.yml
+
+- hosts: webservers
+  sudo: yes
+
+  tasks:
+    - name: Ensure php-fpm is stopped.
+      service: name=php5-fpm state=stopped
+
+    - name: Ensure PHP packages are completely removed.
+      apt:
+        name: "php*"
+        state: absent
+        purge: yes
+
+    - name: Ensure PHP source build is completely removed.
+      file:
+        path: /opt/php
+        state: absent
+
+    - name: Restart nginx.
+      service: name=nginx state=restarted
+
+- hosts: balancer
+  gather_facts: no
+  sudo: yes
+
+  tasks:
+    - name: Empty nginx reverse proxy cache.
+      shell: "rm -rf /var/cache/nginx/*"
+
+    - name: Restart nginx.
+      service: name=nginx state=restarted
