@@ -1,0 +1,61 @@
+#! /usr/bin/env python
+#
+# Monitor a file and toggle onboard LED when it is changed.
+#
+# Usage:
+#   sudo python log-monitor-rgb.py [file]
+#
+# @author Jeff Geerling, 2015
+
+import argparse
+import RPi.GPIO as GPIO
+import subprocess
+import pyinotify
+from time import sleep
+
+# File to watch.
+watch_file = "/var/log/nginx/access.log"
+
+# LED pin mapping.
+red = {{ leds_pin_red }}
+green = {{ leds_pin_green }}
+blue = {{ leds_pin_blue }}
+
+# GPIO Setup.
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+
+GPIO.setup(red, GPIO.OUT)
+GPIO.setup(green, GPIO.OUT)
+GPIO.setup(blue, GPIO.OUT)
+
+class LogMonitorRGB(object):
+    def __init__(self, mask=pyinotify.IN_CREATE | pyinotify.IN_MODIFY):
+        self.mask = mask
+
+    def run(self):
+        """Configure inotify to toggle LEDs on file changes."""
+        self.initialize()
+        watch_manager = pyinotify.WatchManager()
+        watch_manager.add_watch(watch_file, self.mask, rec=True, auto_add=True)
+        notifier = pyinotify.Notifier(watch_manager, default_proc_fun=self.toggle_leds)
+        notifier.loop()
+
+    def toggle_leds(self, event):
+        GPIO.output(green, 0)
+        GPIO.output(red, 1)
+        sleep(0.1)
+        GPIO.output(red, 0)
+        GPIO.output(green, 1)
+
+    def initialize(self):
+        # Reset LED to Green.
+        GPIO.output(red, 0)
+        GPIO.output(green, 1)
+        GPIO.output(blue, 0)
+
+def main():
+    LogMonitorRGB().run()
+
+if __name__ == '__main__':
+    main()

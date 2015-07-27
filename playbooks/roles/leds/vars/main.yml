@@ -3,4 +3,5 @@ leds_scripts:
   - colors
   - fade
   - rgb
+  - led-log-monitor
   - onboard-led-setup

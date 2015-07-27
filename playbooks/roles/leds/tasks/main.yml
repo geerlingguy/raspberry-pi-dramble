@@ -1,4 +1,10 @@
 ---
+- name: Ensure Pip is installed.
+  apt: name=python-pip state=present
+
+- name: Ensure pyinotify is installed.
+  pip: name=pyinotify state=present
+
 - name: Ensure gpio-leds folder exists.
   file:
     path: /opt/gpio-leds

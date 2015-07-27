@@ -4,7 +4,7 @@ server {
     root {{ drupal_docroot }};
 
     gzip_static on;
-    access_log off; # Save a ton of precious disk I/O.
+    access_log {{ nginx_access_log }};
 
     location = /favicon.ico {
         log_not_found off;

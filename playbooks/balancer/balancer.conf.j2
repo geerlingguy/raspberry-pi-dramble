@@ -8,7 +8,8 @@ map $http_cookie $drupal_logged_in {
 server {
     listen 80 default_server;
     server_name {{ site_url }} www.{{ site_url }};
-    access_log off; # Save a ton of precious disk I/O.
+
+    access_log {{ nginx_access_log }};
 
     # Enable proxy cache and specify cache key.
     proxy_cache cache;

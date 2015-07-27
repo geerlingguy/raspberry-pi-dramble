@@ -3,5 +3,10 @@ site_name: Dramble
 site_url: pidramble.com
 drupal_docroot: /var/www/drupal
 
+# Set nginx_access_log to "off" to conserve disk I/O for maximum performance.
+# Set it to a file inside /var/log/nginx if you want to enable the monitoring of
+# requests via GPIO LEDs.
+nginx_access_log: "/var/log/nginx/access.log"
+
 # Drupal filesystem configuration.
 gluster_mount_dir: /mnt/gluster

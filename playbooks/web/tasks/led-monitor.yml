@@ -1,0 +1,12 @@
+---
+- name: Check if led-log-monitor script is already running.
+  shell: "ps aux | grep led"
+  changed_when: false
+  register: led_monitor_check
+  when: deploy_target == 'pi'
+
+- name: Start monitoring nginx requests via GPIO LED.
+  shell: "/usr/bin/led-log-monitor &"
+  async: 45
+  poll: 0
+  when: deploy_target == 'pi' and 'led-log-monitor' not in led_monitor_check.stdout

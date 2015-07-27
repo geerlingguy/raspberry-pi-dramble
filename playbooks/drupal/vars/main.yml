@@ -24,6 +24,6 @@ drupal_site_uuid: 73ee435f-88fd-4b45-9c00-c09c54510359
 
 # Uncomment these lines to install Drupal 8 HEAD from drupal.org instead of the
 # demo Drupal 8 project. These variables will override the ones defined prior.
-# drupal_repo: http://git.drupal.org/project/drupal.git
-# drupal_version: 8.0.x
-# drupal_install_profile: standard # or minimal, if desired
+drupal_repo: http://git.drupal.org/project/drupal.git
+drupal_version: 8.0.x
+drupal_install_profile: standard # or minimal, if desired

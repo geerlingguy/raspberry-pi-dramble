@@ -25,3 +25,4 @@
     - include: tasks/extras.yml
     - include: tasks/config.yml
     - include: tasks/gluster.yml
+    - include: tasks/led-monitor.yml
