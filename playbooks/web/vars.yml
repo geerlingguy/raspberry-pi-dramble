@@ -5,7 +5,7 @@ firewall_allowed_tcp_ports:
   # For Gluster.
   - 111
   # Port-mapper for Gluster 3.4+.
-  # - 2049
+  - 2049
   # Gluster Daemon.
   - 24007
   # 24009+ for Gluster <= 3.3; 49152+ for Gluster 3.4+ (one port per server).
