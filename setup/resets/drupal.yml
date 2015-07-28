@@ -17,6 +17,14 @@
     - name: Remove drupal_install_complete file.
       shell: "rm -rf /var/local/drupal_install_complete"
 
+    - name: Remove Drupal cron job.
+      cron:
+        name: "Dramble Drupal cron"
+        user: "{{ ansible_ssh_user }}"
+        job: "/usr/local/bin/drush --quiet --root=/var/www/drupal cron -y"
+        state: absent
+      when: "inventory_hostname == groups.webservers[0]"
+
     - name: Restart php-fpm and nginx.
       service: "name={{ item }} state=restarted"
       with_items:

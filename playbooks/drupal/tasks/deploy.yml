@@ -26,12 +26,21 @@
   git:
     repo: "{{ drupal_repo }}"
     version: "{{ drupal_version }}"
-    update: yes
+    update: "{{ drupal_keep_updated }}"
     force: yes
     dest: "{{ drupal_docroot }}"
   register: project_updated
   notify: restart nginx
   sudo_user: www-data
+
+- name: Apply necessary patches for Drupal core.
+  shell: >
+    curl https://www.drupal.org/files/issues/{{ item }} | git apply
+    chdir={{ drupal_docroot }}
+  with_items:
+    - rebuilding_service-2497243-188.patch
+    - race_conditions_in_the-2429659-114.patch
+  when: project_updated.changed
 
 - name: Copy settings.php file into place.
   template:
