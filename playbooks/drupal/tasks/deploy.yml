@@ -22,6 +22,21 @@
     group: www-data
   when: drupal_install_complete.stat.exists
 
+- name: Download Drupal to the temp folder.
+  get_url:
+    url: "http://ftp.drupal.org/files/projects/drupal-{{ drupal_version }}.tar.gz"
+    dest: "~/drupal-{{ drupal_version }}.tar.gz"
+  register: download_drupal_tarball
+  when: drupal_deploy_strategy == 'tarball'
+
+- name: Expand Drupal in the docroot.
+  shell: "tar -xf ~/drupal-{{ drupal_version }}.tar.gz --strip 1 -C {{ drupal_docroot }}"
+  when: drupal_deploy_strategy == 'tarball' and download_drupal_tarball.changed
+
+- name: Fix permissions on expanded copy of Drupal.
+  shell: "chown -R www-data:www-data {{ drupal_docroot }}"
+  when: drupal_deploy_strategy == 'tarball' and download_drupal_tarball.changed
+
 - name: Check out Drupal to the docroot.
   git:
     repo: "{{ drupal_repo }}"
@@ -32,6 +47,7 @@
   register: project_updated
   notify: restart nginx
   sudo_user: www-data
+  when: drupal_deploy_strategy == 'git'
 
 - name: Apply necessary patches for Drupal core.
   shell: >
@@ -40,7 +56,7 @@
   with_items:
     - rebuilding_service-2497243-188.patch
     - race_conditions_in_the-2429659-114.patch
-  when: project_updated.changed
+  when: project_updated.changed or download_drupal_tarball.changed
 
 - name: Copy settings.php file into place.
   template:

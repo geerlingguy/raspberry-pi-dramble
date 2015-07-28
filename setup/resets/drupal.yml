@@ -7,6 +7,9 @@
   sudo: yes
 
   tasks:
+    - name: Remove any Drupal downloads.
+      shell: "rm -rf ~/drupal*"
+
     - name: Remove /var/www/drupal contents.
       shell: "rm -rf /var/www/drupal"
 
