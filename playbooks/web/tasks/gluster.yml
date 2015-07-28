@@ -18,6 +18,7 @@
     replicas: 2
     cluster: "{{ groups.webservers | join(',') }}"
     host: "{{ inventory_hostname }}"
+    force: true
   run_once: true
 
 # Mount configuration.

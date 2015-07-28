@@ -12,10 +12,12 @@ firewall_allowed_tcp_ports:
   - 24009
   - 24010
   - 24011
+  - 24012
   # Gluster inline NFS server.
   - 38465
   - 38466
   - 38467
+  - 38468
 firewall_allowed_udp_ports:
   - 111
 
@@ -86,6 +88,7 @@ php_opcache_memory_consumption: "128"
 drush_keep_updated: false
 
 # Gluster configuration.
+glusterfs_default_release: wheezy-backports # For 3.5.x instead of 3.2.x
 gluster_brick_dir: /srv/gluster/brick
 # gluster_mount_dir: "" # Defined in global vars file.
 gluster_brick_name: gluster
