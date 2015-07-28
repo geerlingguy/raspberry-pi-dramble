@@ -16,12 +16,12 @@
     - { role: geerlingguy.php, tags: ['php'] }
     - { role: geerlingguy.drush, tags: ['drush'] }
     - { role: geerlingguy.git, tags: ['git'] }
-    - { role: geerlingguy.glusterfs, tags: ['gluster'] }
     - { role: geerlingguy.munin-node, tags: ['munin-node'] }
+    - { role: geerlingguy.nfs, tags: ['nfs'] }
     - { role: ../roles/leds, tags: ['leds'] }
 
   tasks:
     - include: tasks/extras.yml
     - include: tasks/config.yml
-    - include: tasks/gluster.yml
+    - include: tasks/nfs.yml
     - include: tasks/led-monitor.yml

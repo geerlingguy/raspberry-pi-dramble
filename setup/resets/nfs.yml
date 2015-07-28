@@ -1,0 +1,23 @@
+---
+# To run:
+#   $ ansible-playbook -i ../../inventory nfs.yml
+
+# TODO: Switch all this to nfs!
+- hosts: webservers
+  sudo: yes
+
+  vars_files:
+    - ../../playbooks/vars.yml
+    - ../../playbooks/web/vars.yml
+
+  tasks:
+    - name: Ensure the NFS mount is absent.
+      mount:
+        name: "{{ nfs_mount_dir }}"
+        src: "{{ groups.webservers[0] }}:/{{ nfs_share_dir }}"
+        fstype: nfs
+        state: absent
+
+    # TODO: Remove the share configured by NFS role.
+    # TODO: Stop NFS.
+    # TODO: Remove all remnants of NFS stuff.

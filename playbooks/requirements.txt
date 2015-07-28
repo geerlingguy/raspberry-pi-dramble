@@ -4,7 +4,7 @@ geerlingguy.mysql
 geerlingguy.php
 geerlingguy.composer
 geerlingguy.drush
-geerlingguy.glusterfs
 geerlingguy.git
 geerlingguy.munin
 geerlingguy.munin-node
+geerlingguy.nfs

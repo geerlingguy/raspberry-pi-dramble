@@ -2,25 +2,12 @@
 firewall_allowed_tcp_ports:
   - 22
   - 80
-  # For Gluster.
+  # For NFS.
   - 111
-  - 1023
-  # Port-mapper for Gluster 3.4+.
   - 2049
-  # Gluster Daemon.
-  - 24007
-  # 24009+ for Gluster <= 3.3; 49152+ for Gluster 3.4+ (one port per server).
-  - 49152
-  - 49153
-  - 49154
-  - 49155
-  # Gluster inline NFS server.
-  - 38465
-  - 38466
-  - 38467
-  - 38468
 firewall_allowed_udp_ports:
   - 111
+  - 2049
 
 firewall_additional_rules:
   - "iptables -A INPUT -p tcp --dport 4949 -s {{ groups.balancer[0] }} -j ACCEPT"
@@ -88,11 +75,10 @@ php_opcache_memory_consumption: "128"
 # Don't keep updating Drush once installed.
 drush_keep_updated: false
 
-# Gluster configuration.
-glusterfs_default_release: wheezy-backports # For 3.5.x instead of 3.2.x
-gluster_brick_dir: /srv/gluster/brick
-# gluster_mount_dir: "" # Defined in global vars file.
-gluster_brick_name: gluster
+# NFS configuration.
+nfs_share_dir: /srv/nfs
+nfs_exports: { "/srv/nfs *(rw,sync,no_root_squash)" }
+# nfs_mount_dir: /mnt/nfs # defined in global vars file.
 
 # Munin settings.
 munin_node_allowed_ips:

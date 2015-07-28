@@ -1,0 +1,20 @@
+---
+- name: Ensure NFS share and mount directories exist.
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: www-data
+    mode: 0775
+  with_items:
+    - "{{ nfs_share_dir }}"
+    - "{{ nfs_mount_dir }}"
+
+# Mount configuration.
+- name: Ensure the NFS volume is mounted.
+  mount:
+    name: "{{ nfs_mount_dir }}"
+    src: "{{ groups.webservers[0] }}:/{{ nfs_share_dir }}"
+    fstype: nfs
+    opts: "rw,sync"
+    state: mounted

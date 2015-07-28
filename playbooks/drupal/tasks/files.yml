@@ -1,7 +1,7 @@
 ---
 - name: Ensure Drupal files folder exists.
   file:
-    path: "{{ gluster_mount_dir }}/files"
+    path: "{{ nfs_mount_dir }}/files"
     state: directory
     owner: www-data
     group: www-data
@@ -9,7 +9,7 @@
 
 - name: Symlink Drupal files folder into place.
   file:
-    src: "{{ gluster_mount_dir }}/files"
+    src: "{{ nfs_mount_dir }}/files"
     dest: "{{ drupal_docroot }}/sites/default/files"
     state: link
     force: yes

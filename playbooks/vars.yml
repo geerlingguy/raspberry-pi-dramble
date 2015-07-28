@@ -9,4 +9,4 @@ drupal_docroot: /var/www/drupal
 nginx_access_log: "/var/log/nginx/access.log"
 
 # Drupal filesystem configuration.
-gluster_mount_dir: /mnt/gluster
+nfs_mount_dir: /mnt/nfs
