@@ -14,7 +14,7 @@
     - name: Ensure the NFS mount is absent.
       mount:
         name: "{{ nfs_mount_dir }}"
-        src: "{{ groups.webservers[0] }}:/{{ nfs_share_dir }}"
+        src: "{{ groups.webservers[0] }}:{{ nfs_share_dir }}"
         fstype: nfs
         state: absent
 

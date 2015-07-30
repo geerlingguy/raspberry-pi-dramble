@@ -4,10 +4,17 @@ map $http_cookie $drupal_logged_in {
     ~SESS 1;
 }
 
+# Redirect to www.
+server {
+    listen       80;
+    server_name  {{ site_url }};
+    return       301 http://www.{{ site_url }}$request_uri;
+}
+
 # Dramble Drupal 8 server configuration.
 server {
     listen 80 default_server;
-    server_name {{ site_url }} www.{{ site_url }};
+    server_name www.{{ site_url }};
 
     access_log {{ nginx_access_log }};
 

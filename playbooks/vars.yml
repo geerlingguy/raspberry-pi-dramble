@@ -1,6 +1,6 @@
 ---
 site_name: Dramble
-site_url: pidramble.com
+site_url: pidramble.com # Without the www.
 drupal_docroot: /var/www/drupal
 
 # Set nginx_access_log to "off" to conserve disk I/O for maximum performance.

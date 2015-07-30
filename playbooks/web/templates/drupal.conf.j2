@@ -1,6 +1,14 @@
+# Redirect to www.
+server {
+    listen       80;
+    server_name  {{ site_url }};
+    return       301 http://www.{{ site_url }}$request_uri;
+}
+
+# Drupal 8 configuration.
 server {
     listen 80;
-    server_name {{ inventory_hostname }} pidramble.com;
+    server_name {{ inventory_hostname }} www.{{ site_url }};
     root {{ drupal_docroot }};
 
     gzip_static on;
