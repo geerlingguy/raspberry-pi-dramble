@@ -36,6 +36,11 @@ $settings['omit_vary_cookie'] = TRUE;
 // Base URL.
 // $base_url = 'http://{{ site_url }}';  // NO trailing slash!
 
+// Trusted host settings.
+$settings['trusted_host_patterns'] = array(
+  '^www\.pidramble\.com$',
+);
+
 // Fast 404 configuration.
 $config['system.performance']['fast_404']['exclude_paths'] = '/\/(?:styles)\//';
 $config['system.performance']['fast_404']['paths'] = '/\.(?:txt|png|gif|jpe?g|css|js|ico|swf|flv|cgi|bat|pl|dll|exe|asp)$/i';
