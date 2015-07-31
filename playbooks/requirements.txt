@@ -8,3 +8,4 @@ geerlingguy.git
 geerlingguy.munin
 geerlingguy.munin-node
 geerlingguy.nfs
+geerlingguy.security

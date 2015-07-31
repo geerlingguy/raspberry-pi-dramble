@@ -12,6 +12,7 @@
 
   roles:
     - { role: geerlingguy.firewall, tags: ['firewall'] }
+    - { role: geerlingguy.security, tags: ['security'] }
     - { role: geerlingguy.nginx, tags: ['nginx'] }
     - { role: geerlingguy.php, tags: ['php'] }
     - { role: geerlingguy.drush, tags: ['drush'] }

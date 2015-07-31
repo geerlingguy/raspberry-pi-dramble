@@ -17,3 +17,9 @@
     dest: /etc/php5/fpm/pool.d/www.conf
     mode: 0644
   notify: restart php-fpm
+
+- name: Ensure pi user is in www-data group.
+  user:
+    name: pi
+    groups: www-data
+    append: yes

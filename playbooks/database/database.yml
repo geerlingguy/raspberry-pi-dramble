@@ -7,7 +7,8 @@
     - vars.yml
 
   roles:
-    - geerlingguy.firewall
-    - geerlingguy.mysql
-    - geerlingguy.munin-node
-    - ../roles/leds
+    - { role: geerlingguy.firewall, tags: ['firewall'] }
+    - { role: geerlingguy.security, tags: ['security'] }
+    - { role: geerlingguy.mysql, tags: ['mysql'] }
+    - { role: geerlingguy.munin-node, tags: ['munin-node'] }
+    - { role: ../roles/leds, tags: ['leds'] }

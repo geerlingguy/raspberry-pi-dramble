@@ -10,3 +10,6 @@ nginx_access_log: "/var/log/nginx/access.log"
 
 # Drupal filesystem configuration.
 nfs_mount_dir: /mnt/nfs
+
+security_sudoers_passwordless:
+  - pi

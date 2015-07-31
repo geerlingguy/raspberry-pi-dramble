@@ -11,10 +11,11 @@
     - include: ../wheezy-backports.yml
 
   roles:
-    - geerlingguy.firewall
-    - geerlingguy.nginx
-    - geerlingguy.munin
-    - ../roles/leds
+    - { role: geerlingguy.firewall, tags: ['firewall'] }
+    - { role: geerlingguy.security, tags: ['security'] }
+    - { role: geerlingguy.nginx, tags: ['nginx'] }
+    - { role: geerlingguy.munin, tags: ['munin'] }
+    - { role: ../roles/leds, tags: ['leds'] }
 
   tasks:
     - include: git-repo.yml
