@@ -1,3 +1,0 @@
-[submodule "setup/diet-raspbian"]
-	path = setup/diet-raspbian
-	url = git@github.com:geerlingguy/diet-raspbian.git
