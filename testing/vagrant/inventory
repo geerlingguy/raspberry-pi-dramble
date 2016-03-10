@@ -6,8 +6,8 @@
 192.168.77.4
 
 [database]
-192.168.77.5
-192.168.77.6
+192.168.77.5 mysql_server_id=1 mysql_replication_role=master
+192.168.77.6 mysql_server_id=2 mysql_replication_role=slave
 
 [dramble:children]
 balancer

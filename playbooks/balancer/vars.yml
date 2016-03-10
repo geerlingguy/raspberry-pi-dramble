@@ -27,6 +27,5 @@ munin_hosts:
   - { name: "dramble;bal1.pidramble.com", address: "127.0.0.1", extra: [] }
   - { name: "dramble;www1.pidramble.com", address: "{{ groups.webservers[0] }}", extra: [] }
   - { name: "dramble;www2.pidramble.com", address: "{{ groups.webservers[1] }}", extra: [] }
-  - { name: "dramble;www3.pidramble.com", address: "{{ groups.webservers[2] }}", extra: [] }
-  - { name: "dramble;www4.pidramble.com", address: "{{ groups.webservers[3] }}", extra: [] }
   - { name: "dramble;db1.pidramble.com", address: "{{ groups.database[0] }}", extra: [] }
+  - { name: "dramble;db2.pidramble.com", address: "{{ groups.database[1] }}", extra: [] }
