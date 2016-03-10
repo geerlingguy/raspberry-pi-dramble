@@ -4,8 +4,7 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  # TODO: Switch to geerlingguy/debian-7 at some point.
-  config.vm.box = "mokote/debian-7"
+  config.vm.box = "debian/jessie64"
   config.ssh.insert_key = false
 
   # Balancer.
@@ -44,33 +43,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  # Web 3.
-  config.vm.define "www3" do |www3|
-    www3.vm.network :private_network, ip: "192.168.77.5"
-
-    # VirtualBox.
-    www3.vm.provider :virtualbox do |v|
-      v.name = "www3.pidramble.com"
-      v.memory = 1024
-      v.cpus = 1
-    end
-  end
-
-  # Web 4.
-  config.vm.define "www4" do |www4|
-    www4.vm.network :private_network, ip: "192.168.77.6"
-
-    # VirtualBox.
-    www4.vm.provider :virtualbox do |v|
-      v.name = "www4.pidramble.com"
-      v.memory = 1024
-      v.cpus = 1
-    end
-  end
-
   # Database 1.
   config.vm.define "db1" do |db1|
-    db1.vm.network :private_network, ip: "192.168.77.7"
+    db1.vm.network :private_network, ip: "192.168.77.5"
 
     # VirtualBox.
     db1.vm.provider :virtualbox do |v|
@@ -78,9 +53,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       v.memory = 1024
       v.cpus = 1
     end
+  end
+
+  # Database 2.
+  config.vm.define "db2" do |db2|
+    db2.vm.network :private_network, ip: "192.168.77.6"
+
+    # VirtualBox.
+    db2.vm.provider :virtualbox do |v|
+      v.name = "db2.pidramble.com"
+      v.memory = 1024
+      v.cpus = 1
+    end
 
     # Run ansible provisioner for all VMs at the end.
-    db1.vm.provision "ansible" do |ansible|
+    db2.vm.provision "ansible" do |ansible|
       ansible.playbook = "../../main.yml"
       ansible.inventory_path = "inventory"
       ansible.limit = "all"
