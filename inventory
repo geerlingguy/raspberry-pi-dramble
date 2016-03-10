@@ -4,11 +4,10 @@
 [webservers]
 10.0.1.61
 10.0.1.62
-10.0.1.63
-10.0.1.64
 
 [database]
-10.0.1.65
+10.0.1.63
+10.0.1.64
 
 [dramble:children]
 balancer

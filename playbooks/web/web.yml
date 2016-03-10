@@ -6,15 +6,12 @@
     - ../vars.yml
     - vars.yml
 
-  pre_tasks:
-    # Add backports so we can install a newer version of Nginx.
-    - include: ../wheezy-backports.yml
-
   roles:
     - { role: geerlingguy.firewall, tags: ['firewall'] }
     - { role: geerlingguy.security, tags: ['security'] }
     - { role: geerlingguy.nginx, tags: ['nginx'] }
     - { role: geerlingguy.php, tags: ['php'] }
+    - { role: geerlingguy.php-mysql, tags: ['php'] }
     - { role: geerlingguy.drush, tags: ['drush'] }
     - { role: geerlingguy.git, tags: ['git'] }
     - { role: geerlingguy.munin-node, tags: ['munin-node'] }
