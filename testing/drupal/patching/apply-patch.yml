@@ -3,7 +3,7 @@
 # webservers. It downloads the patch through the local machine since the Pis
 # may not have a reliable Internet connection.
 - hosts: webservers
-  sudo: yes
+  become: yes
   serial: 2
 
   vars:

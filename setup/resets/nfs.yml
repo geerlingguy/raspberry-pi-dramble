@@ -4,7 +4,7 @@
 
 # TODO: Switch all this to nfs!
 - hosts: webservers
-  sudo: yes
+  become: yes
 
   vars_files:
     - ../../playbooks/vars.yml

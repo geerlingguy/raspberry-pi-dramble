@@ -3,7 +3,7 @@
 #   $ ansible-playbook -i ../../inventory php.yml
 
 - hosts: webservers
-  sudo: yes
+  become: yes
 
   tasks:
     - name: Ensure php-fpm is stopped.
@@ -29,7 +29,7 @@
 
 - hosts: balancer
   gather_facts: no
-  sudo: yes
+  become: yes
 
   tasks:
     - name: Empty nginx reverse proxy cache.

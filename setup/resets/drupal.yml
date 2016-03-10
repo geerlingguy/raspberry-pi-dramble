@@ -4,7 +4,7 @@
 
 - hosts: webservers
   gather_facts: no
-  sudo: yes
+  become: yes
 
   tasks:
     - name: Remove any Drupal downloads.
@@ -36,7 +36,7 @@
 
 - hosts: database
   gather_facts: no
-  sudo: yes
+  become: yes
 
   tasks:
     - name: Empty the drupal database.
@@ -44,7 +44,7 @@
 
 - hosts: balancer
   gather_facts: no
-  sudo: yes
+  become: yes
 
   tasks:
     - name: Empty nginx reverse proxy cache.
