@@ -6,24 +6,21 @@ mac_address_mapping:
     name: bal1.pidramble.com
     ip: "10.0.1.59"
   # Balancer over built-in LAN.
-  "b8:27:eb:a1:14:de":
+  "b8:27:eb:52:6a:13":
     name: bal1.pidramble.com
     ip: "10.0.1.60"
-  "b8:27:eb:52:6a:13":
+  "b8:27:eb:90:52:27":
     name: www1.pidramble.com
     ip: "10.0.1.61"
-  "b8:27:eb:90:52:27":
+  "b8:27:eb:f0:49:d2":
     name: www2.pidramble.com
     ip: "10.0.1.62"
-  "b8:27:eb:f0:49:d2":
-    name: www3.pidramble.com
-    ip: "10.0.1.63"
   "b8:27:eb:ea:9c:e0":
-    name: www4.pidramble.com
-    ip: "10.0.1.64"
-  "b8:27:eb:54:0c:d1":
     name: db1.pidramble.com
-    ip: "10.0.1.65"
+    ip: "10.0.1.63"
+  "b8:27:eb:54:0c:d1":
+    name: db2.pidramble.com
+    ip: "10.0.1.64"
 
 # Nameservers to use in resolv.conf.
 dns_nameservers:

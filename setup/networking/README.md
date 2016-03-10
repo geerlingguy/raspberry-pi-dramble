@@ -2,13 +2,17 @@
 
 When you plug a fresh new Raspberry Pi into your network, the default configuration tells the Pi to use DHCP to dynamically request an IP address from your network's router. Typically this is a pretty random address, and it can make configuration annoying.
 
-To keep things simpler, I elected to jot down the MAC addresses of each of the Pis' onboard LAN ports (this stays the same over time), and map those to a set of contiguous static IP addresses so I can deploy, for example, the balancer to 10.0.1.60, the webservers to 10.0.1.61-63, and so on.
+To keep things simpler, I elected to jot down the MAC addresses of each of the Pis' onboard LAN ports (this stays the same over time), and map those to a set of contiguous static IP addresses so I can deploy, for example, the balancer to 10.0.1.60, the webservers to 10.0.1.61-62, and so on.
 
 The playbook and configuration in this directory will automatically perform all the required networking configuration to make this so.
 
-To run the playbook, after you have all your Pi IP addresses listed in the `inventory` and all the MAC addresses mapped to IP addresses and hostnames in `vars.yml`:
+To run the playbook:
 
-    $ ansible-playbook -i inventory main.yml
+  1. Copy `example.inventory` to `inventory`, and list all your Raspberry Pi's _current_ IP addresses under `[pis]`
+  2. Copy `example.vars.yml` to `vars.yml`, and make sure each Pi's MAC address is mapped to the desired final IP addresses and hostnames.
+  3. Run `ansible-playbook -i inventory main.yml`.
+
+> _Note_: If you don't have your SSH key installed on all the Pis yet, you will also need to pass `-k` to the above command and enter your SSH password (the default for Raspbian is `raspberry`).
 
 Reboot the Raspberry Pis after this playbook runs (once you're ready to start accessing them via their new IP addresses):
 

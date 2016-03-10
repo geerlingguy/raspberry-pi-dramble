@@ -1,2 +1,5 @@
 .DS_Store
 .vagrant
+
+setup/networking/inventory
+setup/networking/vars.yml

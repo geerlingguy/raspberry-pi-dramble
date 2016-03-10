@@ -1,6 +1,6 @@
 ---
 - hosts: pis
-  sudo: yes
+  become: yes
 
   vars_files:
     - vars.yml
@@ -25,8 +25,19 @@
         - { template: hosts.j2, dest: /etc/hosts }
         - { template: interfaces.j2, dest: /etc/network/interfaces }
         - { template: resolv.conf.j2, dest: /etc/resolv.conf }
-      notify: update hostname
+        - { template: dhcpcd.conf.j2, dest: /etc/dhcpcd.conf }
+      notify:
+        - update hostname
+        - delete dhcp leases
 
   handlers:
     - name: update hostname
       command: "hostname {{ dramble_hostname }}"
+
+    - name: delete dhcp leases
+      file:
+        path: /var/lib/dhcp/dhclient.leases
+        state: absent
+      with_items:
+        - /var/lib/dhcp/dhclient.leases
+        - /var/lib/dhcpcd5/dhcpcd-eth0.lease
