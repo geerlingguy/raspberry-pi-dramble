@@ -46,7 +46,8 @@
     dest: "{{ drupal_docroot }}"
   register: project_updated
   notify: restart nginx
-  sudo_user: www-data
+  become: yes
+  become_user: www-data
   when: drupal_deploy_strategy == 'git'
 
 - name: Copy settings.php file into place.

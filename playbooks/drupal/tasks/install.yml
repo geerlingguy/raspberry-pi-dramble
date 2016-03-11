@@ -7,7 +7,8 @@
     --account-pass={{ drupal_admin_password }}
     chdir={{ drupal_docroot }}
   when: "inventory_hostname == groups.webservers[0]"
-  sudo_user: www-data
+  become: yes
+  become_user: www-data
 
 - name: Wait for Drupal to get bootstrapped.
   pause: seconds=5
@@ -18,7 +19,8 @@
     drush config-set -y system.site uuid {{ drupal_site_uuid }}
     chdir={{ drupal_docroot }}
   when: "inventory_hostname == groups.webservers[0]"
-  sudo_user: www-data
+  become: yes
+  become_user: www-data
 
 - name: Ensure settings.php has proper permissions.
   file:

@@ -31,13 +31,15 @@
         src: "{{ patch_download_location }}"
         dest: "{{ patch_download_location }}"
         mode: 0644
-      sudo_user: www-data
+      become: yes
+      become_user: www-data
 
     - name: Apply patch to Drupal codebase.
       command: >
         git apply -v {{ patch_download_location }}
         chdir={{ patch_apply_location }}
-      sudo_user: www-data
+      become: yes
+      become_user: www-data
 
     - name: Indicate Ansible is finished deploying to the server.
       command: /usr/bin/rgb green

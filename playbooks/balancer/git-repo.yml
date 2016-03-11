@@ -18,7 +18,8 @@
     dest: "/opt/git/demo-drupal-8.git"
   register: demo_drupal_project_updated
   notify: restart nginx
-  sudo_user: www-data
+  become: yes
+  become_user: www-data
 
 - name: Run git update-server-info so repository is ready.
   command: git update-server-info chdir=/opt/git/demo-drupal-8.git
