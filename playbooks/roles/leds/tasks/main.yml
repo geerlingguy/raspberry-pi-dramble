@@ -16,14 +16,14 @@
     src: "{{ item }}.j2"
     dest: "/opt/gpio-leds/{{ item }}"
     mode: 0755
-  with_items: leds_scripts
+  with_items: "{{ leds_scripts }}"
 
 - name: Make LED control scripts available in the user's PATH.
   file:
     path: "/usr/bin/{{ item }}"
     src: "/opt/gpio-leds/{{ item }}"
     state: link
-  with_items: leds_scripts
+  with_items: "{{ leds_scripts }}"
 
 - name: Set up cron jobs for LED control.
   cron: 'name="{{ item.name }}" special_time=reboot job="{{ item.job }}"'
