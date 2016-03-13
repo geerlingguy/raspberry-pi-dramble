@@ -17,11 +17,11 @@
   tasks:
     - name: Provision DigitalOcean droplets.
       digital_ocean:
-        state: "{{ item.state | default('present') }}"
+        state: "{{ digitalocean_droplet_state }}"
         command: droplet
-        id: "{{ item.name }}"
         name: "{{ item.name }}"
-        api_token: "TOKEN_HERE" # Add your API token here.
+        unique_name: yes
+        api_token: "{{ digitalocean_api_token }}"
         private_networking: yes
         size_id: "{{ item.size | default('1gb') }}"
         image_id: "{{ item.image | default('debian-8-x64') }}"
@@ -29,7 +29,7 @@
         # Jeff Geerling's public keys as of early 2016.
         ssh_key_ids: "{{ item.ssh_key | default('138954,1601164') }}"
       register: created_droplets
-      with_items: droplets
+      with_items: "{{ droplets }}"
 
     - name: Add DigitalOcean hosts to their respective inventory groups.
       add_host:
@@ -38,7 +38,11 @@
         # You can dynamically add inventory variables per-host.
         ansible_ssh_user: root
       when: item.1.droplet is defined
-      with_indexed_items: created_droplets.results
+      with_indexed_items: '{{ created_droplets.results }}'
+
+    - name: Print the DigitalOcean droplet information.
+      debug:
+        var: groups.do
 
 - hosts: do
   remote_user: root

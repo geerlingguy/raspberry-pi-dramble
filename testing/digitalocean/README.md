@@ -17,7 +17,7 @@ After a few minutes (depending on DigitalOcean's current server provisioning spe
 
 ## Deploying the Dramble configuration
 
-  1. Edit the `inventory` file included in this directory to use the IP addresses for the servers in your DigitalOcean droplets dashboard (https://cloud.digitalocean.com/droplets).
+  1. Copy the `example.inventory` file in this directory to `inventory`, and edit it to use the IP addresses for the servers in your [DigitalOcean Droplets list](https://cloud.digitalocean.com/droplets).
   2. Run the main setup playbook (from within *this* directory):
     ```
     ansible-playbook -i inventory ../../main.yml
@@ -28,7 +28,7 @@ After a few minutes (depending on DigitalOcean's current server provisioning spe
 
 ## Deploying Drupal to the DigitalOcean Dramble
 
-  1. Run the drupal install playbook (from within *this* directory):
+  1. Run the Drupal install playbook (from within *this* directory):
     ```
     ansible-playbook -i inventory ../../playbooks/drupal/main.yml
     ```
@@ -36,4 +36,6 @@ After a few minutes (depending on DigitalOcean's current server provisioning spe
 
 ## Destroying the DigitalOcean Droplets
 
-To destroy the droplets you used for testing, edit `provision.yml` and replace `present` with `absent` on the line that reads `state: "{{ item.state | default('present') }}"`, then run the `provision.yml` playbook again.
+To destroy the droplets you used for testing, edit `config.yml` and change `digitalocean_droplet_state` to `absent`, then run the `provision.yml` playbook again.
+
+**Note**: Log in and confirm all the Droplets are destroyed; sometimes the DO API might not destroy all of them in one playbook run.

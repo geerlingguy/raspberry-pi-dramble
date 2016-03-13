@@ -6,6 +6,10 @@
     - ../../config.yml
     - vars.yml
 
+  pre_tasks:
+    - name: Ensure sudo is installed.
+      apt: name=sudo state=present
+
   roles:
     - { role: geerlingguy.firewall, tags: ['firewall'] }
     - { role: geerlingguy.security, tags: ['security'] }

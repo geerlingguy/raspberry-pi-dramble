@@ -3,8 +3,8 @@
   become: yes
 
   vars_files:
-    - ../../config.yml
     - vars/main.yml
+    - ../../config.yml
 
   pre_tasks:
     - name: Indicate Ansible is deploying to the server.

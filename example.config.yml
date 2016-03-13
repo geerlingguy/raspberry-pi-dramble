@@ -1,7 +1,34 @@
 ---
+# Drupal site name (set during installation).
 site_name: Dramble
-site_url: pidramble.com # Without the www.
+
+# Drupal site URL (don't include www. or a trailing slash).
+site_url: pidramble.com
+
+# Drupal docroot where the Drupal codebase should be deployed.
 drupal_docroot: /var/www/drupal
+
+# Drupal uid 1 credentials.
+drupal_admin_name: admin
+drupal_admin_password: admin
+
+# Drupal Database configuration. (Make sure to match with vars for database).
+drupal_db_name: drupal
+drupal_db_username: drupal
+drupal_db_password: supersecure
+
+# Uncomment these lines to install Drupal 8 from drupal.org instead of the demo
+# Drupal 8 project (override vars from `playbooks/drupal/vars/main.yml`).
+# drupal_repo: http://git.drupal.org/project/drupal.git
+# drupal_deploy_strategy: "tarball"
+# drupal_version: "8.0.5"
+
+# Drupal install profile to use (for installation).
+drupal_install_profile: "standard"
+
+# Settings.php configuration for idempotence.
+drupal_hash_salt: nCZ3_LdhMkzH7MidhZ3Ac4sUyIbQP2FS9upOUbppzT9EtWp_gUmR8KZffhwm8rjmTr08oWLhjQ
+drupal_site_uuid: 73ee435f-88fd-4b45-9c00-c09c54510359
 
 # Set nginx_access_log to "off" to conserve disk I/O for maximum performance.
 # Set it to a file inside /var/log/nginx if you want to enable the monitoring of
@@ -11,8 +38,10 @@ nginx_access_log: "/var/log/nginx/access.log"
 # Drupal filesystem configuration.
 nfs_mount_dir: /mnt/nfs
 
+# Security configuration.
 security_sudoers_passwordless:
   - pi
 
-# If you wish to test the infrastructure on DigitalOcean, add your token here.
+# DigitalOcean configuration (use to test the infrastructure on DigitalOcean).
 digitalocean_api_token: "YOUR_TOKEN_HERE"
+digitalocean_droplet_state: present
