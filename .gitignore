@@ -1,6 +1,8 @@
 .DS_Store
 .vagrant
 
+config.yml
+
 setup/networking/inventory
 setup/networking/vars.yml
 

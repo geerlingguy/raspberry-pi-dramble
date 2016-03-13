@@ -1,34 +1,33 @@
 ---
-# Digital Ocean v1 API Usage notes:
-#   - Requests in form: https://api.digitalocean.com/v1/[method]/?client_id=[]&api_key=[]
-#   - Get all available images: https://api.digitalocean.com/v1/images/
-#   - Get all available sizes: https://api.digitalocean.com/v1/sizes/
-
 - hosts: localhost
   connection: local
   gather_facts: false
 
+  vars_files:
+    - ../../config.yml
+
   vars:
     droplets:
-      - { name: bal1.pidramble.com, group: "balancer" }
-      - { name: www1.pidramble.com, group: "webservers" }
-      - { name: www2.pidramble.com, group: "webservers" }
-      - { name: www3.pidramble.com, group: "webservers" }
-      - { name: www4.pidramble.com, group: "webservers" }
-      - { name: db1.pidramble.com, group: "database" }
+      - { name: "bal1.{{ site_url }}", group: "balancer" }
+      - { name: "www1.{{ site_url }}", group: "webservers" }
+      - { name: "www2.{{ site_url }}", group: "webservers" }
+      - { name: "db1.{{ site_url }}", group: "database" }
+      - { name: "db2.{{ site_url }}", group: "database" }
 
   tasks:
     - name: Provision DigitalOcean droplets.
       digital_ocean:
         state: "{{ item.state | default('present') }}"
         command: droplet
+        id: "{{ item.name }}"
         name: "{{ item.name }}"
+        api_token: "TOKEN_HERE" # Add your API token here.
         private_networking: yes
-        size_id: "{{ item.size | default(63) }}" # 1024 mb
-        image_id: "{{ item.image | default(10322059) }}" # Debian 7 x64
-        region_id: "{{ item.region | default(4) }}" # NYC2
-        ssh_key_ids: "{{ item.ssh_key | default('138954') }}" # geerlingguy
-        unique_name: yes
+        size_id: "{{ item.size | default('1gb') }}"
+        image_id: "{{ item.image | default('debian-8-x64') }}"
+        region_id: "{{ item.region | default('nyc3') }}"
+        # Jeff Geerling's public keys as of early 2016.
+        ssh_key_ids: "{{ item.ssh_key | default('138954,1601164') }}"
       register: created_droplets
       with_items: droplets
 

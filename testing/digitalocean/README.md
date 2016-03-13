@@ -1,18 +1,17 @@
 # DigitalOcean Testing for Raspberry Pi Dramble
 
-The included `provision.yml` file, when run, will provision six servers in your DigitalOcean account that you can use to test the Raspberry Pi Dramble project on the public Internet.
+The included `provision.yml` file, when run, will provision five servers in your DigitalOcean account that you can use to test the Raspberry Pi Dramble project on the public Internet.
 
-**NOTE**: These servers will be accessible to the public, *and* you will be charged a fee for each server as long as it's running (something like $0.014/hour, so not much if you destroy them quickly). This provisioning setup is meant for experimental/testing purposes only. If you don't destroy the droplets once you're finished testing, you put sensitive information on them and they get hacked or 'repurposed'... you've been warned!
+**NOTE**: These servers will be accessible to the public, *and* you will be charged a fee for each server as long as it's running (something like $0.01/hour, so not much if you destroy them quickly). This provisioning setup is meant for experimental/testing purposes only. If you don't destroy the droplets once you're finished testing, you put sensitive information on them and they get hacked or 'repurposed'... you've been warned!
 
 ## Provision the servers
 
-Pre-suppositions: You have a DigitalOcean account, and you have your v1 API Client ID and API Key from the account. Additionally, you have `dopy` and Ansible installed on your workstation (install `dopy` with `sudo pip install dopy`).
+Pre-suppositions: You have a DigitalOcean account, and you have a [Personal Access Token](https://www.digitalocean.com/community/tutorials/how-to-use-the-digitalocean-api-v2#how-to-generate-a-personal-access-token). Additionally, you have `dopy` and Ansible installed on your workstation (install `dopy` with `sudo pip install dopy`).
 
-To build the droplets and configure them using Ansible, follow these steps (both from within this directory):
+To build the droplets and configure them using Ansible, follow these steps (within this directory):
 
-  1. Set your DigitalOcean v1 Client ID: `export DO_CLIENT_ID=[client ID here]`
-  2. Set your DigitalOcean v1 API Key: `export DO_API_KEY=[api key here]`
-  3. Run `ansible-playbook provision.yml`.
+  1. Set `digitalocean_api_token` in `config.yml` (in the project root) to your Access Token copy `example.config.yml` to `config.yml` if not already done.
+  2. Run `ansible-playbook provision.yml`.
 
 After a few minutes (depending on DigitalOcean's current server provisioning speed), the servers will be provisioned and ready for you to run the main Ansible playbook on them.
 

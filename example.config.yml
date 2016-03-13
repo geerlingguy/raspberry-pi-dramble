@@ -13,3 +13,6 @@ nfs_mount_dir: /mnt/nfs
 
 security_sudoers_passwordless:
   - pi
+
+# If you wish to test the infrastructure on DigitalOcean, add your token here.
+digitalocean_api_token: "YOUR_TOKEN_HERE"

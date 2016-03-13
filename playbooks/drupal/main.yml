@@ -3,7 +3,7 @@
   become: yes
 
   vars_files:
-    - ../vars.yml
+    - ../../config.yml
     - vars/main.yml
 
   pre_tasks:

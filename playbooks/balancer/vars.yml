@@ -24,8 +24,8 @@ munin_admin_user: admin
 munin_admin_password: secret
 munin_cron_job: absent
 munin_hosts:
-  - { name: "dramble;bal1.pidramble.com", address: "127.0.0.1", extra: [] }
-  - { name: "dramble;www1.pidramble.com", address: "{{ groups.webservers[0] }}", extra: [] }
-  - { name: "dramble;www2.pidramble.com", address: "{{ groups.webservers[1] }}", extra: [] }
-  - { name: "dramble;db1.pidramble.com", address: "{{ groups.database[0] }}", extra: [] }
-  - { name: "dramble;db2.pidramble.com", address: "{{ groups.database[1] }}", extra: [] }
+  - { name: "dramble;bal1.{{ site_url }}", address: "127.0.0.1", extra: [] }
+  - { name: "dramble;www1.{{ site_url }}", address: "{{ groups.webservers[0] }}", extra: [] }
+  - { name: "dramble;www2.{{ site_url }}", address: "{{ groups.webservers[1] }}", extra: [] }
+  - { name: "dramble;db1.{{ site_url }}", address: "{{ groups.database[0] }}", extra: [] }
+  - { name: "dramble;db2.{{ site_url }}", address: "{{ groups.database[1] }}", extra: [] }
