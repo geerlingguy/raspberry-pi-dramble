@@ -6,15 +6,18 @@
   gather_facts: no
   become: yes
 
+  vars_files:
+    - ../../config.yml
+
   tasks:
     - name: Remove any Drupal downloads.
       shell: "rm -rf ~/drupal*"
 
     - name: Remove /var/www/drupal contents.
-      shell: "rm -rf /var/www/drupal"
+      shell: "rm -rf {{ drupal_docroot }}"
 
-    - name: Remove /mnt/gluster/files contents.
-      shell: "rm -rf /mnt/gluster/files"
+    - name: Remove shared files directory.
+      shell: "rm -rf {{ nfs_mount_dir }}/files"
       when: "inventory_hostname == groups.webservers[0]"
 
     - name: Remove drupal_install_complete file.
@@ -24,27 +27,33 @@
       cron:
         name: "Dramble Drupal cron"
         user: "{{ ansible_ssh_user }}"
-        job: "/usr/local/bin/drush --quiet --root=/var/www/drupal cron -y"
+        job: "/usr/local/bin/drush --quiet --root={{ drupal_docroot }} cron -y"
         state: absent
       when: "inventory_hostname == groups.webservers[0]"
 
     - name: Restart php-fpm and nginx.
       service: "name={{ item }} state=restarted"
       with_items:
-        - php5-fpm
+        - php-fpm
         - nginx
 
 - hosts: database
   gather_facts: no
   become: yes
 
+  vars_files:
+    - ../../config.yml
+
   tasks:
     - name: Empty the drupal database.
-      shell: "echo 'DROP DATABASE drupal; CREATE DATABASE drupal;' | mysql -u root -psupersecure"
+      shell: "echo 'DROP DATABASE drupal; CREATE DATABASE drupal;' | mysql -u root -p{{ mysql_root_password }}"
 
 - hosts: balancer
   gather_facts: no
   become: yes
+
+  vars_files:
+    - ../../config.yml
 
   tasks:
     - name: Empty nginx reverse proxy cache.
