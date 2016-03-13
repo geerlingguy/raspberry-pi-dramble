@@ -3,6 +3,13 @@
 
 VAGRANTFILE_API_VERSION = "2"
 
+# Use config.yml values for some configuration.
+require 'yaml'
+unless File.exist?("../../config.yml")
+  raise 'Configuration file not found! Please copy example.config.yml to config.yml and try again.'
+end
+vconfig = YAML.load_file("../../config.yml")
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "debian/jessie64"
   config.ssh.insert_key = false
@@ -18,7 +25,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # VirtualBox.
     bal1.vm.provider :virtualbox do |v|
       v.linked_clone = true if Vagrant::VERSION =~ /^1.8/
-      v.name = "bal1.pidramble.com"
+      v.name = "bal1." + vconfig['site_url']
       v.memory = 1024
       v.cpus = 4
     end
@@ -31,7 +38,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # VirtualBox.
     www1.vm.provider :virtualbox do |v|
       v.linked_clone = true if Vagrant::VERSION =~ /^1.8/
-      v.name = "www1.pidramble.com"
+      v.name = "www1." + vconfig['site_url']
       v.memory = 1024
       v.cpus = 1
     end
@@ -44,7 +51,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # VirtualBox.
     www2.vm.provider :virtualbox do |v|
       v.linked_clone = true if Vagrant::VERSION =~ /^1.8/
-      v.name = "www2.pidramble.com"
+      v.name = "www2." + vconfig['site_url']
       v.memory = 1024
       v.cpus = 1
     end
@@ -57,7 +64,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # VirtualBox.
     db1.vm.provider :virtualbox do |v|
       v.linked_clone = true if Vagrant::VERSION =~ /^1.8/
-      v.name = "db1.pidramble.com"
+      v.name = "db1." + vconfig['site_url']
       v.memory = 1024
       v.cpus = 1
     end
@@ -70,7 +77,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # VirtualBox.
     db2.vm.provider :virtualbox do |v|
       v.linked_clone = true if Vagrant::VERSION =~ /^1.8/
-      v.name = "db2.pidramble.com"
+      v.name = "db2." + vconfig['site_url']
       v.memory = 1024
       v.cpus = 1
     end
