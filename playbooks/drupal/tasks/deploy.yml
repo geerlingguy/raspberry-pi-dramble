@@ -24,7 +24,7 @@
 
 - name: Download Drupal to the temp folder.
   get_url:
-    url: "http://ftp.drupal.org/files/projects/drupal-{{ drupal_version }}.tar.gz"
+    url: "https://ftp.drupal.org/files/projects/drupal-{{ drupal_version }}.tar.gz"
     dest: "~/drupal-{{ drupal_version }}.tar.gz"
   register: download_drupal_tarball
   when: drupal_deploy_strategy == 'tarball'

@@ -20,7 +20,39 @@ nginx_keepalive_timeout: "65"
 nginx_remove_default_vhost: true
 nginx_vhosts: []
 
+# Don't keep updating Drush once installed.
+drush_keep_updated: false
+
+# NFS configuration.
+nfs_share_dir: /srv/nfs
+nfs_exports: { "/srv/nfs *(rw,sync,no_root_squash)" }
+# nfs_mount_dir: /mnt/nfs # defined in global vars file.
+
+# Munin settings.
+munin_node_allowed_ips:
+  - "^{{ groups.balancer[0] | replace('.', '\\.') }}$"
+
 # PHP configuration.
+php_webserver_daemon: "nginx"
+php_enable_php_fpm: true
+php_memory_limit: "128M"
+php_max_execution_time: "240"
+php_opcache_enabled_in_ini: true
+php_opcache_memory_consumption: "128"
+php_fpm_listen: "127.0.0.1:9000"
+php_fpm_listen_allowed_clients: "127.0.0.1"
+php_fpm_pm_max_children: 7
+php_fpm_pm_start_servers: 4
+php_fpm_pm_min_spare_servers: 2
+php_fpm_pm_max_spare_servers: 4
+php_conf_paths:
+  - /etc/php5/fpm
+  - /etc/php5/cli
+php_extension_conf_paths:
+  - /etc/php5/fpm/conf.d
+  - /etc/php5/cli/conf.d
+
+# PHP source installation configuration.
 php_install_from_source: true
 # Some example versions to try: php-5.5.33, php-5.6.19, php-7.0.4.
 php_source_version: "php-7.0.4"
@@ -29,6 +61,7 @@ php_source_configure_command: >
   ./configure
   --prefix={{ php_source_install_path }}
   --with-config-file-path={{ php_conf_paths | first }}
+  --with-config-file-scan-dir={{ php_conf_paths | first }}/conf.d
   --enable-mbstring
   --enable-zip
   --enable-bcmath
@@ -63,21 +96,3 @@ php_source_configure_command: >
   --with-bz2=/usr
   --with-recode=/usr
   --with-mysqli=/usr/bin/mysql_config
-php_webserver_daemon: "nginx"
-php_enable_php_fpm: true
-php_memory_limit: "128M"
-php_max_execution_time: "240"
-php_opcache_enabled_in_ini: true
-php_opcache_memory_consumption: "128"
-
-# Don't keep updating Drush once installed.
-drush_keep_updated: false
-
-# NFS configuration.
-nfs_share_dir: /srv/nfs
-nfs_exports: { "/srv/nfs *(rw,sync,no_root_squash)" }
-# nfs_mount_dir: /mnt/nfs # defined in global vars file.
-
-# Munin settings.
-munin_node_allowed_ips:
-  - "^{{ groups.balancer[0] | replace('.', '\\.') }}$"

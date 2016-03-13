@@ -11,17 +11,10 @@ server {
     server_name {{ inventory_hostname }} www.{{ site_url }};
     root {{ drupal_docroot }};
 
+    gzip on;
     gzip_static on;
+
     access_log {{ nginx_access_log }};
-
-    location = /favicon.ico {
-        log_not_found off;
-    }
-
-    location = /robots.txt {
-        allow all;
-        log_not_found off;
-    }
 
     location ~ \..*/.*\.php$ {
         return 403;
@@ -32,12 +25,14 @@ server {
     }
 
     location / {
-        try_files $uri @rewrite;
+        # Don't touch PHP for static content.
+        try_files $uri /index.php?$query_string;
     }
 
-    location @rewrite {
-        # Clean URLs are handled in drupal_environment_initialize().
-        rewrite ^ /index.php;
+    # Don't allow direct access to PHP files in the vendor directory.
+    location ~ /vendor/.*\.php$ {
+        deny all;
+        return 404;
     }
 
     location ~ \.php$ {
@@ -46,17 +41,33 @@ server {
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $request_filename;
         fastcgi_intercept_errors on;
-        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_pass {{ php_fpm_listen }};
         fastcgi_read_timeout 240s;
         add_header X-Backend-Server $hostname;
+    }
+
+    location @rewrite {
+        # Clean URLs are handled in drupal_environment_initialize().
+        rewrite ^ /index.php;
     }
 
     location ~ ^/sites/.*/files/styles/ {
         try_files $uri @rewrite;
     }
 
+    location = /favicon.ico {
+        log_not_found off;
+        access_log off;
+    }
+
+    location = /robots.txt {
+        allow all;
+        log_not_found off;
+        access_log off;
+    }
+
     location ~* \.(jpg|jpeg|gif|css|png|js|ico|eot|svg|ttf|woff)$ {
         expires max;
-        log_not_found off; # Save a ton of precious disk I/O.
+        log_not_found off;
     }
 }

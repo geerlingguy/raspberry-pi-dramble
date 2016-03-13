@@ -4,8 +4,8 @@ firewall_allowed_tcp_ports:
 
 # Limit access to MySQL port (3306) to webservers.
 firewall_additional_rules:
-  - "iptables -A INPUT -p tcp --dport 3306 -s {{ groups.webservers[0] }}/24 -j ACCEPT"
-  - "iptables -A INPUT -p tcp --dport 3306 -s {{ groups.webservers[1] }}/24 -j ACCEPT"
+  - "iptables -A INPUT -p tcp --dport 3306 -s {{ groups.webservers[0] }} -j ACCEPT"
+  - "iptables -A INPUT -p tcp --dport 3306 -s {{ groups.webservers[1] }} -j ACCEPT"
   - "iptables -A INPUT -p tcp --dport 4949 -s {{ groups.balancer[0] }} -j ACCEPT"
 
 mysql_root_password: supersecure
@@ -25,7 +25,7 @@ mysql_databases:
     replicate: 0
   }
 
-mysql_bind_address: "{{ ansible_default_ipv4.address }}"
+mysql_bind_address: "{{ ansible_all_ipv4_addresses[0] }}"
 
 # Memory settings.
 mysql_key_buffer_size: "32M"

@@ -12,8 +12,9 @@ $databases['default']['default'] = array(
   'password' => '{{ drupal_db_password }}',
   'host' => '{{ groups.database[0] }}',
   'port' => '3306',
-  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
   'driver' => 'mysql',
+  'prefix' => '',
+  'collation' => 'utf8mb4_general_ci',
 );
 
 # Configuration management settings.
@@ -34,7 +35,7 @@ $settings['reverse_proxy_header'] = 'X-Forwarded-For';
 $settings['omit_vary_cookie'] = TRUE;
 
 // Base URL.
-// $base_url = 'http://{{ site_url }}';  // NO trailing slash!
+// $base_url = 'http://{{ site_url }}';
 
 // Trusted host settings.
 $settings['trusted_host_patterns'] = array(
