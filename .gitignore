@@ -1,5 +1,6 @@
 .DS_Store
 .vagrant
+*.retry
 
 config.yml
 
