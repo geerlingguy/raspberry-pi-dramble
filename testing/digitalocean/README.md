@@ -11,30 +11,34 @@ Pre-suppositions: You have a DigitalOcean account, and you have a [Personal Acce
 To build the droplets and configure them using Ansible, follow these steps (within this directory):
 
   1. Set `digitalocean_api_token` in `config.yml` (in the project root) to your Access Token copy `example.config.yml` to `config.yml` if not already done.
-  2. Run `ansible-playbook provision.yml`.
+  2. Run `ansible-playbook provision.yml`, and wait until the Droplets are all provisioned.
+  3. Copy the `example.inventory` file in this directory to `inventory`, and edit it to use the IP addresses for the servers in your [DigitalOcean Droplets list](https://cloud.digitalocean.com/droplets).
 
-After a few minutes (depending on DigitalOcean's current server provisioning speed), the servers will be provisioned and ready for you to run the main Ansible playbook on them.
+Make sure you can connect to the servers by pinging them with Ansible:
 
-## Deploying the Dramble configuration
+    ansible all -i inventory -m ping
 
-  1. Copy the `example.inventory` file in this directory to `inventory`, and edit it to use the IP addresses for the servers in your [DigitalOcean Droplets list](https://cloud.digitalocean.com/droplets).
-  2. Run the main setup playbook (from within *this* directory):
-    ```
+It should show a `SUCCESS` message for each server; you will likely need to type `yes` a few times to accept all the hostkeys. (Note that certain versions of Ansible don't work correctly with new hosts/untrusted hostkeys, so you might have to ssh into each server to accept its hostkey the first time).
+
+## Deploy the Dramble configuration
+
+Run the main setup playbook (from within *this* directory):
+
     ansible-playbook -i inventory ../../main.yml
-    ```
-  3. After a few minutes, everything should be deployed, and the Dramble cluster will be ready for Drupal deployment.
+
+After a few minutes, everything should be deployed, and the Dramble cluster will be ready for Drupal deployment.
 
 > You could run the `main.yml` playbook directly from the `provision.yml` playbook if you wanted, but this would require a little extra reconfiguration, and this DigitalOcean setup is mainly meant for testing purposes, so I'm not going to devote the time to maintaining it for that level of use/ease.
 
-## Deploying Drupal to the DigitalOcean Dramble
+## Deploy Drupal to the DigitalOcean Dramble
 
-  1. Run the Drupal install playbook (from within *this* directory):
-    ```
+Run the Drupal install playbook (from within *this* directory):
+
     ansible-playbook -i inventory ../../playbooks/drupal/main.yml
-    ```
-  2. After a few minutes, everything should be deployed, and the Dramble cluster will be serving up Drupal 8!
 
-## Destroying the DigitalOcean Droplets
+After a few minutes, everything should be deployed, and the Dramble cluster will be serving up Drupal 8!
+
+## Destroy the DigitalOcean Droplets
 
 To destroy the droplets you used for testing, edit `config.yml` and change `digitalocean_droplet_state` to `absent`, then run the `provision.yml` playbook again.
 
