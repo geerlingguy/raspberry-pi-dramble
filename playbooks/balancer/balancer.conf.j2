@@ -53,7 +53,7 @@ server {
     listen 80;
     server_name munin.{{ site_url }};
     root /var/cache/munin/www;
-    access_log off; # Save a ton of precious disk I/O.
+    access_log off;
 }
 
 # Git repository server configuration.
@@ -61,5 +61,5 @@ server {
     listen 80;
     server_name git.{{ site_url }};
     root /opt/git;
-    access_log off; # Save a ton of precious disk I/O.
+    access_log off;
 }
