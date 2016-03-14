@@ -22,7 +22,6 @@ nginx_upstreams:
 # Munin configuration.
 munin_admin_user: admin
 munin_admin_password: secret
-munin_cron_job: absent
 munin_hosts:
   - { name: "dramble;bal1.{{ site_url }}", address: "127.0.0.1", extra: [] }
   - { name: "dramble;www1.{{ site_url }}", address: "{{ groups.webservers[0] }}", extra: [] }
