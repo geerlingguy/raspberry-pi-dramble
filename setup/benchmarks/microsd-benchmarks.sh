@@ -51,14 +51,14 @@ fi
 # Run benchmarks.
 printf "Running hdparm test...\n"
 hdparm -t /dev/mmcblk0
-printf "\n\n"
+printf "\n"
 
 printf "Running dd test...\n\n"
 dd if=/dev/zero of=/home/pi/test bs=8k count=50k conv=fsync; rm -f /home/pi/test
-printf "\n\n"
+printf "\n"
 
 printf "Running iozone test...\n"
 ./iozone -e -I -a -s 100M -r 4k -i 0 -i 1 -i 2
-printf "\n\n"
+printf "\n"
 
-printf "microSD card benchmark complete!\n"
+printf "microSD card benchmark complete!\n\n"
