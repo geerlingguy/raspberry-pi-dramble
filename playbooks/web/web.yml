@@ -10,6 +10,14 @@
     - name: Ensure sudo is installed.
       apt: name=sudo state=present
 
+    - name: Check if the Drupal vhost is already configured.
+      stat: path=/etc/nginx/sites-enabled/drupal.conf
+      register: drupal_vhost_conf
+
+    - name: Ensure rpcbind is purged (first run only).
+      apt: name=rpcbind state=absent purge=yes
+      when: drupal_vhost_conf.stat.exists == false
+
   roles:
     - { role: geerlingguy.firewall, tags: ['firewall'] }
     - { role: geerlingguy.security, tags: ['security'] }

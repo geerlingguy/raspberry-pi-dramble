@@ -1,4 +1,16 @@
 ---
+- name: Ensure rpcbind is running and enabled if exports are present.
+  service:
+    name: rpcbind
+    state: started
+    enabled: yes
+  register: rpcbind_enable
+  when: nfs_exports|length
+
+- name: Restart NFS immediately if exports are updated.
+  service: "name={{ nfs_server_daemon }} state=restarted"
+  when: rpcbind_enable.changed
+
 - name: Ensure NFS share and mount directories exist.
   file:
     path: "{{ item }}"
