@@ -14,6 +14,7 @@
       stat: path=/etc/nginx/sites-enabled/drupal.conf
       register: drupal_vhost_conf
 
+    # See: https://github.com/geerlingguy/raspberry-pi-dramble/issues/65
     - name: Ensure rpcbind is purged (first run only).
       apt: name=rpcbind state=absent purge=yes
       when: drupal_vhost_conf.stat.exists == false

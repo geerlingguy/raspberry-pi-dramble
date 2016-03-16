@@ -1,4 +1,5 @@
 ---
+# See: https://github.com/geerlingguy/raspberry-pi-dramble/issues/65
 - name: Ensure rpcbind is running and enabled if exports are present.
   service:
     name: rpcbind
@@ -7,6 +8,7 @@
   register: rpcbind_enable
   when: nfs_exports|length
 
+# See: https://github.com/geerlingguy/raspberry-pi-dramble/issues/65
 - name: Restart NFS immediately if exports are updated.
   service: "name={{ nfs_server_daemon }} state=restarted"
   when: rpcbind_enable.changed
