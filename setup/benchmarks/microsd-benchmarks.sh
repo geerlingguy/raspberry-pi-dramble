@@ -17,6 +17,7 @@
 #
 # Author: Jeff Geerling, 2016
 
+printf "\n"
 printf "Raspberry Pi Dramble microSD benchmarks\n"
 
 CLOCK="$(grep "actual clock" /sys/kernel/debug/mmc0/ios 2>/dev/null | awk '{printf("%0.3f MHz", $3/1000000)}')"
@@ -43,6 +44,8 @@ if [ ! -f $IOZONE_INSTALL_PATH/$IOZONE_VERSION/src/current/iozone ]; then
   cd $IOZONE_VERSION/src/current
   make --quiet linux-arm
   printf "Install complete!\n\n"
+else
+  cd $IOZONE_VERSION/src/current
 fi
 
 # Run benchmarks.
@@ -50,7 +53,7 @@ printf "Running hdparm test...\n"
 hdparm -t /dev/mmcblk0
 printf "\n\n"
 
-printf "Running dd test...\n"
+printf "Running dd test...\n\n"
 dd if=/dev/zero of=/home/pi/test bs=8k count=50k conv=fsync; rm -f /home/pi/test
 printf "\n\n"
 
