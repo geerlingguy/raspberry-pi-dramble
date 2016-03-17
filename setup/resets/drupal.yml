@@ -42,11 +42,12 @@
   become: yes
 
   vars_files:
+    - ../../playbooks/database/vars.yml
     - ../../config.yml
 
   tasks:
-    - name: Empty the drupal database.
-      shell: "echo 'DROP DATABASE drupal; CREATE DATABASE drupal;' | mysql -u root -p{{ mysql_root_password }}"
+    - name: Drop the drupal database.
+      shell: "echo 'DROP DATABASE IF EXISTS {{ mysql_databases[0]['name'] }};' | mysql -u root -p{{ mysql_root_password }}"
 
 - hosts: balancer
   gather_facts: no

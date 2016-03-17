@@ -6,8 +6,8 @@
 10.0.1.62
 
 [database]
-10.0.1.63
-10.0.1.64
+10.0.1.63 mysql_server_id=1 mysql_replication_role=master
+10.0.1.64 mysql_server_id=2 mysql_replication_role=slave
 
 [dramble:children]
 balancer

@@ -2,28 +2,26 @@
 firewall_allowed_tcp_ports:
   - 22
 
-# Limit access to MySQL port (3306) to webservers.
+# Limit access to MySQL port (3306) to webservers and database servers.
 firewall_additional_rules:
   - "iptables -A INPUT -p tcp --dport 3306 -s {{ groups.webservers[0] }} -j ACCEPT"
   - "iptables -A INPUT -p tcp --dport 3306 -s {{ groups.webservers[1] }} -j ACCEPT"
+  - "iptables -A INPUT -p tcp --dport 3306 -s {{ groups.database[0] }} -j ACCEPT"
+  - "iptables -A INPUT -p tcp --dport 3306 -s {{ groups.database[1] }} -j ACCEPT"
   - "iptables -A INPUT -p tcp --dport 4949 -s {{ groups.balancer[0] }} -j ACCEPT"
 
 mysql_root_password: supersecure
 mysql_users:
-  - {
-    name: drupal,
-    host: "%",
-    password: supersecure,
+  - name: drupal
+    host: "%"
+    password: supersecure
     priv: "drupal.*:ALL"
-  }
 
 mysql_databases:
-  - {
-    name: drupal,
-    collation: utf8_general_ci,
-    encoding: utf8,
-    replicate: 0
-  }
+  - name: drupal
+    collation: utf8_general_ci
+    encoding: utf8
+    replicate: 1
 
 mysql_bind_address: "{{ ansible_all_ipv4_addresses[0] }}"
 
@@ -51,8 +49,8 @@ mysql_innodb_flush_log_at_trx_commit: "2"
 # Replication settings.
 mysql_replication_master: "{{ groups.database[0] }}"
 mysql_replication_user:
-  name: 'replication'
-  password: 'supersecure'
+  name: replication
+  password: supersecure
 
 # Munin settings.
 munin_node_allowed_ips:

@@ -6,8 +6,8 @@
 107.170.51.216
 
 [database]
-192.241.181.197
-192.241.181.199
+159.203.114.37 mysql_server_id=1 mysql_replication_role=master
+159.203.122.117 mysql_server_id=2 mysql_replication_role=slave
 
 [dramble:children]
 balancer
