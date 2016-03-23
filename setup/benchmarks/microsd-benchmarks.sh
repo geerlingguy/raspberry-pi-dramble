@@ -21,19 +21,32 @@ printf "\n"
 printf "Raspberry Pi Dramble microSD benchmarks\n"
 
 CLOCK="$(grep "actual clock" /sys/kernel/debug/mmc0/ios 2>/dev/null | awk '{printf("%0.3f MHz", $3/1000000)}')"
-echo "microSD clock: $CLOCK"
+if [ -n "$CLOCK" ]; then
+  echo "microSD clock: $CLOCK"
+fi
 printf "\n"
 
 # Variables.
-IOZONE_INSTALL_PATH=/home/pi
+USER_HOME_PATH=$(getent passwd $SUDO_USER | cut -d: -f6)
+IOZONE_INSTALL_PATH=$USER_HOME_PATH
 IOZONE_VERSION=iozone3_434
 
 cd $IOZONE_INSTALL_PATH
 
-# Install apt dependencies.
+# Install dependencies.
 if [ ! `which hdparm` ]; then
-  printf "Installing apt dependencies...\n"
-  apt-get install -y hdparm curl
+  printf "Installing hdparm...\n"
+  apt-get install -y hdparm
+  printf "Install complete!\n\n"
+fi
+if [ ! `which curl` ]; then
+  printf "Installing curl...\n"
+  apt-get install -y curl
+  printf "Install complete!\n\n"
+fi
+if [ ! `which make` ]; then
+  printf "Installing build tools...\n"
+  apt-get install -y build-essential
   printf "Install complete!\n\n"
 fi
 
@@ -54,7 +67,7 @@ hdparm -t /dev/mmcblk0
 printf "\n"
 
 printf "Running dd test...\n\n"
-dd if=/dev/zero of=/home/pi/test bs=8k count=50k conv=fsync; rm -f /home/pi/test
+dd if=/dev/zero of=${USER_HOME_PATH}test bs=8k count=50k conv=fsync; rm -f ${USER_HOME_PATH}/test
 printf "\n"
 
 printf "Running iozone test...\n"
