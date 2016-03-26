@@ -2,25 +2,14 @@ auto lo
 
 iface lo inet loopback
 
-{% if pi_dramble_network_interface == 'eth0' %}
-iface eth0 inet static
-  address {{ dramble_ip_address }}/24
-  netmask 255.255.255.0
-  gateway 10.0.1.1
-  dns-nameservers {{ dns_nameservers | join(' ') }}
-{% else %}
 iface eth0 inet manual
-{% endif %}
 
 allow-hotplug wlan0
-{% if pi_dramble_network_interface == 'wlan0' %}
-iface wlan0 inet static
+iface wlan0 inet manual
+wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+
+iface default inet static
   address {{ dramble_ip_address }}/24
   netmask 255.255.255.0
   gateway 10.0.1.1
   dns-nameservers {{ dns_nameservers | join(' ') }}
-{% else %}
-iface wlan0 inet manual
-{% endif %}
-wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
-iface default inet dhcp
