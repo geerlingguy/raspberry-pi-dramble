@@ -1,4 +1,7 @@
 ---
+# Set to either "eth0" (for built-in LAN) or "wlan0" (for WiFi).
+pi_dramble_network_interface: "eth0"
+
 # Mapping of what hardware MAC addresses should be configured with specific IPs.
 mac_address_mapping:
   # Balancer over TRENDnet GigE adapter.
