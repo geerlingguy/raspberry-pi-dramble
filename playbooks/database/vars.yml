@@ -32,15 +32,11 @@ mysql_table_open_cache: "256"
 mysql_sort_buffer_size: "1M"
 mysql_read_buffer_size: "1M"
 mysql_read_rnd_buffer_size: "4M"
-# mysql_myisam_sort_buffer_size: "32M" # For 512MB RAM.
-mysql_myisam_sort_buffer_size: "64M" # For 1GB RAM.
 mysql_thread_cache_size: "25"
 mysql_query_cache_size: "16M"
 
 # InnoDB settings.
 mysql_innodb_file_per_table: "1"
-# mysql_innodb_buffer_pool_size: "256M" # For 512MB RAM.
-mysql_innodb_buffer_pool_size: "512M" # For 1GB RAM.
 mysql_innodb_additional_mem_pool_size: "20M"
 mysql_innodb_log_file_size: "64M"
 mysql_innodb_log_buffer_size: "8M"

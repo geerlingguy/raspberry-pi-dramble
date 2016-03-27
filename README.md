@@ -53,8 +53,14 @@ See the [Pi Dramble Benchmarks](http://www.pidramble.com/wiki/benchmarks) sectio
 
 If you have only a single Raspberry Pi, you can use the [Drupal Pi](https://github.com/geerlingguy/drupal-pi) project to quickly get Drupal running on the single Pi.
 
+## Using Raspberry Pi B+ or Pi Zero
+
+The Raspberry Pi 2 and 3 both have quad-core processors that make certain operations four to ten times faster than single-core Pis like the A+, B+, Zero, etc. Additionally, a typical web application needs as much RAM as possible, and any Pi without at least 512 MB of RAM is woefully underpowered for the Drupal LEMP stack.
+
+It's not recommended—but it is possible—to build your cluster with Raspberry Pi model B+ or Zeros (both have 512 MB of RAM), and you only need to make a couple small changes to `config.yml` before running the main Ansible playbook:
+
+Inside `config.yml`, comment out the two MySQL settings with comments `# For 1GB RAM.`, and uncomment the two MySQL settings with `# For 512MB RAM.`.
+
 ## Author
 
-This project was started in 2015 by [Jeff Geerling](http://www.jeffgeerling.com/), author of [Ansible for DevOps](http://ansiblefordevops.com/).
-
-Raspberry Pi image used in architecture diagram by [Multicherry](http://commons.wikimedia.org/wiki/User:Multicherry), downloaded from [Wikipedia](http://en.m.wikipedia.org/wiki/File:Raspberry_Pi_2_Model_B_v1.1_top_new_(bg_cut_out).jpg). All other logos are copyright their respective owners.
+This project was started in 2015 by [Jeff Geerling](http://www.jeffgeerling.com/), author of [Ansible for DevOps](http://www,ansiblefordevops.com/).

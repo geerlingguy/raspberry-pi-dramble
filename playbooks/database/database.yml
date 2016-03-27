@@ -3,8 +3,8 @@
   become: yes
 
   vars_files:
-    - ../../config.yml
     - vars.yml
+    - ../../config.yml
 
   pre_tasks:
     - name: Ensure sudo is installed.
