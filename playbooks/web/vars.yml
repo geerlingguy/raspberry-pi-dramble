@@ -54,8 +54,8 @@ php_extension_conf_paths:
 
 # PHP source installation configuration.
 php_install_from_source: true
-# Some example versions to try: php-5.5.33, php-5.6.19, php-7.0.4.
-php_source_version: "php-7.0.4"
+# Some example versions to try: php-5.5.35, php-5.6.21, php-7.0.6.
+php_source_version: "php-7.0.6"
 php_source_make_command: "make --jobs={{ ansible_processor_count }}"
 php_source_install_gmp_path: "/usr/include/arm-linux-gnueabihf/gmp.h"
 php_source_configure_command: >
