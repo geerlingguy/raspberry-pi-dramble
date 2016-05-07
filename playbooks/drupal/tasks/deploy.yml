@@ -50,6 +50,18 @@
   become_user: www-data
   when: drupal_deploy_strategy == 'git'
 
+- name: Check if a composer.json file is present.
+  stat: "path={{ drupal_docroot }}/composer.json"
+  register: drupal_core_composer_file
+
+- name: Run composer install if composer.json is present.
+  command: >
+    composer install
+    chdir={{ drupal_docroot }}
+  when: drupal_core_composer_file.stat.exists == true
+  become: yes
+  become_user: www-data
+
 - name: Copy settings.php file into place.
   template:
     src: ../templates/settings.php.j2
