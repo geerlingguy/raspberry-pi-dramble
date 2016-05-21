@@ -18,7 +18,7 @@
 
     - name: Ensure PHP directories are completely removed.
       file:
-        path: /opt/php
+        path: "{{ item }}"
         state: absent
       with_items:
         - /opt/php
