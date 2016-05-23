@@ -25,7 +25,7 @@
     - { role: geerlingguy.git, tags: ['git'] }
     - { role: geerlingguy.nginx, tags: ['nginx'] }
     - { role: geerlingguy.php, tags: ['php'] }
-    - { role: geerlingguy.php-mysql, tags: ['php'] }
+    - { role: geerlingguy.php-mysql, tags: ['php'], when: php_install_from_source == false }
     - { role: geerlingguy.drush, tags: ['drush'] }
     - { role: geerlingguy.munin-node, tags: ['munin-node'] }
     - { role: geerlingguy.nfs, tags: ['nfs'] }

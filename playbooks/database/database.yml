@@ -16,3 +16,8 @@
     - { role: geerlingguy.mysql, tags: ['mysql'] }
     - { role: geerlingguy.munin-node, tags: ['munin-node'] }
     - { role: ../roles/leds, tags: ['leds'] }
+
+  tasks:
+    - name: Set the GPIO LED to Green.
+      shell: "/usr/bin/rgb green"
+      when: deploy_target == 'pi'
