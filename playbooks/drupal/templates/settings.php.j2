@@ -50,6 +50,10 @@ $config['system.performance']['fast_404']['html'] = '<!DOCTYPE html><html><head>
 // Load services definition file.
 $settings['container_yamls'][] = __DIR__ . '/services.yml';
 
+// Use database as cache backend instead of APCu (there are better ways to do
+// this... but for now, this allows sessions to work between servers).
+$settings['cache']['default'] = 'cache.backend.database';
+
 // Local settings files.
 if (file_exists(__DIR__ . '/settings.local.php')) {
   include __DIR__ . '/settings.local.php';
