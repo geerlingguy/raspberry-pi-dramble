@@ -10,7 +10,11 @@ $databases['default']['default'] = array(
   'database' => '{{ drupal_db_name }}',
   'username' => '{{ drupal_db_username }}',
   'password' => '{{ drupal_db_password }}',
+{% if mysql_slave_failover_active == false %}
   'host' => '{{ groups.database[0] }}',
+{% else %}
+  'host' => '{{ groups.database[1] }}',
+{% endif %}
   'port' => '3306',
   'driver' => 'mysql',
   'prefix' => '',

@@ -39,6 +39,7 @@ nginx_access_log: "/var/log/nginx/access.log"
 mysql_root_password: supersecure
 
 # MySQL options.
+mysql_slave_failover_active: false
 # mysql_innodb_buffer_pool_size: "256M" # For 512MB RAM.
 mysql_innodb_buffer_pool_size: "512M" # For 1GB RAM.
 # mysql_myisam_sort_buffer_size: "32M" # For 512MB RAM.
