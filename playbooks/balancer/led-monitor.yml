@@ -11,6 +11,13 @@
   poll: 0
   when: deploy_target == 'pi' and 'led-log-monitor' not in led_monitor_check.stdout
 
+- name: Add a cron job to automatically start the log monitor after reboot.
+  cron:
+    name: "Monitor web requests wit the RGB LED"
+    special_time: reboot
+    job: "/usr/bin/led-log-monitor &"
+  when: deploy_target == 'pi'
+
 - name: Set the GPIO LED to Green.
   shell: "/usr/bin/rgb green"
   when: deploy_target == 'pi'

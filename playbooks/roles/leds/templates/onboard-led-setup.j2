@@ -11,14 +11,16 @@
 # @author Jeff Geerling, 2015
 
 # Set the PWR LED to GPIO mode.
-echo gpio | tee /sys/class/leds/led1/trigger
+# NOTE: The PWR LED might not be controllable in Raspbian as of 2016...
+#echo gpio | tee /sys/class/leds/led1/trigger
 
 # (Optional) Turn on (1) or off (0) the PWR LED.
 #echo 1 | tee /sys/class/leds/led1/brightness
 #echo 0 | tee /sys/class/leds/led1/brightness
 
 # Revert the PWR LED back to 'under-voltage detect' mode.
-# echo input | tee /sys/class/leds/led1/trigger
+#echo input | tee /sys/class/leds/led1/trigger
 
 # Set the ACT LED to trigger on cpu0 instead of mmc0.
-echo cpu0 | tee /sys/class/leds/led0/trigger
+# NOTE: The PWR LED might not be controllable in Raspbian as of 2016...
+#echo cpu0 | tee /sys/class/leds/led0/trigger
