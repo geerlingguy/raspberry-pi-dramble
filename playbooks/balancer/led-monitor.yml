@@ -13,7 +13,7 @@
 
 - name: Add a cron job to automatically start the log monitor after reboot.
   cron:
-    name: "Monitor web requests wit the RGB LED"
+    name: "Monitor web requests with the RGB LED"
     special_time: reboot
     job: "/usr/bin/led-log-monitor &"
   when: deploy_target == 'pi'

@@ -43,6 +43,7 @@ server {
         fastcgi_intercept_errors on;
         fastcgi_pass {{ php_fpm_listen }};
         fastcgi_read_timeout 240s;
+        fastcgi_connect_timeout 2s;
         add_header X-Backend-Server $hostname;
     }
 
