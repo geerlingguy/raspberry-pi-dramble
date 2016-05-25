@@ -30,5 +30,5 @@
     name: "{{ nfs_mount_dir }}"
     src: "{{ groups.webservers[0] }}:{{ nfs_share_dir }}"
     fstype: nfs
-    opts: "rw,sync"
+    opts: "noauto,x-systemd.automount,x-systemd.device-timeout=10,timeo=14"
     state: mounted
