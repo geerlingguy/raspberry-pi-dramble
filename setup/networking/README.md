@@ -14,7 +14,7 @@ To run the playbook:
 
 > _Note_: If you don't have your SSH key installed on all the Pis yet, you will also need to pass `-k` to the above command and enter your SSH password (the default for Raspbian is `raspberry`).
 
-Reboot the Raspberry Pis after this playbook runs (once you're ready to start accessing them via their new IP addresses):
+Assuming everything went well, the Pis should switch over to their new IP addresses quickly; if they don't, you can forcefully reboot them with the command:
 
     $ ansible pis -i inventory -a "shutdown -r now" -s
 
