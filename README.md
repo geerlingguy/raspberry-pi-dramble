@@ -63,4 +63,4 @@ Inside `config.yml`, comment out the two MySQL settings with comments `# For 1GB
 
 ## Author
 
-This project was started in 2015 by [Jeff Geerling](http://www.jeffgeerling.com/), author of [Ansible for DevOps](http://www,ansiblefordevops.com/).
+This project was started in 2015 by [Jeff Geerling](http://www.jeffgeerling.com/), author of [Ansible for DevOps](http://www.ansiblefordevops.com/).
