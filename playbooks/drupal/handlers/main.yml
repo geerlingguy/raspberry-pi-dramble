@@ -4,7 +4,7 @@
   notify: restart php-fpm
 
 - name: restart php-fpm
-  service: name=php5-fpm state=restarted
+  service: name=php-fpm state=restarted
 
 - name: purge reverse proxy cache
   shell: "rm -rf /var/cache/nginx/*"

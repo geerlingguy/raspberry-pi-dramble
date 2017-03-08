@@ -7,7 +7,7 @@
 
   tasks:
     - name: Ensure php-fpm is stopped.
-      service: name=php5-fpm state=stopped
+      service: name=php-fpm state=stopped
       failed_when: false
 
     - name: Ensure PHP packages are completely removed.

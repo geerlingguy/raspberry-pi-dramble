@@ -21,7 +21,7 @@ drupal_db_password: supersecure
 # Drupal 8 project (override vars from `playbooks/drupal/vars/main.yml`).
 # drupal_repo: http://git.drupal.org/project/drupal.git
 # drupal_deploy_strategy: "tarball"
-# drupal_version: "8.1.1"
+# drupal_version: "8.2.6"
 
 # Drupal install profile to use (for installation).
 drupal_install_profile: "standard"
