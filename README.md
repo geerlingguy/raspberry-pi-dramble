@@ -1,3 +1,5 @@
+<a href="http://www.pidramble.com"><img src="https://raw.githubusercontent.com/geerlingguy/raspberry-pi-dramble/master/images/logo.svg" width="100%" height="73"></a>
+
 # Raspberry Pi Dramble
 
 A cluster ([Bramble](http://elinux.org/Bramble)) of Raspberry Pis on which Drupal will be deployed using Ansible.
