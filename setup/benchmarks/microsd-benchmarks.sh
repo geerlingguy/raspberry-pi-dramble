@@ -67,7 +67,7 @@ hdparm -t /dev/mmcblk0
 printf "\n"
 
 printf "Running dd test...\n\n"
-dd if=/dev/zero of=${USER_HOME_PATH}test bs=8k count=50k conv=fsync; rm -f ${USER_HOME_PATH}/test
+dd if=/dev/zero of=${USER_HOME_PATH}/test bs=8k count=50k conv=fsync; rm -f ${USER_HOME_PATH}/test
 printf "\n"
 
 printf "Running iozone test...\n"
