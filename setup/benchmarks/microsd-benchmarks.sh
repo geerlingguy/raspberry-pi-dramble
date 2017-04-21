@@ -26,6 +26,12 @@ if [ -n "$CLOCK" ]; then
 fi
 printf "\n"
 
+# Environment. We currently depend on SUDO_USER. 
+if [ -z "$SUDO_USER" ]; then
+  printf "!!! SUDO_USER not defined.  Script must be run using sudo.  Exiting.\n\n"
+  exit 1;
+fi
+
 # Variables.
 USER_HOME_PATH=$(getent passwd $SUDO_USER | cut -d: -f6)
 IOZONE_INSTALL_PATH=$USER_HOME_PATH
