@@ -26,9 +26,9 @@ if [ -n "$CLOCK" ]; then
 fi
 printf "\n"
 
-# Environment. We currently depend on SUDO_USER. 
+# Fail if $SUDO_USER is empty.
 if [ -z "$SUDO_USER" ]; then
-  printf "!!! SUDO_USER not defined.  Script must be run using sudo.  Exiting.\n\n"
+  printf "This script must be run with sudo.\n"
   exit 1;
 fi
 
