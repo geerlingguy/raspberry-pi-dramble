@@ -11,7 +11,7 @@ end
 vconfig = YAML.load_file("../../config.yml")
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "debian/jessie64"
+  config.vm.box = "geerlingguy/debian8"
   config.ssh.insert_key = false
 
   # Set order so virtualbox provider is used unless overridden.
