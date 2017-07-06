@@ -11,6 +11,7 @@ env:
 
 install:
   - docker pull geerlingguy/docker-debian8-ansible:latest
+  - cp example.config.yml config.yml
 
 script:
   - ./testing/docker/docker-playbook-test.sh
