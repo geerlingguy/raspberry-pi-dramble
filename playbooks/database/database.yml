@@ -7,8 +7,11 @@
     - ../../config.yml
 
   pre_tasks:
-    - name: Ensure sudo is installed.
-      apt: name=sudo state=present
+    - name: Ensure dependencies are installed.
+      apt: name={{ item }} state=present
+      with_items:
+        - sudo
+        - openssh-server
 
   roles:
     - { role: geerlingguy.firewall, tags: ['firewall'] }

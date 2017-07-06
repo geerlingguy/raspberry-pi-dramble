@@ -1,5 +1,16 @@
 ---
 services: docker
 
+env:
+  matrix:
+    # Test each playbook individually.
+    - playbook: balancer
+    - playbook: database
+    - playbook: web
+    # - playbook: drupal
+
+install:
+  - docker pull geerlingguy/docker-debian8-ansible:latest
+
 script:
-  - /bin/true
+  - ./testing/docker/docker-playbook-test.sh
