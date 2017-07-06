@@ -31,5 +31,5 @@ docker exec --tty $playbook env TERM=xterm \
 docker exec --tty $playbook env TERM=xterm \
   ansible-playbook /etc/ansible/pi-dramble/playbooks/$playbook/$playbook.yml --connection=local \
   -i /etc/ansible/pi-dramble/testing/docker/inventory \
-  --extra-vars "deploy_target=docker" \
+  --extra-vars "deploy_target=docker php_source_install_gmp_path=/usr/include/x86_64-linux-gnu/gmp.h" \
   --limit=localhost

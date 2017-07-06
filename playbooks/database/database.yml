@@ -12,6 +12,7 @@
       with_items:
         - sudo
         - openssh-server
+        - cron
 
   roles:
     - { role: geerlingguy.firewall, tags: ['firewall'] }

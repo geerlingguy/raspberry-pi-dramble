@@ -12,6 +12,7 @@
       with_items:
         - sudo
         - openssh-server
+        - cron
 
     - name: Check if the Drupal vhost is already configured.
       stat: path=/etc/nginx/sites-enabled/drupal.conf
