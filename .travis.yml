@@ -14,4 +14,4 @@ install:
   - cp example.config.yml config.yml
 
 script:
-  - ./testing/docker/docker-playbook-test.sh
+  - "travis_wait 30 ./testing/docker/docker-playbook-test.sh"
