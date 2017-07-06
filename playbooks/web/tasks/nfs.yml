@@ -32,3 +32,4 @@
     fstype: nfs
     opts: "noauto,x-systemd.automount,x-systemd.device-timeout=10,timeo=14"
     state: mounted
+  when: deploy_target != 'docker'
