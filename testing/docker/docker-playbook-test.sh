@@ -13,7 +13,7 @@ playbook=${playbook:-balancer}
 
 # Run a Docker container for the playbook to run inside.
 docker run --detach \
-  --volume=/Users/jgeerling/Dropbox/Development/GitHub/raspberry-pi-dramble:/etc/ansible/pi-dramble:rw \
+  --volume=$(pwd):/etc/ansible/pi-dramble:rw \
   --name $playbook \
   --privileged \
   --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro \
