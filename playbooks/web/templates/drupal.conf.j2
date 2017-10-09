@@ -40,7 +40,7 @@ server {
          return 301 $scheme://$host$1/core/$2$is_args$args;
     }
 
-    location ~ \.php$ {
+    location ~ \.php$|^/update.php {
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
         #NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
         include fastcgi_params;
