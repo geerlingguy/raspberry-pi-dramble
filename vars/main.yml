@@ -1,0 +1,43 @@
+---
+firewall_allowed_tcp_ports:
+  - 22
+  - 80
+  - 443
+  # For NFS.
+  - 111
+  - 2049
+  # For Kubernetes.
+  - 6443
+  - 2379
+  - 2380
+  - 10250
+  - 10251
+  - 10252
+  - 10255
+  # TODO: Ports 30000-32767 for NodePort services?
+  # For Weave.
+  - 6783
+  - 6784
+  # For Flannel.
+  - 8285
+  - 8472
+firewall_allowed_udp_ports:
+  # For NFS.
+  - 111
+  - 2049
+  # For Weave.
+  - 6783
+  - 6784
+  # For Flannel.
+  - 8285
+  - 8472
+
+# Docker configuration.
+docker_install_from_convenience_script: True
+docker_users:
+  - pi
+
+# NFS configuration.
+nfs_share_dir: /srv/nfs
+nfs_exports: { "/srv/nfs *(rw,sync,no_root_squash,no_subtree_check)" }
+# nfs_mount_dir: /mnt/nfs # defined in global vars file.

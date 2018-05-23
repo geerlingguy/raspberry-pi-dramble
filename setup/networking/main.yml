@@ -23,7 +23,6 @@
       with_items:
         - { template: hostname.j2, dest: /etc/hostname }
         - { template: hosts.j2, dest: /etc/hosts }
-        - { template: interfaces.j2, dest: /etc/network/interfaces }
         - { template: resolv.conf.j2, dest: /etc/resolv.conf }
         - { template: dhcpcd.conf.j2, dest: /etc/dhcpcd.conf }
       notify:

@@ -1,4 +1,38 @@
 ---
-- include: playbooks/balancer/balancer.yml
-- include: playbooks/database/database.yml
-- include: playbooks/web/web.yml
+- hosts: dramble
+  become: yes
+
+  vars_files:
+    - vars/main.yml
+    - config.yml
+
+  pre_tasks:
+    - name: Ensure dependencies are installed.
+      apt: name={{ item }} state=present
+      with_items:
+        - sudo
+        - openssh-server
+
+    - name: Disable swap.
+      command: >
+        dphys-swapfile swapoff &&
+        dphys-swapfile uninstall &&
+        update-rc.d dphys-swapfile remove
+      when: ansible_swaptotal_mb > 0
+
+    # See: https://github.com/geerlingguy/raspberry-pi-dramble/issues/65
+    # - name: Ensure rpcbind is purged (first run only).
+    #   apt: name=rpcbind state=absent purge=yes
+
+  roles:
+    - { role: geerlingguy.firewall, tags: ['firewall'] }
+    - { role: geerlingguy.security, tags: ['security'] }
+    - { role: geerlingguy.nfs, tags: ['nfs'] }
+    - { role: geerlingguy.pip, tags: ['pip', 'docker'] }
+    - { role: docker-arm, tags: ['docker'] }
+    - { role: geerlingguy.kubernetes, tags: ['kubernetes'] }
+    - { role: leds, tags: ['leds'] }
+
+  tasks:
+    - include: tasks/nfs.yml
+    - include: tasks/led-monitor.yml
