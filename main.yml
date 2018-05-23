@@ -27,7 +27,9 @@
     #   apt: name=rpcbind state=absent purge=yes
 
   roles:
-    - { role: geerlingguy.firewall, tags: ['firewall'] }
+    # TODO: Re-enable firewall once I can figure out exactly which ports are
+    # required to get cni, flannel, etc. all working correctly.
+    # - { role: geerlingguy.firewall, tags: ['firewall'] }
     - { role: geerlingguy.security, tags: ['security'] }
     - { role: geerlingguy.nfs, tags: ['nfs'] }
     - { role: geerlingguy.pip, tags: ['pip', 'docker'] }
