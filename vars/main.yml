@@ -37,6 +37,15 @@ docker_install_from_convenience_script: True
 docker_users:
   - pi
 
+# Kubernetes configuration.
+kubernetes_packages:
+  - name: kubelet=1.10.2-00
+    state: present
+  - name: kubeadm=1.10.2-00
+    state: present
+  - name: kubernetes-cni
+    state: present
+
 # NFS configuration.
 nfs_share_dir: /srv/nfs
 nfs_exports: { "/srv/nfs *(rw,sync,no_root_squash,no_subtree_check)" }

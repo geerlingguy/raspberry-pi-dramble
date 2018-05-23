@@ -20,6 +20,8 @@
         update-rc.d dphys-swapfile remove
       when: ansible_swaptotal_mb > 0
 
+    - import_tasks: tasks/cgroup-features.yml
+
     # See: https://github.com/geerlingguy/raspberry-pi-dramble/issues/65
     # - name: Ensure rpcbind is purged (first run only).
     #   apt: name=rpcbind state=absent purge=yes
@@ -34,5 +36,5 @@
     - { role: leds, tags: ['leds'] }
 
   tasks:
-    - include: tasks/nfs.yml
-    - include: tasks/led-monitor.yml
+    - include_tasks: tasks/nfs.yml
+    - import_tasks: tasks/led-monitor.yml

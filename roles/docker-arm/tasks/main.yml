@@ -16,11 +16,11 @@
   command: /tmp/get-docker.sh
   when: docker_command_result.rc == 1
 
-- name: Make sure Docker CE is up to date (if already installed).
-  package:
-    name: docker-ce
-    state: latest
-  when: docker_command_result.rc == 0
+- name: Make sure Docker CE is the version specified.
+  apt:
+    name: "docker-ce={{ docker_version }}"
+    state: present
+    force: yes
 
 - name: Install Docker Compose using Pip.
   pip:
