@@ -13,14 +13,14 @@
         - sudo
         - openssh-server
 
+    - import_tasks: tasks/cgroup-features.yml
+
     - name: Disable swap.
       command: >
         dphys-swapfile swapoff &&
         dphys-swapfile uninstall &&
         update-rc.d dphys-swapfile remove
       when: ansible_swaptotal_mb > 0
-
-    - import_tasks: tasks/cgroup-features.yml
 
     # See: https://github.com/geerlingguy/raspberry-pi-dramble/issues/65
     # - name: Ensure rpcbind is purged (first run only).

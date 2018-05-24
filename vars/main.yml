@@ -38,6 +38,7 @@ docker_users:
   - pi
 
 # Kubernetes configuration.
+kubernetes_pod_network_cidr: '10.244.0.0/16'
 kubernetes_packages:
   - name: kubelet=1.10.2-00
     state: present

@@ -8,3 +8,4 @@
 [dramble:vars]
 ansible_ssh_user=pi
 deploy_target=pi
+kubernetes_apiserver_advertise_address=10.0.100.44

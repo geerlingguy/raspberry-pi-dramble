@@ -10,7 +10,7 @@
   register: cgroup_features
 
 - name: Reboot immediately if cgroup features changed.
-  shell: "sleep 5 & reboot"
+  shell: "sleep 5 && reboot"
   async: 1
   poll: 0
   when: cgroup_features is changed
