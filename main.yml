@@ -19,7 +19,7 @@
       command: >
         dphys-swapfile swapoff &&
         dphys-swapfile uninstall &&
-        update-rc.d dphys-swapfile remove
+        systemctl disable dphys-swapfile
       when: ansible_swaptotal_mb > 0
 
     # See: https://github.com/geerlingguy/raspberry-pi-dramble/issues/65
