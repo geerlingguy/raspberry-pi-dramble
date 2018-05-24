@@ -39,4 +39,10 @@
 
   tasks:
     - include_tasks: tasks/nfs.yml
+      tags: ['nfs']
+
     - import_tasks: tasks/led-monitor.yml
+      tags: ['leds']
+
+    - import_tasks: tasks/drupal-k8s.yml
+      tags: ['drupal']

@@ -49,7 +49,9 @@ The process for setting up all the Raspberry Pis is outlined in the Wiki:
   3. [Network the Raspberry Pis](http://www.pidramble.com/wiki/setup/network)
   4. [Test the Ansible configuration](http://www.pidramble.com/wiki/setup/test-ansible)
   5. [Provision the Raspberry Pis](http://www.pidramble.com/wiki/setup/provision)
+    - TODO: This documentation might need updating for Kubernetes.
   6. [Deploy Drupal to the Raspberry Pis](http://www.pidramble.com/wiki/setup/deploy-drupal)
+    - TODO: This documentation might need updating for Kubernetes.
 
 ### Benchmarks - Testing the performance of the Dramble
 
@@ -59,14 +61,16 @@ See the [Pi Dramble Benchmarks](http://www.pidramble.com/wiki/benchmarks) sectio
 
 If you have only a single Raspberry Pi, you can use the [Drupal Pi](https://github.com/geerlingguy/drupal-pi) project to quickly get Drupal running on the single Pi.
 
-## Using Raspberry Pi B+ or Pi Zero
+## Using older or slower Raspberry Pi models
 
-The Raspberry Pi 2 and 3 both have quad-core processors that make certain operations four to ten times faster than single-core Pis like the A+, B+, Zero, etc. Additionally, a typical web application needs as much RAM as possible, and any Pi without at least 512 MB of RAM is woefully underpowered for the Drupal LEMP stack.
+The Raspberry Pi 2, 3, and 3 B+ have quad-core processors that make certain operations four to ten times faster than single-core Pis like the A+, B+, Zero, etc. Additionally, cluster members need as much RAM as possible, and any Pi without at least 1 GB of RAM is woefully underpowered for this setup.
 
-It's not recommended—but it is possible—to build your cluster with Raspberry Pi model B+ or Zeros (both have 512 MB of RAM), and you only need to make a couple small changes to `config.yml` before running the main Ansible playbook:
+Therefore only the following Pi models are officially supported at this time:
 
-Inside `config.yml`, comment out the two MySQL settings with comments `# For 1GB RAM.`, and uncomment the two MySQL settings with `# For 512MB RAM.`.
+  - Raspberry Pi model 3 B+
+  - Raspberry Pi model 3 B
+  - Raspberry Pi model 2
 
 ## Author
 
-This project was started in 2015 by [Jeff Geerling](http://www.jeffgeerling.com/), author of [Ansible for DevOps](http://www.ansiblefordevops.com/).
+This project was started in 2015 by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).

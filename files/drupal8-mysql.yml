@@ -1,0 +1,103 @@
+# MySQL Service definition.
+apiVersion: v1
+kind: Service
+metadata:
+  name: drupal8-mysql
+  labels:
+    app: drupal8
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: drupal8
+    tier: mysql
+  clusterIP: None
+---
+# PersistentVolume definition.
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: drupal8-mysql
+  labels:
+    type: local
+    app: drupal8
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteOnce
+  local:
+    path: "/var/drupal8-mysql"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - kube1.pidramble.com
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: drupal8-mysql
+  labels:
+    app: drupal8
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
+---
+# MySQL Deployment definition.
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: drupal8-mysql
+  labels:
+    app: drupal8
+spec:
+  selector:
+    matchLabels:
+      app: drupal8
+      tier: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: drupal8
+        tier: mysql
+    spec:
+      containers:
+      # See: https://github.com/docker-library/mysql/issues/318
+      - image: hypriot/rpi-mysql:5.5
+        name: mysql
+        env:
+        - name: MYSQL_DATABASE
+          value: drupal
+        - name: MYSQL_USER
+          value: drupal
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: drupal8-mysql-pass
+              key: password
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: drupal8-mysql-root-pass
+              key: password
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: drupal8-mysql

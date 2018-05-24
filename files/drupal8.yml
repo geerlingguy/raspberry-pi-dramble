@@ -1,0 +1,49 @@
+# Drupal 8 Service definition.
+apiVersion: v1
+kind: Service
+metadata:
+  name: drupal8
+  labels:
+    app: drupal8
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: drupal8
+    tier: frontend
+  type: NodePort
+---
+# Drupal 8 Deployment definition.
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: drupal8
+  labels:
+    app: drupal8
+spec:
+  selector:
+    matchLabels:
+      app: drupal8
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: drupal8
+        tier: frontend
+    spec:
+      containers:
+        - image: drupal:8
+          name: drupal8
+          env:
+            - name: DRUPAL_DB_HOST
+              value: drupal8-mysql
+            - name: DRUPAL_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: drupal8-mysql-pass
+                  key: password
+          ports:
+            - containerPort: 80
+              name: drupal8
