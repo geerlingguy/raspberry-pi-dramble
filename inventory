@@ -1,9 +1,9 @@
 [dramble]
-10.0.100.44
-#10.0.100.45
-#10.0.100.46
-#10.0.100.47
-#10.0.100.48
+10.0.100.44 kubernetes_role=master
+10.0.100.45 kubernetes_role=node
+#10.0.100.46 kubernetes_role=node
+#10.0.100.47 kubernetes_role=node
+#10.0.100.48 kubernetes_role=node
 
 [dramble:vars]
 ansible_ssh_user=pi
