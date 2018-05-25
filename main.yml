@@ -38,6 +38,16 @@
     - { role: leds, tags: ['leds'] }
 
   tasks:
+    # TODO: See https://github.com/coreos/flannel/issues/663
+    - name: Apply Drupal 8 Kubernetes services to the cluster.
+      shell: >
+        curl -sSL "https://github.com/coreos/flannel/blob/master/Documentation/kube-flannel.yml?raw=true" |
+        sed "s/amd64/arm/g" |
+        kubectl apply -f -
+      register: flannel_result
+      changed_when: "'created' in flannel_result.stdout"
+      run_once: True
+
     - include_tasks: tasks/nfs.yml
       tags: ['nfs']
 
