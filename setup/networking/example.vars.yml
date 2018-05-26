@@ -1,21 +1,21 @@
 ---
 # Mapping of what hardware MAC addresses should be configured with specific IPs.
 mac_address_mapping:
-  "b8:27:eb:52:6a:13":
-    name: bal1.pidramble.com
-    ip: "10.0.1.60"
-  "b8:27:eb:90:52:27":
-    name: www1.pidramble.com
-    ip: "10.0.1.61"
-  "b8:27:eb:f0:49:d2":
-    name: www2.pidramble.com
-    ip: "10.0.1.62"
-  "b8:27:eb:ea:9c:e0":
-    name: db1.pidramble.com
-    ip: "10.0.1.63"
-  "b8:27:eb:54:0c:d1":
-    name: db2.pidramble.com
-    ip: "10.0.1.64"
+  "b8:27:eb:69:0d:c3":
+    name: kube1.pidramble.com
+    ip: "10.0.100.61"
+  "b8:27:eb:21:1b:f3":
+    name: kube2.pidramble.com
+    ip: "10.0.100.62"
+  "b8:27:eb:e3:be:21":
+    name: kube3.pidramble.com
+    ip: "10.0.100.63"
+  "b8:27:eb:09:4f:46":
+    name: kube4.pidramble.com
+    ip: "10.0.100.64"
+  "b8:27:eb:26:d9:08":
+    name: kube5.pidramble.com
+    ip: "10.0.100.65"
 
 # Nameservers to use in resolv.conf.
 dns_nameservers:
