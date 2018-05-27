@@ -21,6 +21,7 @@
         dphys-swapfile uninstall &&
         systemctl disable dphys-swapfile
       when: ansible_swaptotal_mb > 0
+      tags: ['always']
 
     # See: https://github.com/geerlingguy/raspberry-pi-dramble/issues/65
     # - name: Ensure rpcbind is purged (first run only).
