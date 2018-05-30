@@ -1,0 +1,8 @@
+---
+# See https://raspberrypi.stackexchange.com/q/84390/6506
+- name: Disable swap.
+  shell: >
+    dphys-swapfile swapoff &&
+    dphys-swapfile uninstall &&
+    update-rc.d -f dphys-swapfile remove
+  when: ansible_swaptotal_mb > 0

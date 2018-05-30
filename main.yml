@@ -14,18 +14,8 @@
         - openssh-server
 
     - import_tasks: tasks/cgroup-features.yml
-
-    - name: Disable swap.
-      command: >
-        dphys-swapfile swapoff &&
-        dphys-swapfile uninstall &&
-        systemctl disable dphys-swapfile
-      when: ansible_swaptotal_mb > 0
+    - import_tasks: tasks/disable-swap.yml
       tags: ['always']
-
-    # See: https://github.com/geerlingguy/raspberry-pi-dramble/issues/65
-    # - name: Ensure rpcbind is purged (first run only).
-    #   apt: name=rpcbind state=absent purge=yes
 
   roles:
     # TODO: Re-enable firewall once I can figure out exactly which ports are
