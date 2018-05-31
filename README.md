@@ -67,15 +67,13 @@ Until the official Pi Dramble Wiki is updated (see TODOs above), this section of
          kubectl get pods
          ...
 
-  3. Once the cluster is running, you can get the NodePort of the `drupal8` service with:
+  3. Edit your `/etc/hosts` file and add the line:
 
-         kubectl get service traefik-ingress-service --namespace=kube-system
+         cluster.pidramble.test  10.0.100.62
 
-  4. Edit your `/etc/hosts` file and add the line:
+  5. After that, you can access the `drupal8` Kubernetes service at the URL: `http://cluster.pidramble.test/`.
 
-         cluster.pidramble.test  10.0.100.61
-
-  5. After that, you can access the `drupal8` Kubernetes service at the URL: http://cluster.pidramble.test:NODEPORT/ (where NODEPORT is the port mapped to port 80 for the `traefik-ingress-service`).
+> Note that for the hosts file, you can point the domain at any of the non-master nodes (e.g. `10.0.100.62`, `10.0.100.63`, etc.); they are all running the Traefik ingress controller as a Kubernetes DaemonSet, meaning any single host can direct traffic on port 80 to the `drupal8` service. Technically, you could use DNS round robin to point one domain at all the Pis, but the best solution is to have another load balancer in front of all the Pis, redirecting the traffic to them using a more intelligent load balancing and health monitoring solution.
 
 ### Benchmarks - Testing the performance of the Dramble
 
