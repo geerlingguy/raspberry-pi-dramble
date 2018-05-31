@@ -24,14 +24,20 @@
     src: "files/{{ item }}"
     dest: "~/{{ item }}"
   with_items:
+    - nginx-ingress.yml
+    - nginx-ingress-loadbalancer.yml
     - drupal8.yml
     - drupal8-mysql.yml
+    - drupal8-ingress.yml
 
 - name: Apply Drupal 8 Kubernetes services to the cluster.
   command: kubectl apply -f ~/{{ item }}
   with_items:
+    - nginx-ingress.yml
+    - nginx-ingress-loadbalancer.yml
     - drupal8.yml
     - drupal8-mysql.yml
+    - drupal8-ingress.yml
   register: drupal8_result
   changed_when: "'created' in drupal8_result.stdout"
   run_once: True

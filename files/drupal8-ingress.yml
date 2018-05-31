@@ -1,0 +1,19 @@
+# Definition of Drupal 8 Ingress resource.
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: drupal8-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  backend:
+    serviceName: default-http-backend
+    servicePort: 80
+  rules:
+  - host: cluster.pidramble.test
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: drupal8
+          servicePort: 80
