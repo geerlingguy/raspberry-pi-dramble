@@ -17,15 +17,16 @@
     - "'already exists' not in kubectl_secret_result.stderr"
     - "'created' not in kubectl_secret_result.stdout"
   run_once: True
-  # no_log: True
+  no_log: True
 
 - name: Copy Kubernetes definition files to the cluster.
   copy:
     src: "files/{{ item }}"
     dest: "~/{{ item }}"
   with_items:
-    - nginx-ingress.yml
-    - nginx-ingress-loadbalancer.yml
+    - ingress-traefik.yml
+    - ingress-traefik-rbac.yml
+    - default-http-backend.yml
     - drupal8.yml
     - drupal8-mysql.yml
     - drupal8-ingress.yml
@@ -33,8 +34,9 @@
 - name: Apply Drupal 8 Kubernetes services to the cluster.
   command: kubectl apply -f ~/{{ item }}
   with_items:
-    - nginx-ingress.yml
-    - nginx-ingress-loadbalancer.yml
+    - ingress-traefik.yml
+    - ingress-traefik-rbac.yml
+    - default-http-backend.yml
     - drupal8.yml
     - drupal8-mysql.yml
     - drupal8-ingress.yml

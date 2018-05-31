@@ -49,9 +49,33 @@ The process for setting up all the Raspberry Pis is outlined in the Wiki:
   3. [Network the Raspberry Pis](http://www.pidramble.com/wiki/setup/network)
   4. [Test the Ansible configuration](http://www.pidramble.com/wiki/setup/test-ansible)
   5. [Provision the Raspberry Pis](http://www.pidramble.com/wiki/setup/provision)
-    - TODO: This documentation might need updating for Kubernetes.
+    - TODO: This documentation needs updating for Kubernetes.
   6. [Deploy Drupal to the Raspberry Pis](http://www.pidramble.com/wiki/setup/deploy-drupal)
-    - TODO: This documentation might need updating for Kubernetes.
+    - TODO: This documentation needs updating for Kubernetes.
+
+### Kubernetes Setup Notes
+
+Until the official Pi Dramble Wiki is updated (see TODOs above), this section of the README should suffice for setup steps for someone familiar with command line usage.
+
+  1. Run the main playbook to install Kubernetes on all the Pis and configure the cluster:
+
+         ansible-playbook -i inventory main.yml
+
+  2. You can SSH into the Kubernetes master (10.0.100.61 by default) and run `kubectl` by switching to the root user (`sudo su`). For example:
+
+         kubectl get nodes
+         kubectl get pods
+         ...
+
+  3. Once the cluster is running, you can get the NodePort of the `drupal8` service with:
+
+         kubectl get service traefik-ingress-service --namespace=kube-system
+
+  4. Edit your `/etc/hosts` file and add the line:
+
+         cluster.pidramble.test  10.0.100.61
+
+  5. After that, you can access the `drupal8` Kubernetes service at the URL: http://cluster.pidramble.test:NODEPORT/ (where NODEPORT is the port mapped to port 80 for the `traefik-ingress-service`).
 
 ### Benchmarks - Testing the performance of the Dramble
 
