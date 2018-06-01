@@ -4,8 +4,8 @@
 #
 # This is hacky, but it does what I need it to do :)
 #
-# Usage:
-#   ./docker-playbook-test.sh
+# Usage (from project root):
+#   testing/docker/docker-playbook-test.sh
 
 container_name=dramble
 

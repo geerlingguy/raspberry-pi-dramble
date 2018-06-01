@@ -7,6 +7,9 @@
     - config.yml
 
   pre_tasks:
+    - import_tasks: tasks/test-setup.yml
+      when: deploy_target != 'pi'
+
     - name: Ensure dependencies are installed.
       apt: name={{ item }} state=present
       with_items:
@@ -21,12 +24,25 @@
     # TODO: Re-enable firewall once I can figure out exactly which ports are
     # required to get cni, flannel, etc. all working correctly.
     # - { role: geerlingguy.firewall, tags: ['firewall'] }
-    - { role: geerlingguy.security, tags: ['security'] }
-    - { role: geerlingguy.nfs, tags: ['nfs'] }
-    - { role: geerlingguy.pip, tags: ['pip', 'docker'] }
-    - { role: docker-arm, tags: ['docker'] }
-    - { role: geerlingguy.kubernetes, tags: ['kubernetes'] }
-    - { role: leds, tags: ['leds'] }
+
+    - role: geerlingguy.security
+      tags: ['security']
+
+    - role: geerlingguy.nfs
+      tags: ['nfs']
+      when: deploy_target != 'docker'
+
+    - role: geerlingguy.pip
+      tags: ['pip', 'docker']
+
+    - role: docker-arm
+      tags: ['docker']
+
+    - role: geerlingguy.kubernetes
+      tags: ['kubernetes']
+
+    - role: leds
+      tags: ['leds']
 
   tasks:
     # TODO: See https://github.com/coreos/flannel/issues/663
@@ -41,6 +57,7 @@
 
     - include_tasks: tasks/nfs.yml
       tags: ['nfs']
+      when: deploy_target != 'docker'
 
     - import_tasks: tasks/led-monitor.yml
       tags: ['leds']

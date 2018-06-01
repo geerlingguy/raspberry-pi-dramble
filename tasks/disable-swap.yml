@@ -5,4 +5,6 @@
     dphys-swapfile swapoff &&
     dphys-swapfile uninstall &&
     update-rc.d -f dphys-swapfile remove
-  when: ansible_swaptotal_mb > 0
+  when:
+    - ansible_swaptotal_mb > 0
+    - deploy_target == 'pi'

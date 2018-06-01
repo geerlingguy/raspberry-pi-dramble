@@ -8,6 +8,7 @@
     line: '\1 cgroup_enable=cpuset cgroup_enable=memory'
     state: present
   register: cgroup_features
+  when: deploy_target == 'pi'
 
 - name: Reboot immediately if cgroup features changed.
   shell: "sleep 5 && reboot"

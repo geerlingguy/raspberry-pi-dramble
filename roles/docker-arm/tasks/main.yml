@@ -22,6 +22,12 @@
     state: present
     force: yes
 
+- name: Ensure Docker is started.
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
 - name: Install Docker Compose using Pip.
   pip:
     name: docker-compose

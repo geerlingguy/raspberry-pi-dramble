@@ -1,0 +1,23 @@
+---
+- name: Ensure auth.log file is present.
+  file:
+    path: /var/log/auth.log
+    state: touch
+    owner: root
+    group: adm
+    mode: 0640
+  when: deploy_target == 'docker'
+
+- name: Override vars for test environments.
+  set_fact:
+    docker_version: 18.04.0~ce~3-0~debian
+    kubernetes_kubelet_extra_args: '--fail-swap-on=false'
+    kubernetes_allow_pods_on_master: True
+  when: deploy_target == 'docker'
+
+- name: Override vars for non-ARM environments.
+  set_fact:
+    docker_version: 18.04.0~ce~3-0~debian
+  when:
+    - deploy_target != 'docker'
+    - deploy_target != 'pi'
