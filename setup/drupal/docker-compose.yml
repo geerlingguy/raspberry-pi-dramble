@@ -1,0 +1,26 @@
+---
+version: '3'
+
+services:
+  drupal:
+    build: ./
+    image: pidramble/drupal:7.1
+    container_name: drupal
+    environment:
+      DRUPAL_DATABASE_HOST: drupal-mysql
+    ports:
+      - "80:80"
+    restart: always
+    volumes:
+      - ./web:/var/www/html:rw,delegated
+
+  mysql:
+    image: mysql:5.7
+    container_name: drupal-mysql
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_DATABASE: drupal
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
+    ports:
+      - "3306:3306"
