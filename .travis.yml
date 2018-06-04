@@ -1,6 +1,10 @@
 ---
 services: docker
 
+addons:
+  hosts:
+    - cluster.pidramble.test
+
 install:
   - docker pull geerlingguy/docker-debian9-ansible:latest
   - cp example.config.yml config.yml

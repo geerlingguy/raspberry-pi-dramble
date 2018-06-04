@@ -11,6 +11,8 @@ container_name=dramble
 
 # Run a Docker container for the playbook to run inside.
 docker run --detach \
+  -h kube5 \
+  -p 8080:80 \
   --volume=$(pwd):/etc/ansible/pi-dramble:rw \
   --name $container_name \
   --privileged \
