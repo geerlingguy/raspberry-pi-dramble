@@ -8,20 +8,15 @@
     mode: 0640
   when: deploy_target == 'docker'
 
-- name: Override vars for Docker test environment.
+- name: Override vars for non-ARM test environments.
   set_fact:
     docker_version: 18.04.0~ce~3-0~debian
     mysql_container_image: 'mysql:5.7'
     default_http_backend_image: 'k8s.gcr.io/defaultbackend:1.0'
+  when: deploy_target != 'pi'
+
+- name: Override vars for single-node Docker environment.
+  set_fact:
     kubernetes_kubelet_extra_args: '--fail-swap-on=false'
     kubernetes_allow_pods_on_master: True
   when: deploy_target == 'docker'
-
-- name: Override vars for non-ARM environments.
-  set_fact:
-    docker_version: 18.04.0~ce~3-0~debian
-    mysql_container_image: 'mysql:5.7'
-    default_http_backend_image: 'k8s.gcr.io/defaultbackend:1.0'
-  when:
-    - deploy_target != 'docker'
-    - deploy_target != 'pi'
