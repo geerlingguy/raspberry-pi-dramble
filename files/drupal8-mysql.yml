@@ -36,7 +36,7 @@ spec:
         - key: kubernetes.io/hostname
           operator: In
           values:
-          - kube5.pidramble.com
+          - kube5
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -73,8 +73,7 @@ spec:
         tier: mysql
     spec:
       containers:
-      # See: https://github.com/docker-library/mysql/issues/318
-      - image: hypriot/rpi-mysql:5.5
+      - image: {{ mysql_container_image }}
         name: mysql
         env:
         - name: MYSQL_DATABASE

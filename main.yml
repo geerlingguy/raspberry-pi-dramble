@@ -54,6 +54,7 @@
       register: flannel_result
       changed_when: "'created' in flannel_result.stdout"
       run_once: True
+      when: deploy_target == 'pi'
 
     - include_tasks: tasks/nfs.yml
       tags: ['nfs']

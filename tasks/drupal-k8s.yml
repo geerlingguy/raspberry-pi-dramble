@@ -20,7 +20,7 @@
   no_log: True
 
 - name: Copy Kubernetes definition files to the cluster.
-  copy:
+  template:
     src: "files/{{ item }}"
     dest: "~/{{ item }}"
   with_items:

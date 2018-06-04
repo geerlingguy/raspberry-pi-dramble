@@ -48,6 +48,10 @@ kubernetes_packages:
   - name: kubernetes-cni
     state: present
 
+# See: https://github.com/docker-library/mysql/issues/318
+mysql_container_image: hypriot/rpi-mysql:5.5
+default_http_backend_image: gcr.io/google_containers/defaultbackend-arm:1.4
+
 # NFS configuration.
 nfs_share_dir: /srv/nfs
 nfs_exports: { "/srv/nfs *(rw,sync,no_root_squash,no_subtree_check)" }
