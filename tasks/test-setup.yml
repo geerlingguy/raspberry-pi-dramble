@@ -20,3 +20,14 @@
     kubernetes_kubelet_extra_args: '--fail-swap-on=false'
     kubernetes_allow_pods_on_master: True
   when: deploy_target == 'docker'
+
+- name: Copy kube-flannel-vagrant.yml file in place.
+  copy:
+    src: files/kube-flannel-vagrant.yml
+    dest: "~/kube-flannel-vagrant.yml"
+  when: deploy_target == 'vagrant'
+
+- name: Override vars for Vagrant environment.
+  set_fact:
+    kubernetes_flannel_manifest_file: "~/kube-flannel-vagrant.yml"
+  when: deploy_target == 'vagrant'
