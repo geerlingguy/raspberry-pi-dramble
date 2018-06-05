@@ -20,6 +20,4 @@ Add the following to your `/etc/hosts` file so you can access pods via the Kuber
 
     192.168.77.3  cluster.pidramble.test
 
-## Deploy Drupal to the VMs
-
-TODO.
+Then, visit http://cluster.pidramble.test/, and you should see the Drupal site.

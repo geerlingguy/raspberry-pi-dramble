@@ -79,6 +79,10 @@ Until the official Pi Dramble Wiki is updated (see TODOs above), this section of
 
 See the [Pi Dramble Benchmarks](http://www.pidramble.com/wiki/benchmarks) section of the Wiki for current benchmarks and statistics.
 
+## Local testing
+
+A Vagrantfile is also included for local testing and debugging of the Kubernetes cluster and manifests using [Vagrant](https://www.vagrantup.com). See the [Vagrant README](testing/vagrant/README.md) for more details.
+
 ## Drupal on a Single Pi - Drupal Pi
 
 If you have only a single Raspberry Pi, you can use the [Drupal Pi](https://github.com/geerlingguy/drupal-pi) project to quickly get Drupal running on the single Pi.
