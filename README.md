@@ -4,9 +4,7 @@
 
 [![Build Status](https://travis-ci.org/geerlingguy/raspberry-pi-dramble.svg?branch=master)](https://travis-ci.org/geerlingguy/raspberry-pi-dramble)
 
-> **NOTE**: This project is currently being converted to use Kubernetes as the foundational layer of the Drupal site infrastructure. Please [check out the `kubernetes` branch](https://github.com/geerlingguy/raspberry-pi-dramble/tree/kubernetes) and see its README for more info.
-
-A cluster ([Bramble](http://elinux.org/Bramble)) of Raspberry Pis on which Drupal will be deployed using Ansible.
+A cluster ([Bramble](http://elinux.org/Bramble)) of Raspberry Pis on which Drupal will be deployed using Ansible and Kubernetes.
 
 <p align="center"><img src="https://raw.githubusercontent.com/geerlingguy/raspberry-pi-dramble/master/images/raspberry-pi-dramble-hero.jpg" alt="Raspberry Pi Dramble - Hero Image" /></p>
 
