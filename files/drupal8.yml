@@ -34,7 +34,8 @@ spec:
         tier: frontend
     spec:
       containers:
-        - image: drupal:8
+        - image: geerlingguy/drupal:latest
+          imagePullPolicy: Always
           name: drupal8
           env:
             - name: DRUPAL_DB_HOST

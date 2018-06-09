@@ -51,6 +51,7 @@ kubernetes_packages:
 # See: https://github.com/docker-library/mysql/issues/318
 mysql_container_image: hypriot/rpi-mysql:5.5
 default_http_backend_image: gcr.io/google_containers/defaultbackend-arm:1.4
+mysql_node_affinity_hostname: kube5
 
 # NFS configuration.
 nfs_share_dir: /srv/nfs

@@ -4,6 +4,7 @@ services: docker
 addons:
   hosts:
     - cluster.pidramble.test
+    - kube1
 
 install:
   - docker pull geerlingguy/docker-debian9-ansible:latest

@@ -19,6 +19,7 @@
   set_fact:
     kubernetes_kubelet_extra_args: '--fail-swap-on=false'
     kubernetes_allow_pods_on_master: True
+    mysql_node_affinity_hostname: kube1
   when: deploy_target == 'docker'
 
 - name: Copy kube-flannel-vagrant.yml file in place.
@@ -30,4 +31,5 @@
 - name: Override vars for Vagrant environment.
   set_fact:
     kubernetes_flannel_manifest_file: "~/kube-flannel-vagrant.yml"
+    kubernetes_kubelet_extra_args: '--node-ip={{ inventory_hostname }}'
   when: deploy_target == 'vagrant'
