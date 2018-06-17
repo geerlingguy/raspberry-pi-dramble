@@ -1,0 +1,74 @@
+---
+# Docker namespace.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: docker
+---
+# PersistentVolume definition for NFS mount for Docker registry.
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: registry-pv
+  labels:
+    app: registry
+  namespace: docker
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: {{ nfs_share_dir }}/docker-registry
+    server: {{ groups.dramble[0] }}
+  persistentVolumeReclaimPolicy: Retain
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: registry-pvc
+  labels:
+    app: registry
+  namespace: docker
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
+---
+# Docker registry Pod definition.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: registry
+  labels:
+    app: registry
+  namespace: docker
+spec:
+  containers:
+  - name: registry
+    image: registry:2
+    imagePullPolicy: Always
+    ports:
+    - containerPort: 5000
+    volumeMounts:
+    - mountPath: /var/lib/registry
+      name: registry-data
+  volumes:
+  - name: registry-data
+    persistentVolumeClaim:
+      claimName: registry-pvc
+---
+# Docker registry Service definition: registry.docker-registry.svc.cluster.local
+kind: Service
+apiVersion: v1
+metadata:
+  name: registry
+  namespace: docker
+spec:
+  selector:
+    app: registry
+  ports:
+    - port: 5000
+      targetPort: 5000

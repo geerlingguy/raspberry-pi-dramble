@@ -57,3 +57,6 @@ mysql_node_affinity_hostname: kube5
 nfs_share_dir: /srv/nfs
 nfs_exports: { "/srv/nfs *(rw,sync,no_root_squash,no_subtree_check)" }
 # nfs_mount_dir: /mnt/nfs # defined in global vars file.
+nfs_extra_dirs:
+  - docker-registry
+  - drupal-files

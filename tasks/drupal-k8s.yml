@@ -23,20 +23,21 @@
   template:
     src: "files/{{ item }}"
     dest: "~/{{ item }}"
-  with_items:
-    - ingress-traefik.yml
-    - ingress-traefik-rbac.yml
-    - default-http-backend.yml
-    - drupal8.yml
-    - drupal8-mysql.yml
-    - drupal8-ingress.yml
+  with_fileglob: "files/*.yml"
 
-- name: Apply Drupal 8 Kubernetes services to the cluster.
+- name: Apply general Kubernetes services to the cluster.
   command: kubectl apply -f ~/{{ item }}
   with_items:
     - ingress-traefik.yml
     - ingress-traefik-rbac.yml
     - default-http-backend.yml
+  register: kube_services_result
+  changed_when: "'created' in kube_services_result.stdout"
+  run_once: True
+
+- name: Apply Drupal 8 Kubernetes services to the cluster.
+  command: kubectl apply -f ~/{{ item }}
+  with_items:
     - drupal8.yml
     - drupal8-mysql.yml
     - drupal8-ingress.yml
