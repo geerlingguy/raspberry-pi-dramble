@@ -26,9 +26,10 @@
 
 - name: Ensure extra NFS dirs exist.
   file:
-    path: "{{ item }}"
+    path: "{{ nfs_mount_dir }}/{{ item }}"
     state: directory
   with_items: "{{ nfs_extra_dirs }}"
+  run_once: True
 
 # Mount configuration.
 - name: Ensure the NFS volume is mounted.

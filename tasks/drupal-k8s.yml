@@ -21,8 +21,8 @@
 
 - name: Copy Kubernetes definition files to the cluster.
   template:
-    src: "files/{{ item }}"
-    dest: "~/{{ item }}"
+    src: "{{ item }}"
+    dest: "~/{{ item | basename }}"
   with_fileglob: "files/*.yml"
 
 - name: Apply general Kubernetes services to the cluster.
@@ -31,6 +31,7 @@
     - ingress-traefik.yml
     - ingress-traefik-rbac.yml
     - default-http-backend.yml
+    - docker-registry.yml
   register: kube_services_result
   changed_when: "'created' in kube_services_result.stdout"
   run_once: True
