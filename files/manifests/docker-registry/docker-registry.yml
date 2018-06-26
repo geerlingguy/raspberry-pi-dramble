@@ -1,0 +1,128 @@
+---
+# PersistentVolume definition for NFS mount for Docker registry.
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: docker-registry-pv
+  labels:
+    app: docker-registry
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: {{ nfs_share_dir }}/docker-registry
+    server: {{ groups.dramble[0] }}
+  persistentVolumeReclaimPolicy: Retain
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: docker-registry-pvc
+  labels:
+    app: docker-registry
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
+---
+# Docker registry Deployment definition.
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: docker-registry
+  labels:
+    app: docker-registry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docker-registry
+  template:
+    metadata:
+      labels:
+        app: docker-registry
+    spec:
+      containers:
+      - image: registry:2
+        name: docker-registry
+        envFrom:
+        - configMapRef:
+            name: docker-registry
+        volumeMounts:
+        - name: cert-fullchain
+          mountPath: /etc/certs/registry-fullchain.pem
+        - name: cert-privkey
+          mountPath: /etc/certs/registry-privkey.pem
+        - name: docker-registry-data
+          mountPath: /var/lib/registry
+        ports:
+        - name: registry
+          containerPort: 5000
+          protocol: TCP
+        imagePullPolicy: Always
+      restartPolicy: Always
+      volumes:
+        - name: docker-registry-data
+          persistentVolumeClaim:
+            claimName: docker-registry-pvc
+        - name: cert-fullchain
+          hostPath:
+            path: /mnt/nfs/certs/registry-fullchain.pem
+        - name: cert-privkey
+          hostPath:
+            path: /mnt/nfs/certs/registry-privkey.pem
+---
+# Docker registry Service definition.
+kind: Service
+apiVersion: v1
+metadata:
+  name: docker-registry
+spec:
+  selector:
+    app: docker-registry
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 5000
+  - name: https
+    protocol: TCP
+    port: 443
+    targetPort: 5000
+---
+# Docker registry Ingress definition.
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: docker-registry
+spec:
+  tls:
+  - hosts:
+    - {{ docker_registry_domain }}
+    secretName: docker-registry-tls
+  rules:
+  - host: {{ docker_registry_domain }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: docker-registry
+          servicePort: 5000
+---
+# Docker registry ConfigMap definition.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: docker-registry
+data:
+  REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/registry
+  REGISTRY_HTTP_SECRET: {{ docker_registry_http_secret }}
+  REGISTRY_HTTP_TLS_CERTIFICATE: /etc/certs/registry-fullchain.pem
+  REGISTRY_HTTP_TLS_KEY: /etc/certs/registry-privkey.pem
+  # REGISTRY_AUTH: htpasswd
+  # REGISTRY_AUTH_HTPASSWD_PATH: /etc/registry-htpasswd
+  # REGISTRY_AUTH_HTPASSWD_REALM: Private Registry

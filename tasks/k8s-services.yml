@@ -1,0 +1,16 @@
+---
+- name: Copy Kubernetes definition files to the cluster.
+  template:
+    src: "{{ item }}"
+    dest: "~/{{ item | basename }}"
+  with_fileglob: "files/manifests/kube-system/*.yml"
+
+- name: Apply Docker registry manifest to the cluster.
+  command: kubectl apply -f ~/{{ item }}
+  with_items:
+    - ingress-traefik.yml
+    - ingress-traefik-rbac.yml
+    - default-http-backend.yml
+  register: kube_apply_result
+  changed_when: "'created' in kube_apply_result.stdout"
+  run_once: True

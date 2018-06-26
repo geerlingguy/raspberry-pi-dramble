@@ -63,5 +63,11 @@
     - import_tasks: tasks/led-monitor.yml
       tags: ['leds']
 
-    - import_tasks: tasks/drupal-k8s.yml
+    - import_tasks: tasks/k8s-services.yml
+      tags: ['kubernetes']
+
+    - import_tasks: tasks/k8s-docker-registry.yml
+      tags: ['kubernetes', 'docker']
+
+    - import_tasks: tasks/k8s-drupal8.yml
       tags: ['drupal']

@@ -23,27 +23,15 @@
   template:
     src: "{{ item }}"
     dest: "~/{{ item | basename }}"
-  with_fileglob: "files/*.yml"
-
-- name: Apply general Kubernetes services to the cluster.
-  command: kubectl apply -f ~/{{ item }}
-  with_items:
-    - ingress-traefik.yml
-    - ingress-traefik-rbac.yml
-    - default-http-backend.yml
-    - docker-registry.yml
-  register: kube_services_result
-  changed_when: "'created' in kube_services_result.stdout"
-  run_once: True
+  with_fileglob: "files/manifests/drupal8/*.yml"
 
 - name: Apply Drupal 8 Kubernetes services to the cluster.
   command: kubectl apply -f ~/{{ item }}
   with_items:
     - drupal8.yml
     - drupal8-mysql.yml
-    - drupal8-ingress.yml
-  register: drupal8_result
-  changed_when: "'created' in drupal8_result.stdout"
+  register: kube_apply_result
+  changed_when: "'created' in kube_apply_result.stdout"
   run_once: True
 
 # Only needed if using the k8s_raw module.

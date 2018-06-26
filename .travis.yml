@@ -4,6 +4,7 @@ services: docker
 addons:
   hosts:
     - cluster.pidramble.test
+    - registry.pidramble.test
     - kube1
 
 install:

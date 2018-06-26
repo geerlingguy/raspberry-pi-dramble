@@ -1,4 +1,7 @@
 ---
+# Drupal configuration.
+drupal8_domain: cluster.pidramble.test
+
 # MySQL configuration.
 mysql_drupal_password: aaiQyjrcdvkxX6fg7UeM
 mysql_root_password: mm2vnyboVrndryde4kJR
@@ -9,6 +12,10 @@ nfs_mount_dir: /mnt/nfs
 # Security configuration.
 security_sudoers_passwordless:
   - pi
+
+# Docker configuration.
+docker_registry_domain: registry.pidramble.test
+docker_registry_http_secret: fdb19409c851605cd6c46615888d4c0e37858121df7c
 
 # DigitalOcean configuration (use to test the infrastructure on DigitalOcean).
 digitalocean_api_token: "YOUR_TOKEN_HERE"

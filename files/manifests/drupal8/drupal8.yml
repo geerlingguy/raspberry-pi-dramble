@@ -44,6 +44,26 @@ spec:
     tier: frontend
   type: NodePort
 ---
+# Definition of Drupal 8 Ingress resource.
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: drupal8-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  backend:
+    serviceName: default-http-backend
+    servicePort: 80
+  rules:
+  - host: {{ drupal8_domain }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: drupal8
+          servicePort: 80
+---
 # Drupal 8 Deployment definition.
 apiVersion: extensions/v1beta1
 kind: Deployment
