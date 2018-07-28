@@ -48,6 +48,8 @@ spec:
         - name: docker-registry
           image: registry:2
           env:
+            - name: REGISTRY_HTTP_SECRET
+              value: {{ docker_registry_http_secret }}
             - name: REGISTRY_HTTP_ADDR
               value: ":5000"
             - name: REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY
