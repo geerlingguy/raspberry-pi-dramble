@@ -102,7 +102,26 @@ spec:
           volumeMounts:
             - mountPath: /var/www/html/sites/default/files
               name: drupal8-files
+          resources:
+            limits:
+              cpu: "1"
+            requests:
+              cpu: 500m
       volumes:
         - name: drupal8-files
           persistentVolumeClaim:
             claimName: drupal8-files-pvc
+---
+# Definition of Drupal 8 Horizontal Pod Autoscaler.
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: drupal8
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: drupal8
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50

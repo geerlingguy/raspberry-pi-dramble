@@ -5,7 +5,7 @@
     dest: "~/{{ item | basename }}"
   with_fileglob: "files/manifests/kube-system/*.yml"
 
-- name: Apply Docker registry manifest to the cluster.
+- name: Apply Ingress manifests to the cluster.
   command: kubectl apply -f ~/{{ item }}
   with_items:
     - ingress-traefik.yml
@@ -14,3 +14,16 @@
   register: kube_apply_result
   changed_when: "'created' in kube_apply_result.stdout"
   run_once: True
+
+- name: Clone the metrics-server project from GitHub.
+  git:
+    repo: https://github.com/kubernetes-incubator/metrics-server.git
+    dest: "~/metrics-server"
+    version: master
+    update: no
+    depth: 1
+  register: metrics_server_clone
+
+- name: Apply metrics-server services to the cluster.
+  command: kubectl create -f ~/metrics-server/deploy/1.8+/
+  when: metrics_server_clone is changed
