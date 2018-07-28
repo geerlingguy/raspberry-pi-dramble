@@ -14,11 +14,13 @@
     path: /mnt/nfs/certs
     state: directory
   run_once: True
+  delegate_to: "{{ groups.dramble[0] }}"
 
 - name: Generate an OpenSSL private key.
   openssl_privatekey:
     path: /mnt/nfs/certs/registry-privkey.pem
   run_once: True
+  delegate_to: "{{ groups.dramble[0] }}"
 
 - name: Generate an OpenSSL CSR.
   openssl_csr:
@@ -26,6 +28,7 @@
     privatekey_path: /mnt/nfs/certs/registry-privkey.pem
     common_name: "{{ docker_registry_domain }}"
   run_once: True
+  delegate_to: "{{ groups.dramble[0] }}"
 
 - name: Generate a Self Signed OpenSSL certificate.
   openssl_certificate:
@@ -34,6 +37,7 @@
     csr_path: /mnt/nfs/certs/registry-privkey.csr
     provider: selfsigned
   run_once: True
+  delegate_to: "{{ groups.dramble[0] }}"
 
 # Make sure cert is in local store on each server.
 - name: Ensure local cert directory exists.
@@ -53,7 +57,7 @@
   when: copy_registry_cert is changed
 
 # Add a Kubernetes secret for Traefik Ingress TLS.
-- name: Create necessary Drupal 8 secrets.
+- name: Create necessary TLS secrets.
   command: kubectl create secret tls docker-registry-tls --key /mnt/nfs/certs/registry-privkey.pem --cert /mnt/nfs/certs/registry-fullchain.pem
   register: kubectl_secret_result
   changed_when: "'already exists' not in kubectl_secret_result.stderr"
@@ -61,6 +65,7 @@
     - "'already exists' not in kubectl_secret_result.stderr"
     - "'created' not in kubectl_secret_result.stdout"
   run_once: True
+  delegate_to: "{{ groups.dramble[0] }}"
 
 # Kubernetes manifest for Docker registry.
 - name: Copy Kubernetes definition files to the cluster.
@@ -76,3 +81,4 @@
   register: kube_apply_result
   changed_when: "'created' in kube_apply_result.stdout"
   run_once: True
+  delegate_to: "{{ groups.dramble[0] }}"

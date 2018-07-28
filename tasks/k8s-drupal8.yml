@@ -17,6 +17,7 @@
     - "'already exists' not in kubectl_secret_result.stderr"
     - "'created' not in kubectl_secret_result.stdout"
   run_once: True
+  delegate_to: "{{ groups.dramble[0] }}"
   no_log: True
 
 - name: Copy Kubernetes definition files to the cluster.
@@ -32,6 +33,7 @@
     - drupal8-mysql.yml
   register: kube_apply_result
   changed_when: "'created' in kube_apply_result.stdout"
+  delegate_to: "{{ groups.dramble[0] }}"
   run_once: True
 
 # Only needed if using the k8s_raw module.
