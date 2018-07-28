@@ -34,8 +34,6 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: docker-registry
-  labels:
-    app: docker-registry
 spec:
   replicas: 1
   selector:
@@ -47,82 +45,54 @@ spec:
         app: docker-registry
     spec:
       containers:
-      - image: registry:2
-        name: docker-registry
-        envFrom:
-        - configMapRef:
-            name: docker-registry
-        volumeMounts:
-        - name: cert-fullchain
-          mountPath: /etc/certs/registry-fullchain.pem
-        - name: cert-privkey
-          mountPath: /etc/certs/registry-privkey.pem
-        - name: docker-registry-data
-          mountPath: /var/lib/registry
-        ports:
-        - name: registry
-          containerPort: 5000
-          protocol: TCP
-        imagePullPolicy: Always
-      restartPolicy: Always
+        - name: docker-registry
+          image: registry:2
+          env:
+            - name: REGISTRY_HTTP_ADDR
+              value: ":5000"
+            - name: REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY
+              value: "/var/lib/registry"
+          ports:
+          - name: http
+            containerPort: 5000
+          volumeMounts:
+          - name: docker-registry-data
+            mountPath: /var/lib/registry
       volumes:
         - name: docker-registry-data
           persistentVolumeClaim:
             claimName: docker-registry-pvc
-        - name: cert-fullchain
-          hostPath:
-            path: /mnt/nfs/certs/registry-fullchain.pem
-        - name: cert-privkey
-          hostPath:
-            path: /mnt/nfs/certs/registry-privkey.pem
 ---
 # Docker registry Service definition.
 kind: Service
 apiVersion: v1
 metadata:
   name: docker-registry
+  labels:
+    app: docker-registry
 spec:
   selector:
     app: docker-registry
   ports:
   - name: http
-    protocol: TCP
-    port: 80
-    targetPort: 5000
-  - name: https
-    protocol: TCP
-    port: 443
+    port: 5000
     targetPort: 5000
 ---
 # Docker registry Ingress definition.
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
   name: docker-registry
 spec:
-  tls:
-  - hosts:
-    - {{ docker_registry_domain }}
-    secretName: docker-registry-tls
   rules:
   - host: {{ docker_registry_domain }}
     http:
       paths:
-      - path: /
-        backend:
+      - backend:
           serviceName: docker-registry
           servicePort: 5000
----
-# Docker registry ConfigMap definition.
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: docker-registry
-data:
-  REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/registry
-  REGISTRY_HTTP_SECRET: {{ docker_registry_http_secret }}
-  REGISTRY_HTTP_TLS_CERTIFICATE: /etc/certs/registry-fullchain.pem
-  REGISTRY_HTTP_TLS_KEY: /etc/certs/registry-privkey.pem
-  # REGISTRY_AUTH: htpasswd
-  # REGISTRY_AUTH_HTPASSWD_PATH: /etc/registry-htpasswd
-  # REGISTRY_AUTH_HTPASSWD_REALM: Private Registry
+        path: /

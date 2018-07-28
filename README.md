@@ -75,7 +75,19 @@ Until the official Pi Dramble Wiki is updated (see TODOs above), this section of
 
 > Note that for the hosts file, you can point the domain at any of the non-master nodes (e.g. `10.0.100.62`, `10.0.100.63`, etc.); they are all running the Traefik ingress controller as a Kubernetes DaemonSet, meaning any single host can direct traffic on port 80 to the `drupal8` service. Technically, you could use DNS round robin to point one domain at all the Pis, but the best solution is to have another load balancer in front of all the Pis, redirecting the traffic to them using a more intelligent load balancing and health monitoring solution.
 
-### Benchmarks - Testing the performance of the Dramble
+#### Private Docker Registry Usage
+
+The Pi Dramble includes a built-in Docker registry that is used to host Drupal images for deployment to Kubernetes. To use the Docker Registry manually (to push or pull images):
+
+  1. Edit your `/etc/hosts` file and add the line:
+
+         registry.pidramble.test  10.0.100.62
+
+  2. Configure Docker to work with `registry.pidramble.test` as an [insecure HTTP registry](https://docs.docker.com/registry/insecure/#deploy-a-plain-http-registry).
+
+Eventually, the registry will be secure (see GitHub issue TODO), but for now the Dramble uses an insecure HTTP registry for ease of installation.
+
+## Benchmarks - Testing the performance of the Dramble
 
 See the [Pi Dramble Benchmarks](http://www.pidramble.com/wiki/benchmarks) section of the Wiki for current benchmarks and statistics.
 
