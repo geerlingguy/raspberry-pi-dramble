@@ -3,6 +3,14 @@
 # and private key (do they also need to be mounted?). Might not need to do this
 # if the certs are in the local store.
 
+- name: Ensure requirements for python OpenSSL are met.
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - libffi-dev
+    - libssl-dev
+
 # SSL Cert setup for secure Docker registry.
 - name: Ensure python OpenSSL dependencies are installed.
   pip:
