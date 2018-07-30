@@ -4,18 +4,19 @@
 # if the certs are in the local store.
 
 - name: Ensure requirements for python OpenSSL are met.
-  package:
-    name: "{{ item }}"
+  apt:
+    name:
+      - libffi-dev
+      - libssl-dev
     state: present
-  with_items:
-    - libffi-dev
-    - libssl-dev
 
 # SSL Cert setup for secure Docker registry.
 - name: Ensure python OpenSSL dependencies are installed.
   pip:
     name: pyOpenSSL
     state: present
+  run_once: True
+  delegate_to: "{{ groups.dramble[0] }}"
 
 - name: Ensure directory exists for self-signed TLS certs.
   file:
