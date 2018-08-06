@@ -1,6 +1,7 @@
 ---
 # Drupal configuration.
 drupal8_domain: cluster.pidramble.test
+drupal8_docker_image: geerlingguy/drupal:latest-arm32v7
 
 # MySQL configuration.
 mysql_drupal_password: aaiQyjrcdvkxX6fg7UeM
@@ -14,6 +15,7 @@ security_sudoers_passwordless:
   - pi
 
 # Docker configuration.
+docker_registry_image: vsellier/docker-registry-arm:2.6.2
 docker_registry_domain: registry.pidramble.test
 docker_registry_http_secret: fdb19409c851605cd6c46615888d4c0e37858121df7c
 

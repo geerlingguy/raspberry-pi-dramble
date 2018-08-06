@@ -85,7 +85,7 @@ spec:
         tier: frontend
     spec:
       containers:
-        - image: geerlingguy/drupal:latest
+        - image: {{ drupal8_docker_image }}
           imagePullPolicy: Always
           name: drupal8
           env:

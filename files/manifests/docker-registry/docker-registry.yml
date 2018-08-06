@@ -46,7 +46,7 @@ spec:
     spec:
       containers:
         - name: docker-registry
-          image: registry:2
+          image: {{ docker_registry_image }}
           env:
             - name: REGISTRY_HTTP_SECRET
               value: {{ docker_registry_http_secret }}
