@@ -16,7 +16,7 @@ To run the playbook:
 
 Assuming everything went well, the Pis should switch over to their new IP addresses quickly; if they don't, you can forcefully reboot them with the command:
 
-    $ ansible pis -i inventory -a "shutdown -r now" -s
+    $ ansible pis -i inventory -a "reboot" -b
 
 Now you should be able to run the main Dramble playbooks on your Pi cluster!
 
@@ -28,17 +28,12 @@ If you ever need to change active Dramble networking info, it's easy! Just chang
 
 _If you don't want to use the automated playbook, you can do the following on each Raspberry Pi individually_:
 
-  1. Set a unique hostname (e.g. `www1.pidramble.com` for the first webserver, and `db1.pidramble.com` for the database server):
+  1. Set a unique hostname (e.g. `kube1.pidramble.com` for the first server, and `kube2.pidramble.com` for the second server):
     1. Edit `/etc/hostname` and replace the existing hostname with the new hostname.
     2. Enter `hostname [new-hostname]` to update the hostname immediately.
     3. Edit `/etc/hosts` and replace the existing hostname with the new hostname.
   2. Set up the network settings for our Pi network:
-    1. Edit `/etc/network/interfaces` and change the `iface eth0 inet dhcp` block to (IP address specific to the server):
-        ```
-        iface eth0 inet static
-          address 10.0.1.60/24
-          gateway 10.0.1.1
-        ```
+    1. TODO - these instructions changed with Rasbpian Stretch.
     2. Restart the Pi: `sudo reboot`
     3. You'll need to reconnect to the Pi on its new static IP address.
 

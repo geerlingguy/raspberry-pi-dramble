@@ -1,4 +1,63 @@
 ---
-- include: playbooks/balancer/balancer.yml
-- include: playbooks/database/database.yml
-- include: playbooks/web/web.yml
+- hosts: dramble
+  become: yes
+
+  vars_files:
+    - vars/main.yml
+    - config.yml
+
+  pre_tasks:
+    - import_tasks: tasks/test-setup.yml
+      when: deploy_target != 'pi'
+
+    - name: Ensure dependencies are installed.
+      apt:
+        name:
+          - sudo
+          - openssh-server
+        state: present
+
+    - import_tasks: tasks/cgroup-features.yml
+    - import_tasks: tasks/disable-swap.yml
+      tags: ['always']
+
+  roles:
+    # TODO: Re-enable firewall once I can figure out exactly which ports are
+    # required to get cni, flannel, etc. all working correctly.
+    # - { role: geerlingguy.firewall, tags: ['firewall'] }
+
+    - role: geerlingguy.security
+      tags: ['security']
+
+    - role: geerlingguy.nfs
+      tags: ['nfs']
+      when: deploy_target != 'docker'
+
+    - role: geerlingguy.pip
+      tags: ['pip', 'docker']
+
+    - role: docker-arm
+      tags: ['docker']
+
+    - role: geerlingguy.kubernetes
+      tags: ['kubernetes']
+
+    - role: leds
+      tags: ['leds']
+
+  tasks:
+    - include_tasks: tasks/nfs.yml
+      tags: ['nfs']
+      when: deploy_target != 'docker'
+
+    - import_tasks: tasks/led-monitor.yml
+      tags: ['leds']
+
+    - import_tasks: tasks/k8s-services.yml
+      tags: ['kubernetes']
+
+    - import_tasks: tasks/k8s-docker-registry.yml
+      tags: ['kubernetes', 'docker']
+
+    - import_tasks: tasks/k8s-drupal8.yml
+      tags: ['drupal']

@@ -1,0 +1,127 @@
+---
+# PersistentVolume definition for NFS mount for Drupal 8 files.
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: drupal8-files-pv
+  labels:
+    app: drupal8
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: {{ nfs_share_dir }}/drupal8-files
+    server: {{ groups.dramble[0] }}
+  persistentVolumeReclaimPolicy: Retain
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: drupal8-files-pvc
+  labels:
+    app: drupal8
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+# Drupal 8 Service definition.
+apiVersion: v1
+kind: Service
+metadata:
+  name: drupal8
+  labels:
+    app: drupal8
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: drupal8
+    tier: frontend
+  type: NodePort
+---
+# Definition of Drupal 8 Ingress resource.
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: drupal8-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  backend:
+    serviceName: default-http-backend
+    servicePort: 80
+  rules:
+  - host: {{ drupal8_domain }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: drupal8
+          servicePort: 80
+---
+# Drupal 8 Deployment definition.
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: drupal8
+  labels:
+    app: drupal8
+spec:
+  selector:
+    matchLabels:
+      app: drupal8
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: drupal8
+        tier: frontend
+    spec:
+      containers:
+        - image: {{ drupal8_docker_image }}
+          imagePullPolicy: Always
+          name: drupal8
+          env:
+            - name: DRUPAL_DB_HOST
+              value: drupal8-mysql
+            - name: DRUPAL_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: drupal8-mysql-pass
+                  key: password
+          ports:
+            - containerPort: 80
+              name: drupal8
+          volumeMounts:
+            - mountPath: /var/www/html/sites/default/files
+              name: drupal8-files
+          resources:
+            limits:
+              cpu: "1"
+            requests:
+              cpu: 500m
+      volumes:
+        - name: drupal8-files
+          persistentVolumeClaim:
+            claimName: drupal8-files-pvc
+---
+# Definition of Drupal 8 Horizontal Pod Autoscaler.
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: drupal8
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: drupal8
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50

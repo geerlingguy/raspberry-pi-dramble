@@ -1,8 +1,0 @@
----
-- name: Add Drupal cron job.
-  cron:
-    name: "Dramble Drupal cron"
-    minute: "*/15"
-    user: "{{ ansible_ssh_user }}"
-    job: "/usr/local/bin/drush --quiet --root=/var/www/drupal cron -y"
-  when: "inventory_hostname == groups.webservers[0]"

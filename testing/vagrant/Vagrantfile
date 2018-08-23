@@ -11,86 +11,39 @@ end
 vconfig = YAML.load_file("../../config.yml")
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "geerlingguy/debian8"
+  config.vm.box = "geerlingguy/debian9"
   config.ssh.insert_key = false
-
-  # Set order so virtualbox provider is used unless overridden.
   config.vm.provider "virtualbox"
-  config.vm.provider "vmware_fusion"
 
-  # Balancer.
-  config.vm.define "bal1" do |bal1|
-    bal1.vm.network :private_network, ip: "192.168.77.2"
-
-    # VirtualBox.
-    bal1.vm.provider :virtualbox do |v|
-      v.linked_clone = true if Vagrant::VERSION =~ /^1.8/
-      v.name = "bal1." + vconfig['site_url']
-      v.memory = 1024
-      v.cpus = 4
-    end
+  config.vm.provider :virtualbox do |v|
+    v.memory = 1024
+    v.cpus = 1
+    v.linked_clone = true
   end
 
-  # Web 1.
-  config.vm.define "www1" do |www1|
-    www1.vm.network :private_network, ip: "192.168.77.3"
+  # Define five VMs with static private IP addresses.
+  boxes = [
+    { :name => "kube1", :ip => "192.168.77.2" },
+    { :name => "kube2", :ip => "192.168.77.3" },
+    { :name => "kube3", :ip => "192.168.77.4" },
+    { :name => "kube4", :ip => "192.168.77.5" },
+    { :name => "kube5", :ip => "192.168.77.6" }
+  ]
 
-    # VirtualBox.
-    www1.vm.provider :virtualbox do |v|
-      v.linked_clone = true if Vagrant::VERSION =~ /^1.8/
-      v.name = "www1." + vconfig['site_url']
-      v.memory = 1024
-      v.cpus = 1
-    end
-  end
+  # Provision each of the VMs.
+  boxes.each do |opts|
+    config.vm.define opts[:name] do |config|
+      config.vm.hostname = opts[:name] + ".pidramble.com"
+      config.vm.network :private_network, ip: opts[:ip]
 
-  # Web 2.
-  config.vm.define "www2" do |www2|
-    www2.vm.network :private_network, ip: "192.168.77.4"
-
-    # VirtualBox.
-    www2.vm.provider :virtualbox do |v|
-      v.linked_clone = true if Vagrant::VERSION =~ /^1.8/
-      v.name = "www2." + vconfig['site_url']
-      v.memory = 1024
-      v.cpus = 1
-    end
-  end
-
-  # Database 1.
-  config.vm.define "db1" do |db1|
-    db1.vm.network :private_network, ip: "192.168.77.5"
-
-    # VirtualBox.
-    db1.vm.provider :virtualbox do |v|
-      v.linked_clone = true if Vagrant::VERSION =~ /^1.8/
-      v.name = "db1." + vconfig['site_url']
-      v.memory = 1024
-      v.cpus = 1
-    end
-  end
-
-  # Database 2.
-  config.vm.define "db2" do |db2|
-    db2.vm.network :private_network, ip: "192.168.77.6"
-
-    # VirtualBox.
-    db2.vm.provider :virtualbox do |v|
-      v.linked_clone = true if Vagrant::VERSION =~ /^1.8/
-      v.name = "db2." + vconfig['site_url']
-      v.memory = 1024
-      v.cpus = 1
-    end
-
-    # Run ansible provisioner for all VMs at the end.
-    db2.vm.provision "ansible" do |ansible|
-      ansible.playbook = "../../main.yml"
-      ansible.inventory_path = "inventory"
-      ansible.limit = "all"
-      ansible.extra_vars = {
-        mysql_datadir: "/var/lib/mysql",
-        php_source_install_gmp_path: "/usr/include/x86_64-linux-gnu/gmp.h"
-      }
+      # Provision all the VMs using Ansible after last VM is up.
+      if opts[:name] == "kube5"
+        config.vm.provision "ansible" do |ansible|
+          ansible.playbook = "../../main.yml"
+          ansible.inventory_path = "inventory"
+          ansible.limit = "all"
+        end
+      end
     end
   end
 

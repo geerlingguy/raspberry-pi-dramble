@@ -1,19 +1,11 @@
-[balancer]
-10.0.1.60
-
-[webservers]
-10.0.1.61
-10.0.1.62
-
-[database]
-10.0.1.63 mysql_server_id=1 mysql_replication_role=master
-10.0.1.64 mysql_server_id=2 mysql_replication_role=slave
-
-[dramble:children]
-balancer
-webservers
-database
+[dramble]
+10.0.100.61 kubernetes_role=master
+10.0.100.62 kubernetes_role=node
+10.0.100.63 kubernetes_role=node
+10.0.100.64 kubernetes_role=node
+10.0.100.65 kubernetes_role=node
 
 [dramble:vars]
 ansible_ssh_user=pi
 deploy_target=pi
+kubernetes_apiserver_advertise_address=10.0.100.61

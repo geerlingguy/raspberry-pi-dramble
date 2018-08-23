@@ -1,0 +1,6 @@
+---
+- src: geerlingguy.firewall
+- src: geerlingguy.nfs
+- src: geerlingguy.security
+- src: geerlingguy.pip
+- src: geerlingguy.kubernetes

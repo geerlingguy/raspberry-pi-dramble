@@ -4,9 +4,7 @@
 
 [![Build Status](https://travis-ci.org/geerlingguy/raspberry-pi-dramble.svg?branch=master)](https://travis-ci.org/geerlingguy/raspberry-pi-dramble)
 
-> **NOTE**: This project is currently being converted to use Kubernetes as the foundational layer of the Drupal site infrastructure. Please [check out the `kubernetes` branch](https://github.com/geerlingguy/raspberry-pi-dramble/tree/kubernetes) and see its README for more info.
-
-A cluster ([Bramble](http://elinux.org/Bramble)) of Raspberry Pis on which Drupal will be deployed using Ansible.
+A cluster ([Bramble](http://elinux.org/Bramble)) of Raspberry Pis on which Drupal will be deployed using Ansible and Kubernetes.
 
 <p align="center"><img src="https://raw.githubusercontent.com/geerlingguy/raspberry-pi-dramble/master/images/raspberry-pi-dramble-hero.jpg" alt="Raspberry Pi Dramble - Hero Image" /></p>
 
@@ -49,24 +47,68 @@ The process for setting up all the Raspberry Pis is outlined in the Wiki:
   3. [Network the Raspberry Pis](http://www.pidramble.com/wiki/setup/network)
   4. [Test the Ansible configuration](http://www.pidramble.com/wiki/setup/test-ansible)
   5. [Provision the Raspberry Pis](http://www.pidramble.com/wiki/setup/provision)
+    - TODO: This documentation needs updating for Kubernetes.
   6. [Deploy Drupal to the Raspberry Pis](http://www.pidramble.com/wiki/setup/deploy-drupal)
+    - TODO: This documentation needs updating for Kubernetes.
 
-### Benchmarks - Testing the performance of the Dramble
+### Kubernetes Setup Notes
+
+Until the official Pi Dramble Wiki is updated (see TODOs above), this section of the README should suffice for setup steps for someone familiar with command line usage.
+
+  1. Run the main playbook to install Kubernetes on all the Pis and configure the cluster:
+
+         ansible-playbook -i inventory main.yml
+
+  2. You can SSH into the Kubernetes master (10.0.100.61 by default) and run `kubectl` by switching to the root user (`sudo su`). For example:
+
+         kubectl get nodes
+         kubectl get pods
+         ...
+
+  3. Edit your `/etc/hosts` file and add the line:
+
+         cluster.pidramble.test  10.0.100.62
+
+  4. After that, you can access the `drupal8` Kubernetes service at the URL: `http://cluster.pidramble.test/`.
+
+  5. To install Drupal 8, use the database username `drupal`, the database name `drupal`, the MySQL server URL `drupal8-mysql`, and the database password defined in your `config.yml` file.
+
+> Note that for the hosts file, you can point the domain at any of the non-master nodes (e.g. `10.0.100.62`, `10.0.100.63`, etc.); they are all running the Traefik ingress controller as a Kubernetes DaemonSet, meaning any single host can direct traffic on port 80 to the `drupal8` service. Technically, you could use DNS round robin to point one domain at all the Pis, but the best solution is to have another load balancer in front of all the Pis, redirecting the traffic to them using a more intelligent load balancing and health monitoring solution.
+
+#### Private Docker Registry Usage
+
+The Pi Dramble includes a built-in Docker registry that is used to host Drupal images for deployment to Kubernetes. To use the Docker Registry manually (to push or pull images):
+
+  1. Edit your `/etc/hosts` file and add the line:
+
+         registry.pidramble.test  10.0.100.62
+
+  2. Configure Docker to work with `registry.pidramble.test` as an [insecure HTTP registry](https://docs.docker.com/registry/insecure/#deploy-a-plain-http-registry).
+
+Eventually, the registry will be secure (see GitHub issue TODO), but for now the Dramble uses an insecure HTTP registry for ease of installation.
+
+## Benchmarks - Testing the performance of the Dramble
 
 See the [Pi Dramble Benchmarks](http://www.pidramble.com/wiki/benchmarks) section of the Wiki for current benchmarks and statistics.
+
+## Local testing
+
+A Vagrantfile is also included for local testing and debugging of the Kubernetes cluster and manifests using [Vagrant](https://www.vagrantup.com). See the [Vagrant README](testing/vagrant/README.md) for more details.
 
 ## Drupal on a Single Pi - Drupal Pi
 
 If you have only a single Raspberry Pi, you can use the [Drupal Pi](https://github.com/geerlingguy/drupal-pi) project to quickly get Drupal running on the single Pi.
 
-## Using Raspberry Pi B+ or Pi Zero
+## Using older or slower Raspberry Pi models
 
-The Raspberry Pi 2 and 3 both have quad-core processors that make certain operations four to ten times faster than single-core Pis like the A+, B+, Zero, etc. Additionally, a typical web application needs as much RAM as possible, and any Pi without at least 512 MB of RAM is woefully underpowered for the Drupal LEMP stack.
+The Raspberry Pi 2, 3, and 3 B+ have quad-core processors that make certain operations four to ten times faster than single-core Pis like the A+, B+, Zero, etc. Additionally, cluster members need as much RAM as possible, and any Pi without at least 1 GB of RAM is woefully underpowered for this setup.
 
-It's not recommended—but it is possible—to build your cluster with Raspberry Pi model B+ or Zeros (both have 512 MB of RAM), and you only need to make a couple small changes to `config.yml` before running the main Ansible playbook:
+Therefore only the following Pi models are officially supported at this time:
 
-Inside `config.yml`, comment out the two MySQL settings with comments `# For 1GB RAM.`, and uncomment the two MySQL settings with `# For 512MB RAM.`.
+  - Raspberry Pi model 3 B+
+  - Raspberry Pi model 3 B
+  - Raspberry Pi model 2
 
 ## Author
 
-This project was started in 2015 by [Jeff Geerling](http://www.jeffgeerling.com/), author of [Ansible for DevOps](http://www.ansiblefordevops.com/).
+This project was started in 2015 by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).

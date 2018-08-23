@@ -1,0 +1,62 @@
+---
+firewall_allowed_tcp_ports:
+  - 22
+  - 80
+  - 443
+  # For NFS.
+  - 111
+  - 2049
+  # For Kubernetes.
+  - 6443
+  - 2379
+  - 2380
+  - 10250
+  - 10251
+  - 10252
+  - 10255
+  # TODO: Ports 30000-32767 for NodePort services?
+  # For Weave.
+  - 6783
+  - 6784
+  # For Flannel.
+  - 8285
+  - 8472
+firewall_allowed_udp_ports:
+  # For NFS.
+  - 111
+  - 2049
+  # For Weave.
+  - 6783
+  - 6784
+  # For Flannel.
+  - 8285
+  - 8472
+
+# Docker configuration.
+docker_install_from_convenience_script: True
+docker_users:
+  - pi
+
+# Kubernetes configuration.
+kubernetes_allow_pods_on_master: False
+kubernetes_pod_network_cidr: '10.244.0.0/16'
+kubernetes_packages:
+  - name: kubelet=1.10.2-00
+    state: present
+  - name: kubeadm=1.10.2-00
+    state: present
+  - name: kubernetes-cni
+    state: present
+
+# See: https://github.com/docker-library/mysql/issues/318
+mysql_container_image: hypriot/rpi-mysql:5.5
+default_http_backend_image: gcr.io/google_containers/defaultbackend-arm:1.4
+mysql_node_affinity_hostname: kube5
+
+# NFS configuration.
+nfs_share_dir: /srv/nfs
+nfs_exports: { "/srv/nfs *(rw,sync,no_root_squash,no_subtree_check)" }
+# nfs_mount_dir: /mnt/nfs # defined in global vars file.
+nfs_extra_dirs:
+  - docker-registry
+  - drupal8-files

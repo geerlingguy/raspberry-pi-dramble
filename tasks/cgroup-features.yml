@@ -1,0 +1,25 @@
+---
+- name: Enable required cgroup features.
+  lineinfile:
+    path: /boot/cmdline.txt
+    backrefs: True
+    # regexp: '(^.+console(\s+(?!cgroup_enable=cpuset)[\w=/\-\.]+)*)\s*$'
+    regexp: '(^.+rootwait(\s+(?!cgroup_enable=cpuset cgroup_enable=memory)[\w=/\-\.]+)*)\s*$'
+    line: '\1 cgroup_enable=cpuset cgroup_enable=memory'
+    state: present
+  register: cgroup_features
+  when: deploy_target == 'pi'
+
+- name: Reboot immediately if cgroup features changed.
+  shell: "sleep 5 && reboot"
+  async: 1
+  poll: 0
+  when: cgroup_features is changed
+
+- name: Wait for the reboot to complete if cgroup features changed.
+  wait_for_connection:
+    connect_timeout: 20
+    sleep: 5
+    delay: 5
+    timeout: 300
+  when: cgroup_features is changed

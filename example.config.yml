@@ -1,49 +1,11 @@
 ---
-# Drupal site name (set during installation).
-site_name: Dramble
+# Drupal configuration.
+drupal8_domain: cluster.pidramble.test
+drupal8_docker_image: geerlingguy/drupal:latest-arm32v7
 
-# Drupal site URL (don't include www. or a trailing slash).
-site_url: pidramble.com
-
-# Drupal docroot where the Drupal codebase should be deployed.
-drupal_docroot: /var/www/drupal
-
-# Drupal uid 1 credentials.
-drupal_admin_name: admin
-drupal_admin_password: admin
-
-# Drupal Database configuration. (Make sure to match with vars for database).
-drupal_db_name: drupal
-drupal_db_username: drupal
-drupal_db_password: supersecure
-
-# Uncomment these lines to install Drupal 8 from drupal.org instead of the demo
-# Drupal 8 project (override vars from `playbooks/drupal/vars/main.yml`).
-# drupal_repo: http://git.drupal.org/project/drupal.git
-# drupal_deploy_strategy: "tarball"
-# drupal_version: "8.2.6"
-
-# Drupal install profile to use (for installation).
-drupal_install_profile: "standard"
-
-# Settings.php configuration for idempotence.
-drupal_hash_salt: nCZ3_LdhMkzH7MidhZ3Ac4sUyIbQP2FS9upOUbppzT9EtWp_gUmR8KZffhwm8rjmTr08oWLhjQ
-drupal_site_uuid: 73ee435f-88fd-4b45-9c00-c09c54510359
-
-# Set nginx_access_log to "off" to conserve disk I/O for maximum performance.
-# Set it to a file inside /var/log/nginx if you want to enable the monitoring of
-# requests via GPIO LEDs.
-nginx_access_log: "/var/log/nginx/access.log"
-
-# Set a secure MySQL root password.
-mysql_root_password: supersecure
-
-# MySQL options.
-mysql_slave_failover_active: false
-# mysql_innodb_buffer_pool_size: "256M" # For 512MB RAM.
-mysql_innodb_buffer_pool_size: "512M" # For 1GB RAM.
-# mysql_myisam_sort_buffer_size: "32M" # For 512MB RAM.
-mysql_myisam_sort_buffer_size: "64M" # For 1GB RAM.
+# MySQL configuration.
+mysql_drupal_password: aaiQyjrcdvkxX6fg7UeM
+mysql_root_password: mm2vnyboVrndryde4kJR
 
 # Drupal filesystem configuration.
 nfs_mount_dir: /mnt/nfs
@@ -51,6 +13,11 @@ nfs_mount_dir: /mnt/nfs
 # Security configuration.
 security_sudoers_passwordless:
   - pi
+
+# Docker configuration.
+docker_registry_image: vsellier/docker-registry-arm:2.6.2
+docker_registry_domain: registry.pidramble.test
+docker_registry_http_secret: fdb19409c851605cd6c46615888d4c0e37858121df7c
 
 # DigitalOcean configuration (use to test the infrastructure on DigitalOcean).
 digitalocean_api_token: "YOUR_TOKEN_HERE"

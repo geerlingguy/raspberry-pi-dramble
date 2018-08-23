@@ -1,17 +1,16 @@
 ---
 services: docker
 
-env:
-  matrix:
-    # Test each playbook individually.
-    - playbook: balancer
-    - playbook: database
-    - playbook: web
-    # - playbook: drupal
+addons:
+  hosts:
+    - cluster.pidramble.test
+    - registry.pidramble.test
+    - kube1
 
 install:
-  - docker pull geerlingguy/docker-debian8-ansible:latest
+  - docker pull geerlingguy/docker-debian9-ansible:latest
   - cp example.config.yml config.yml
 
 script:
-  - "travis_wait 30 ./testing/docker/docker-playbook-test.sh"
+  # - "travis_wait 30 ./testing/docker/docker-playbook-test.sh"
+  - ./testing/docker/docker-playbook-test.sh

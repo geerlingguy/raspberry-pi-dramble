@@ -1,9 +1,0 @@
----
-# The default configuration below installs a demonstration Drupal 8 site that
-# can be used to demonstrate initial deployment and updates to a Drupal 8 site
-# via Ansible and Drush. You can override this default configuration in your
-# main config.yml in the project root.
-drupal_repo: "http://git.{{ site_url }}/demo-drupal-8.git"
-drupal_deploy_strategy: git
-drupal_version: "1.2.0"
-drupal_keep_updated: yes

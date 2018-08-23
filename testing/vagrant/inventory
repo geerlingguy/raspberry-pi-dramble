@@ -1,20 +1,12 @@
-[balancer]
-192.168.77.2
-
-[webservers]
-192.168.77.3
-192.168.77.4
-
-[database]
-192.168.77.5 mysql_server_id=1 mysql_replication_role=master
-192.168.77.6 mysql_server_id=2 mysql_replication_role=slave
-
-[dramble:children]
-balancer
-webservers
-database
+[dramble]
+192.168.77.2 kubernetes_role=master
+192.168.77.3 kubernetes_role=node
+192.168.77.4 kubernetes_role=node
+192.168.77.5 kubernetes_role=node
+192.168.77.6 kubernetes_role=node
 
 [dramble:vars]
 ansible_ssh_user=vagrant
 ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
 deploy_target=vagrant
+kubernetes_apiserver_advertise_address=192.168.77.2

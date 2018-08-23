@@ -1,10 +1,2 @@
-[balancer]
+[dramble]
 localhost
-
-[webservers]
-localhost
-127.0.0.1
-
-[database]
-localhost mysql_server_id=1 mysql_replication_role=master
-127.0.0.1 mysql_server_id=2 mysql_replication_role=slave

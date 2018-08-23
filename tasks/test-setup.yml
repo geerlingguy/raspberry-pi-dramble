@@ -1,0 +1,37 @@
+---
+- name: Ensure auth.log file is present.
+  file:
+    path: /var/log/auth.log
+    state: touch
+    owner: root
+    group: adm
+    mode: 0640
+  when: deploy_target == 'docker'
+
+- name: Override vars for non-ARM test environments.
+  set_fact:
+    docker_version: 18.04.0~ce~3-0~debian
+    drupal8_docker_image: geerlingguy/drupal:latest
+    mysql_container_image: 'mysql:5.7'
+    docker_registry_image: registry:2
+    default_http_backend_image: 'k8s.gcr.io/defaultbackend:1.0'
+  when: deploy_target != 'pi'
+
+- name: Override vars for single-node Docker environment.
+  set_fact:
+    kubernetes_kubelet_extra_args: '--fail-swap-on=false'
+    kubernetes_allow_pods_on_master: True
+    mysql_node_affinity_hostname: kube1
+  when: deploy_target == 'docker'
+
+- name: Copy kube-flannel-vagrant.yml file in place.
+  copy:
+    src: files/manifests/kube-system/kube-flannel-vagrant.yml
+    dest: "~/kube-flannel-vagrant.yml"
+  when: deploy_target == 'vagrant'
+
+- name: Override vars for Vagrant environment.
+  set_fact:
+    kubernetes_flannel_manifest_file: "~/kube-flannel-vagrant.yml"
+    kubernetes_kubelet_extra_args: '--node-ip={{ inventory_hostname }}'
+  when: deploy_target == 'vagrant'

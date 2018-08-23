@@ -14,15 +14,10 @@ In this directory, run the following command:
 
     $ vagrant up
 
-After 10-20 minutes, you should have the infrastructure up and running (assuming there were no errors!).
+After 5-10 minutes, you should have the infrastructure up and running.
 
-## Deploy Drupal to the VMs
+Add the following to your `/etc/hosts` file so you can access pods via the Kubernetes cluster ingress controller:
 
-Once the VMs are up and running, and Ansible provisioning is complete, run the following command (also in this directory):
+    192.168.77.3  cluster.pidramble.test
 
-    $ ansible-playbook -i inventory ../../playbooks/drupal/main.yml
-
-To update to a newer version of the `demo-drupal-8` project, use:
-
-    # Deploy 1.2.1.
-    $ ansible-playbook -i inventory ../../playbooks/drupal/main.yml --extra-vars "drupal_version=1.2.1"
+Then, visit http://cluster.pidramble.test/, and you should see the Drupal site.

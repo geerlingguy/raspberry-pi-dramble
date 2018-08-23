@@ -1,0 +1,100 @@
+---
+# PersistentVolume definition for NFS mount for Docker registry.
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: docker-registry-pv
+  labels:
+    app: docker-registry
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: {{ nfs_share_dir }}/docker-registry
+    server: {{ groups.dramble[0] }}
+  persistentVolumeReclaimPolicy: Retain
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: docker-registry-pvc
+  labels:
+    app: docker-registry
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
+---
+# Docker registry Deployment definition.
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: docker-registry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docker-registry
+  template:
+    metadata:
+      labels:
+        app: docker-registry
+    spec:
+      containers:
+        - name: docker-registry
+          image: {{ docker_registry_image }}
+          env:
+            - name: REGISTRY_HTTP_SECRET
+              value: {{ docker_registry_http_secret }}
+            - name: REGISTRY_HTTP_ADDR
+              value: ":5000"
+            - name: REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY
+              value: "/var/lib/registry"
+          ports:
+          - name: http
+            containerPort: 5000
+          volumeMounts:
+          - name: docker-registry-data
+            mountPath: /var/lib/registry
+      volumes:
+        - name: docker-registry-data
+          persistentVolumeClaim:
+            claimName: docker-registry-pvc
+---
+# Docker registry Service definition.
+kind: Service
+apiVersion: v1
+metadata:
+  name: docker-registry
+  labels:
+    app: docker-registry
+spec:
+  selector:
+    app: docker-registry
+  ports:
+  - name: http
+    port: 5000
+    targetPort: 5000
+---
+# Docker registry Ingress definition.
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+  name: docker-registry
+spec:
+  rules:
+  - host: {{ docker_registry_domain }}
+    http:
+      paths:
+      - backend:
+          serviceName: docker-registry
+          servicePort: 5000
+        path: /

@@ -1,0 +1,35 @@
+# Overridden version of deploy/1.8%2B/metrics-server-deployment.yaml for the
+# metrics-server project for ARM-based computers like the Raspberry Pi. The only
+# line changed is the container image.
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: metrics-server
+  namespace: kube-system
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: metrics-server
+  namespace: kube-system
+  labels:
+    k8s-app: metrics-server
+spec:
+  selector:
+    matchLabels:
+      k8s-app: metrics-server
+  template:
+    metadata:
+      name: metrics-server
+      labels:
+        k8s-app: metrics-server
+    spec:
+      serviceAccountName: metrics-server
+      containers:
+      - name: metrics-server
+        image: gcr.io/google_containers/metrics-server-arm:v0.2.1
+        imagePullPolicy: Always
+        command:
+        - /metrics-server
+        - --source=kubernetes.summary_api:''

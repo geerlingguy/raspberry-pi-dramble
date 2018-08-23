@@ -1,0 +1,18 @@
+---
+dependencies: []
+galaxy_info:
+  author: Jeff Geerling
+  description: Docker setup for Rasbperry Pi.
+  company: Midwestern Mac, LLC
+  license: license (MIT)
+  min_ansible_version: 2.4
+  platforms:
+    - name: Debian
+      versions:
+        - wheezy
+        - jessie
+        - stretch
+  galaxy_tags:
+    - system
+    - docker
+    - containers

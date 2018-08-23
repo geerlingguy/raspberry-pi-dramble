@@ -1,0 +1,5 @@
+---
+# A list of users who will be added to the docker group.
+docker_users: []
+
+docker_version: 18.04.0~ce~3-0~raspbian

@@ -1,0 +1,30 @@
+---
+# See https://raspberrypi.stackexchange.com/q/84390/6506
+- name: Disable swap.
+  shell: >
+    dphys-swapfile swapoff &&
+    dphys-swapfile uninstall &&
+    update-rc.d -f dphys-swapfile remove
+  when:
+    - ansible_swaptotal_mb > 0
+    - deploy_target == 'pi'
+
+- name: Disable swap (in Vagrant environment).
+  shell: >
+    swapoff --all
+  when:
+    - ansible_swaptotal_mb > 0
+    - deploy_target == 'vagrant'
+
+- name: Disable swap permanently (in Vagrant environment).
+  mount:
+    name: none
+    src: /dev/mapper/packer--debian--9--amd64--vg-swap_1
+    fstype: swap
+    opts: sw
+    passno: 0
+    dump: 0
+    state: absent
+  when:
+    - ansible_swaptotal_mb > 0
+    - deploy_target == 'vagrant'
