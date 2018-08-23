@@ -15,9 +15,3 @@ The scripts and documentation inside `gpio-led` help configure the GPIO pins on 
 ### networking
 
 Set up Dramble networking by assigning a uniform set of IP addresses and hostnames based on Pi MAC addresses.
-
-### resets
-
-Playbooks to quickly reset things while hacking. For example, you can run the `drupal.yml` playbook to delete the Drupal codebase and associated files from all the webservers, and reset the `drupal` database, then run the Drupal deployment playbook again afterwards.
-
-It's much quicker to use these reset playbooks than to log into servers and run equivalent commands by hand.

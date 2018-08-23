@@ -1,19 +1,11 @@
-[balancer]
-162.243.20.29
-
-[webservers]
-107.170.54.218
-107.170.51.216
-
-[database]
-159.203.114.37 mysql_server_id=1 mysql_replication_role=master
-159.203.122.117 mysql_server_id=2 mysql_replication_role=slave
-
-[dramble:children]
-balancer
-webservers
-database
+[dramble]
+162.243.20.29 kubernetes_role=master
+107.170.54.218 kubernetes_role=node
+107.170.51.216 kubernetes_role=node
+159.203.114.37 kubernetes_role=node
+159.203.122.117 kubernetes_role=node
 
 [dramble:vars]
 ansible_ssh_user=root
 deploy_target=digitalocean
+kubernetes_apiserver_advertise_address=162.243.20.29

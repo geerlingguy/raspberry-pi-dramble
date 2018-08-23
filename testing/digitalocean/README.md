@@ -1,5 +1,7 @@
 # DigitalOcean Testing for Raspberry Pi Dramble
 
+> **NOTE**: This configuration has not yet been tested and updated to work with the new Kubernetes-based Dramble cluster. It may not work correctly until the following issue is completed: [Update DigitalOcean documentation and ensure it works](https://github.com/geerlingguy/raspberry-pi-dramble/issues/122).
+
 The included `provision.yml` file, when run, will provision five servers in your DigitalOcean account that you can use to test the Raspberry Pi Dramble project on the public Internet.
 
 **NOTE**: These servers will be accessible to the public, *and* you will be charged a fee for each server as long as it's running (something like $0.01/hour, so not much if you destroy them quickly). This provisioning setup is meant for experimental/testing purposes only. If you don't destroy the droplets once you're finished testing, you put sensitive information on them and they get hacked or 'repurposed'... you've been warned!

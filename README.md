@@ -55,6 +55,10 @@ The process for setting up all the Raspberry Pis is outlined in the Wiki:
 
 Until the official Pi Dramble Wiki is updated (see TODOs above), this section of the README should suffice for setup steps for someone familiar with command line usage.
 
+  1. Install Ansible role dependencies:
+
+         ansible-galaxy install -r playbooks/requirements.yml --force
+
   1. Run the main playbook to install Kubernetes on all the Pis and configure the cluster:
 
          ansible-playbook -i inventory main.yml

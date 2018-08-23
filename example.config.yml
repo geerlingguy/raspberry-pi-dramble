@@ -18,7 +18,3 @@ security_sudoers_passwordless:
 docker_registry_image: vsellier/docker-registry-arm:2.6.2
 docker_registry_domain: registry.pidramble.test
 docker_registry_http_secret: fdb19409c851605cd6c46615888d4c0e37858121df7c
-
-# DigitalOcean configuration (use to test the infrastructure on DigitalOcean).
-digitalocean_api_token: "YOUR_TOKEN_HERE"
-digitalocean_droplet_state: present
