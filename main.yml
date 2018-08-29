@@ -29,6 +29,10 @@
     - role: geerlingguy.security
       tags: ['security']
 
+    - role: geerlingguy.swap
+      tags: ['always', 'swap']
+      when: deploy_target != 'pi'
+
     - role: geerlingguy.nfs
       tags: ['nfs']
       when: deploy_target != 'docker'
