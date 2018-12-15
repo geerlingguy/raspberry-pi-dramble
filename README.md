@@ -57,11 +57,11 @@ Until the official Pi Dramble Wiki is updated (see TODOs above), this section of
 
   1. Install Ansible role dependencies:
 
-         ansible-galaxy install -r playbooks/requirements.yml --force
+         ansible-galaxy install -r requirements.yml --force
 
   1. Run the main playbook to install Kubernetes on all the Pis and configure the cluster:
 
-         ansible-playbook -i inventory main.yml
+         ansible-playbook main.yml
 
   2. You can SSH into the Kubernetes master (10.0.100.61 by default) and run `kubectl` by switching to the root user (`sudo su`). For example:
 

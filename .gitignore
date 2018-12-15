@@ -4,6 +4,8 @@
 
 config.yml
 
+roles/geerlingguy.*
+
 setup/networking/inventory
 setup/networking/vars.yml
 
