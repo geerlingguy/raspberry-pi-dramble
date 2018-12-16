@@ -4,11 +4,12 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: drupal8-files-pv
+  namespace: default
   labels:
     app: drupal8
 spec:
   capacity:
-    storage: 5Gi
+    storage: 4Gi
   accessModes:
     - ReadWriteOnce
   nfs:
@@ -20,6 +21,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: drupal8-files-pvc
+  namespace: default
   labels:
     app: drupal8
 spec:
@@ -27,13 +29,14 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
+      storage: 4Gi
 ---
 # Drupal 8 Service definition.
 apiVersion: v1
 kind: Service
 metadata:
   name: drupal8
+  namespace: default
   labels:
     app: drupal8
 spec:
@@ -49,6 +52,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: drupal8-ingress
+  namespace: default
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
@@ -69,6 +73,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: drupal8
+  namespace: default
   labels:
     app: drupal8
 spec:
@@ -117,6 +122,7 @@ apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   name: drupal8
+  namespace: default
 spec:
   scaleTargetRef:
     apiVersion: apps/v1

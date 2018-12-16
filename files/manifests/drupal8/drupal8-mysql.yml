@@ -3,6 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: drupal8-mysql
+  namespace: default
   labels:
     app: drupal8
 spec:
@@ -13,50 +14,44 @@ spec:
     tier: mysql
   clusterIP: None
 ---
-# PersistentVolume definition.
+# PersistentVolume definition for NFS mount for Drupal 8 database.
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: drupal8-mysql
+  name: drupal8-db-pv
+  namespace: default
   labels:
-    type: local
     app: drupal8
 spec:
-  storageClassName: local-storage
   capacity:
-    storage: 8Gi
+    storage: 4Gi
   accessModes:
     - ReadWriteOnce
-  local:
-    path: "/var/drupal8-mysql"
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-          - {{ mysql_node_affinity_hostname }}
+  nfs:
+    path: {{ nfs_share_dir }}/drupal8-db
+    server: {{ groups.dramble[0] }}
+  persistentVolumeReclaimPolicy: Retain
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: drupal8-mysql
+  name: drupal8-db-pvc
+  namespace: default
   labels:
     app: drupal8
 spec:
-  storageClassName: local-storage
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 8Gi
+      storage: 4Gi
 ---
 # MySQL Deployment definition.
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: drupal8-mysql
+  namespace: default
   labels:
     app: drupal8
 spec:
@@ -99,4 +94,4 @@ spec:
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
-          claimName: drupal8-mysql
+          claimName: drupal8-db-pvc

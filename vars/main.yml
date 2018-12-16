@@ -67,3 +67,4 @@ nfs_exports: { "/srv/nfs *(rw,sync,no_root_squash,no_subtree_check)" }
 nfs_extra_dirs:
   - docker-registry
   - drupal8-files
+  - drupal8-db

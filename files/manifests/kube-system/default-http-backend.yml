@@ -4,9 +4,9 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: default-http-backend
+  namespace: default
   labels:
     app: default-http-backend
-  namespace: kube-system
 spec:
   replicas: 1
   selector:
@@ -44,8 +44,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: default
   name: default-http-backend
-  namespace: kube-system
   labels:
     app: default-http-backend
 spec:

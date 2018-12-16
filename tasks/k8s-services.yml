@@ -5,7 +5,7 @@
     dest: "~/{{ item | basename }}"
   with_fileglob: "files/manifests/kube-system/*.yml"
 
-- name: Apply Ingress manifests to the cluster.
+- name: Apply Ingress-related manifests to the cluster.
   command: kubectl apply -f ~/{{ item }}
   with_items:
     - ingress-traefik.yml
