@@ -2,4 +2,5 @@
 # A list of users who will be added to the docker group.
 docker_users: []
 
-docker_version: 18.04.0~ce~3-0~raspbian
+# See: https://download.docker.com/linux/debian/dists/stretch/stable/binary-armhf/Packages
+docker_version: 5:18.09.0~3-0~debian-stretch
