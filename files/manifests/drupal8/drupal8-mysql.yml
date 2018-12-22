@@ -1,25 +1,10 @@
-# MySQL Service definition.
-apiVersion: v1
-kind: Service
-metadata:
-  name: drupal8-mysql
-  namespace: default
-  labels:
-    app: drupal8
-spec:
-  ports:
-  - port: 3306
-  selector:
-    app: drupal8
-    tier: mysql
-  clusterIP: None
+# PersistentVolume for Drupal 8 MySQL database.
 ---
-# PersistentVolume definition for NFS mount for Drupal 8 database.
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: drupal8-db-pv
-  namespace: default
+  name: mysql-db-pv
+  namespace: drupal8
   labels:
     app: drupal8
 spec:
@@ -35,8 +20,8 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: drupal8-db-pvc
-  namespace: default
+  name: mysql-db-pvc
+  namespace: drupal8
   labels:
     app: drupal8
 spec:
@@ -45,13 +30,14 @@ spec:
   resources:
     requests:
       storage: 4Gi
+
+# MySQL Deployment.
 ---
-# MySQL Deployment definition.
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: drupal8-mysql
-  namespace: default
+  name: mysql
+  namespace: drupal8
   labels:
     app: drupal8
 spec:
@@ -78,13 +64,13 @@ spec:
         - name: MYSQL_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: drupal8-mysql-pass
-              key: password
+              name: mysql-pass
+              key: drupal8-mysql-pass
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: drupal8-mysql-root-pass
-              key: password
+              name: mysql-pass
+              key: drupal8-mysql-root-pass
         ports:
         - containerPort: 3306
           name: mysql
@@ -94,4 +80,21 @@ spec:
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
-          claimName: drupal8-db-pvc
+          claimName: mysql-db-pvc
+
+# MySQL Service.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: drupal8
+  labels:
+    app: drupal8
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: drupal8
+    tier: mysql
+  clusterIP: None

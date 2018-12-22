@@ -10,7 +10,6 @@
   with_items:
     - ingress-traefik.yml
     - ingress-traefik-rbac.yml
-    - default-http-backend.yml
   register: kube_apply_result
   changed_when: "'created' in kube_apply_result.stdout"
   run_once: True
