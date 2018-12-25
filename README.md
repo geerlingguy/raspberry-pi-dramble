@@ -61,7 +61,7 @@ Until the official Pi Dramble Wiki is updated (see TODOs above), this section of
 
   1. Run the main playbook to install Kubernetes on all the Pis and configure the cluster:
 
-         ansible-playbook main.yml
+         ansible-playbook -i inventory main.yml
 
   2. You can SSH into the Kubernetes master (10.0.100.61 by default) and run `kubectl` by switching to the root user (`sudo su`). For example:
 

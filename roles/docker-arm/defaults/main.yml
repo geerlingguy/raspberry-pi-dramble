@@ -2,5 +2,5 @@
 # A list of users who will be added to the docker group.
 docker_users: []
 
-# See: https://download.docker.com/linux/debian/dists/stretch/stable/binary-armhf/Packages
-docker_version: 5:18.09.0~3-0~debian-stretch
+# Check available versions on a Pi: `apt-cache madison docker-ce`
+docker_version: 5:18.09.0~3-0~raspbian-stretch
