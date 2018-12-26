@@ -14,6 +14,8 @@
 
 - name: Run Docker install convenience script.
   command: /tmp/get-docker.sh
+  environment:
+    CHANNEL: stable
   when: docker_command_result.rc == 1
 
 - name: Make sure Docker CE is the version specified.
@@ -21,6 +23,10 @@
     name: "docker-ce={{ docker_version }}"
     state: present
     force: yes
+
+# TODO: Remove this shim once 18.09.1 or later is released.
+- import_tasks: docker-1809-shim.yml
+  when: ansible_service_mgr == 'systemd'
 
 - name: Ensure Docker is started.
   service:

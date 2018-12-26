@@ -40,13 +40,13 @@ docker_users:
 # Kubernetes configuration.
 kubernetes_allow_pods_on_master: False
 kubernetes_pod_network_cidr: '10.244.0.0/16'
-kubernetes_version: '1.10'
+kubernetes_version: '1.13'
 kubernetes_packages:
-  - name: kubelet=1.10.8-00
+  - name: kubelet=1.13.1-00
     state: present
-  - name: kubectl=1.10.8-00
+  - name: kubectl=1.13.1-00
     state: present
-  - name: kubeadm=1.10.8-00
+  - name: kubeadm=1.13.1-00
     state: present
   - name: kubernetes-cni
     state: present
@@ -67,3 +67,4 @@ nfs_exports: { "/srv/nfs *(rw,sync,no_root_squash,no_subtree_check)" }
 nfs_extra_dirs:
   - docker-registry
   - drupal8-files
+  - drupal8-db

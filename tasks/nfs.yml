@@ -24,6 +24,9 @@
     - "{{ nfs_share_dir }}"
     - "{{ nfs_mount_dir }}"
 
+- name: Flush handlers so NFS mounts are exported.
+  meta: flush_handlers
+
 # Mount configuration.
 - name: Ensure the NFS volume is mounted.
   mount:

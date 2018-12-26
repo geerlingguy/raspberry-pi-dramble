@@ -1,0 +1,17 @@
+# Drupal 8 Namespace.
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: drupal8
+
+# Secret.
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-pass
+  namespace: drupal8
+data:
+  drupal8-mysql-pass: {{ mysql_drupal_password | b64encode }}
+  drupal8-mysql-root-pass: {{ mysql_root_password | b64encode }}

@@ -4,22 +4,6 @@
     path: /var/drupal8-mysql
     state: directory
 
-- name: Create necessary Drupal 8 secrets.
-  command: kubectl create secret generic {{ item.secret }} --from-literal=password={{ item.password }}
-  with_items:
-    - secret: drupal8-mysql-pass
-      password: "{{ mysql_drupal_password }}"
-    - secret: drupal8-mysql-root-pass
-      password: "{{ mysql_root_password }}"
-  register: kubectl_secret_result
-  changed_when: "'already exists' not in kubectl_secret_result.stderr"
-  failed_when:
-    - "'already exists' not in kubectl_secret_result.stderr"
-    - "'created' not in kubectl_secret_result.stdout"
-  run_once: True
-  delegate_to: "{{ groups.dramble[0] }}"
-  no_log: True
-
 - name: Copy Kubernetes definition files to the cluster.
   template:
     src: "{{ item }}"
@@ -29,41 +13,10 @@
 - name: Apply Drupal 8 Kubernetes services to the cluster.
   command: kubectl apply -f ~/{{ item }}
   with_items:
+    - drupal8-metadata.yml
     - drupal8.yml
     - drupal8-mysql.yml
   register: kube_apply_result
   changed_when: "'created' in kube_apply_result.stdout"
   delegate_to: "{{ groups.dramble[0] }}"
   run_once: True
-
-# Only needed if using the k8s_raw module.
-# - name: Ensure OpenShift Python client is present.
-#   pip: name=openshift state=present
-
-# Option 1: Copy definitions to server then run them with k8s_raw.
-# - name: Copy Kubernetes definition files to the cluster.
-#   copy:
-#     src: "files/{{ item }}"
-#     dest: "~/{{ item }}"
-#   with_items:
-#     - drupal8.yml
-#     - drupal8-mysql.yml
-
-# - name: Deploy Drupal 8 Kubernetes services to the cluster.
-#   k8s_raw:
-#     src: "~/{{ item }}"
-#     state: present
-#   with_items:
-#     - drupal8.yml
-#     - drupal8-mysql.yml
-#   run_once: True
-
-# Option 2: Deploy definitions directly from controller without copying them.
-# - name: Deploy Drupal 8 Kubernetes services to the cluster.
-#   k8s_raw:
-#     definition: "{{ lookup('file', 'files/' + item) | from_yaml }}"
-#     state: present
-#   with_items:
-#     - drupal8.yml
-#     - drupal8-mysql.yml
-#   run_once: True

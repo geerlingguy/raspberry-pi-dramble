@@ -1,14 +1,15 @@
----
 # PersistentVolume definition for NFS mount for Drupal 8 files.
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: drupal8-files-pv
+  namespace: drupal8
   labels:
     app: drupal8
 spec:
   capacity:
-    storage: 5Gi
+    storage: 4Gi
   accessModes:
     - ReadWriteOnce
   nfs:
@@ -20,6 +21,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: drupal8-files-pvc
+  namespace: drupal8
   labels:
     app: drupal8
 spec:
@@ -27,48 +29,15 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
----
-# Drupal 8 Service definition.
-apiVersion: v1
-kind: Service
-metadata:
-  name: drupal8
-  labels:
-    app: drupal8
-spec:
-  ports:
-    - port: 80
-  selector:
-    app: drupal8
-    tier: frontend
-  type: NodePort
----
-# Definition of Drupal 8 Ingress resource.
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: drupal8-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-spec:
-  backend:
-    serviceName: default-http-backend
-    servicePort: 80
-  rules:
-  - host: {{ drupal8_domain }}
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: drupal8
-          servicePort: 80
----
+      storage: 4Gi
+
 # Drupal 8 Deployment definition.
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: drupal8
+  namespace: drupal8
   labels:
     app: drupal8
 spec:
@@ -94,8 +63,8 @@ spec:
             - name: DRUPAL_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: drupal8-mysql-pass
-                  key: password
+                  name: mysql-pass
+                  key: drupal8-mysql-pass
           ports:
             - containerPort: 80
               name: drupal8
@@ -111,12 +80,50 @@ spec:
         - name: drupal8-files
           persistentVolumeClaim:
             claimName: drupal8-files-pvc
+
+# Drupal 8 Service definition.
 ---
-# Definition of Drupal 8 Horizontal Pod Autoscaler.
+apiVersion: v1
+kind: Service
+metadata:
+  name: drupal8
+  namespace: drupal8
+  labels:
+    app: drupal8
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: drupal8
+    tier: frontend
+  type: NodePort
+
+# Drupal 8 Ingress.
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: drupal8-ingress
+  namespace: drupal8
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: {{ drupal8_domain }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: drupal8
+          servicePort: 80
+
+# Drupal 8 Horizontal Pod Autoscaler.
+---
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   name: drupal8
+  namespace: drupal8
 spec:
   scaleTargetRef:
     apiVersion: apps/v1

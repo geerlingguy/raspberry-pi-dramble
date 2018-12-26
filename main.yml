@@ -31,7 +31,7 @@
 
     - role: geerlingguy.swap
       tags: ['always', 'swap']
-      when: deploy_target != 'pi'
+      when: deploy_target == 'vagrant'
 
     - role: geerlingguy.nfs
       tags: ['nfs']
