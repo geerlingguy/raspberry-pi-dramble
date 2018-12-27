@@ -8,7 +8,7 @@
   template:
     src: "{{ item }}"
     dest: "~/{{ item | basename }}"
-  with_fileglob: "files/manifests/drupal8/*.yml"
+  with_fileglob: "k8s-manifests/drupal8/*.yml"
 
 - name: Apply Drupal 8 Kubernetes services to the cluster.
   command: kubectl apply -f ~/{{ item }}

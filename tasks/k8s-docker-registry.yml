@@ -81,7 +81,7 @@
   template:
     src: "{{ item }}"
     dest: "~/{{ item | basename }}"
-  with_fileglob: "files/manifests/docker-registry/*.yml"
+  with_fileglob: "k8s-manifests/docker-registry/*.yml"
 
 - name: Apply Docker registry manifest to the cluster.
   command: kubectl apply -f ~/{{ item }}

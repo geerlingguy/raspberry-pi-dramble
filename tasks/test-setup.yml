@@ -26,7 +26,7 @@
 
 - name: Copy kube-flannel-vagrant.yml file in place.
   copy:
-    src: files/manifests/kube-system/kube-flannel-vagrant.yml
+    src: k8s-manifests/kube-system/kube-flannel-vagrant.yml
     dest: "~/kube-flannel-vagrant.yml"
   when: deploy_target == 'vagrant'
 
