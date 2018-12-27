@@ -60,8 +60,6 @@ mysql_container_image: hypriot/rpi-mysql:5.5
 
 # Image to use for the metrics-server deployment.
 metrics_server_image: gcr.io/google_containers/metrics-server-arm:v0.3.1
-metrics_server_command:
-  - /metrics-server
 
 # NFS configuration.
 nfs_share_dir: /srv/nfs

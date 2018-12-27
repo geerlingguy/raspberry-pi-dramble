@@ -15,10 +15,6 @@
     mysql_container_image: 'mysql:5.7'
     docker_registry_image: registry:2
     metrics_server_image: k8s.gcr.io/metrics-server-amd64:v0.3.1
-    metrics_server_command:
-      - /metrics-server
-      - --kubelet-insecure-tls
-      - --kubelet-preferred-address-types=InternalIP
   when: deploy_target != 'pi'
 
 - name: Override vars for single-node Docker environment.

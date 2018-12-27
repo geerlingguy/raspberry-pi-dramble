@@ -38,6 +38,7 @@
   run_once: True
   delegate_to: "{{ groups.dramble[0] }}"
 
+# TODO: This task should do an *apply* if the deployment task above was changed.
 - name: Apply metrics-server services to the cluster.
   command: kubectl create -f ~/metrics-server/deploy/1.8+/
   when: metrics_server_download is changed
