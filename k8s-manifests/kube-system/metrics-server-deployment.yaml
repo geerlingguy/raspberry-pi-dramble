@@ -1,6 +1,6 @@
-# Overridden version of deploy/1.8%2B/metrics-server-deployment.yaml for the
-# metrics-server project for ARM-based computers like the Raspberry Pi. The only
-# line changed is the container image.
+# Overridden version of deploy/1.8+/metrics-server-deployment.yaml from
+# kubernetes-incubator/metrics-server so we can control the container image and
+# command.
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -26,10 +26,16 @@ spec:
         k8s-app: metrics-server
     spec:
       serviceAccountName: metrics-server
+      volumes:
+      # mount in tmp so we can safely use from-scratch images and/or read-only containers
+      - name: tmp-dir
+        emptyDir: {}
       containers:
       - name: metrics-server
-        image: gcr.io/google_containers/metrics-server-arm:v0.2.1
+        image: {{ metrics_server_image }}
         imagePullPolicy: Always
+        volumeMounts:
+        - name: tmp-dir
+          mountPath: /tmp
         command:
-        - /metrics-server
-        - --source=kubernetes.summary_api:''
+        {{ metrics_server_command | to_nice_yaml | indent(8, False) }}

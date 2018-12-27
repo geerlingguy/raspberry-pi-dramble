@@ -31,11 +31,10 @@
   run_once: True
   delegate_to: "{{ groups.dramble[0] }}"
 
-- name: Overwrite metrics-server deployment manifest for ARM processor.
-  copy:
-    src: k8s-manifests/kube-system/metrics-server-deployment-arm.yaml
+- name: Overwrite metrics-server deployment manifest.
+  template:
+    src: k8s-manifests/kube-system/metrics-server-deployment.yaml
     dest: "~/metrics-server/deploy/1.8+/metrics-server-deployment.yaml"
-  when: deploy_target == 'pi'
   run_once: True
   delegate_to: "{{ groups.dramble[0] }}"
 
