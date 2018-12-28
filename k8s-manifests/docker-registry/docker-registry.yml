@@ -1,9 +1,17 @@
+# Docker registry Namespace.
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: docker-registry
+
 ---
 # PersistentVolume definition for NFS mount for Docker registry.
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: docker-registry-pv
+  namespace: docker-registry
   labels:
     app: docker-registry
 spec:
@@ -14,12 +22,13 @@ spec:
   nfs:
     path: {{ nfs_share_dir }}/docker-registry
     server: {{ groups.dramble[0] }}
-  persistentVolumeReclaimPolicy: Retain
+  persistentVolumeReclaimPolicy: Recycle
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: docker-registry-pvc
+  namespace: docker-registry
   labels:
     app: docker-registry
 spec:
@@ -34,6 +43,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: docker-registry
+  namespace: docker-registry
 spec:
   replicas: 1
   selector:
@@ -70,6 +80,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: docker-registry
+  namespace: docker-registry
   labels:
     app: docker-registry
 spec:
@@ -89,6 +100,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
   name: docker-registry
+  namespace: docker-registry
 spec:
   rules:
   - host: {{ docker_registry_domain }}

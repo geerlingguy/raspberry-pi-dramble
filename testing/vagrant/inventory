@@ -1,9 +1,9 @@
 [dramble]
-192.168.77.2 kubernetes_role=master
-192.168.77.3 kubernetes_role=node
-192.168.77.4 kubernetes_role=node
-192.168.77.5 kubernetes_role=node
-192.168.77.6 kubernetes_role=node
+kube1 ansible_host=192.168.77.2 kubernetes_role=master
+kube2 ansible_host=192.168.77.3 kubernetes_role=node
+kube3 ansible_host=192.168.77.4 kubernetes_role=node
+kube4 ansible_host=192.168.77.5 kubernetes_role=node
+kube5 ansible_host=192.168.77.6 kubernetes_role=node
 
 [dramble:vars]
 ansible_ssh_user=vagrant

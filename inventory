@@ -1,9 +1,9 @@
 [dramble]
-10.0.100.61 kubernetes_role=master
-10.0.100.62 kubernetes_role=node
-10.0.100.63 kubernetes_role=node
-10.0.100.64 kubernetes_role=node
-10.0.100.65 kubernetes_role=node
+kube1 ansible_host=10.0.100.61 kubernetes_role=master
+kube2 ansible_host=10.0.100.62 kubernetes_role=node
+kube3 ansible_host=10.0.100.63 kubernetes_role=node
+kube4 ansible_host=10.0.100.64 kubernetes_role=node
+kube5 ansible_host=10.0.100.65 kubernetes_role=node
 
 [dramble:vars]
 ansible_ssh_user=pi

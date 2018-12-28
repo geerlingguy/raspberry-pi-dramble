@@ -15,7 +15,7 @@ spec:
   nfs:
     path: {{ nfs_share_dir }}/drupal8-files
     server: {{ groups.dramble[0] }}
-  persistentVolumeReclaimPolicy: Retain
+  persistentVolumeReclaimPolicy: Recycle
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
