@@ -14,14 +14,13 @@
     drupal8_docker_image: geerlingguy/drupal:latest
     mysql_container_image: 'mysql:5.7'
     docker_registry_image: registry:2
-    default_http_backend_image: 'k8s.gcr.io/defaultbackend:1.0'
+    metrics_server_image: k8s.gcr.io/metrics-server-amd64:v0.3.1
   when: deploy_target != 'pi'
 
 - name: Override vars for single-node Docker environment.
   set_fact:
     kubernetes_kubelet_extra_args: '--fail-swap-on=false'
     kubernetes_allow_pods_on_master: True
-    mysql_node_affinity_hostname: kube1
   when: deploy_target == 'docker'
 
 - name: Copy kube-flannel-vagrant.yml file in place.
