@@ -8,7 +8,7 @@ The playbook and configuration in this directory will automatically perform all 
 
 To run the playbook:
 
-  1. Copy `example.inventory` to `inventory`, and list all your Raspberry Pi's _current_ IP addresses under `[pis]`
+  1. Copy `example.inventory` to `inventory`, and list all your Raspberry Pi's _current_ IP addresses under `[dramble]`
   2. Copy `example.vars.yml` to `vars.yml`, and make sure each Pi's MAC address is mapped to the desired final IP addresses and hostnames.
   3. Run `ansible-playbook -i inventory main.yml`.
 
@@ -16,7 +16,7 @@ To run the playbook:
 
 Assuming everything went well, the Pis should switch over to their new IP addresses quickly; if they don't, you can forcefully reboot them with the command:
 
-    $ ansible pis -i inventory -a "reboot" -b
+    $ ansible dramble -i inventory -a "reboot" -b
 
 Now you should be able to run the main Dramble playbooks on your Pi cluster!
 

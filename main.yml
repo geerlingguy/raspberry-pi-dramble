@@ -21,6 +21,11 @@
     - import_tasks: tasks/disable-swap.yml
       tags: ['always']
 
+    - name: Set the master node IP.
+      set_fact:
+        kubernetes_master_ip: "{{ hostvars['kube1']['ansible_host'] }}"
+      tags: ['always']
+
   roles:
     # TODO: Re-enable firewall once I can figure out exactly which ports are
     # required to get cni, flannel, etc. all working correctly.

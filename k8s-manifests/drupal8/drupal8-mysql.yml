@@ -14,7 +14,7 @@ spec:
     - ReadWriteOnce
   nfs:
     path: {{ nfs_share_dir }}/drupal8-db
-    server: {{ groups.dramble[0] }}
+    server: {{ kubernetes_master_ip }}
   persistentVolumeReclaimPolicy: Recycle
 ---
 apiVersion: v1

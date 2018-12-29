@@ -14,7 +14,9 @@ Read the rest of this README and the official [Dramble Wiki](http://www.pidrambl
 
 I'm doing presentations on Ansible, and how easy it makes infrastructure configuration, even for high-performance/high-availability Drupal sites. WiFi/Internet access is spotty at most conferences, so deploying to AWS, DigitalOcean, or other live public cloud instances that require a stable Internet connection is a Bad Idea™.
 
-Deploying to VMs on my own presentation laptop is an option (and I've done this in the past), but it's not quite as impactful as deploying to real, live, 'in-the-flesh' servers. Especially if you can say you're carrying around a datacenter in your bag!
+I'm also presenting on Kubernetes, and how easy it is to have self-healing, almost-infinitely-scalable infrastructure (managed with Ansible), and it's more fun to build with Kubernetes on bare metal... at least when the RAM on the Kubernetes master isn't all eaten up!
+
+But really, it's just plain awesome. How many people can say they carry their entire datacenter in a travel bag, and can run it from a USB battery pack?
 
 A cluster of servers, in my hand, at the presentation. With blinking LEDs!
 
@@ -24,11 +26,11 @@ You can browse more information about _geerlingguy_'s Dramble on [http://www.pid
 
 ## Specs
 
-  - 24 ARMv7 CPU Cores
-  - 5.4 GHz combined compute power
-  - 6 GB RAM
-  - 96 GB microSD flash-based storage
-  - 1 Gbps private network
+  - 16+ ARMv7 CPU Cores
+  - 5.6 GHz combined compute power
+  - 4 GB RAM
+  - 128 GB microSD flash-based storage
+  - 1 Gbps private network with PoE
 
 ## Getting the Pis (and other accessories)
 
@@ -79,6 +81,16 @@ Until the official Pi Dramble Wiki is updated (see TODOs above), this section of
 
 > Note that for the hosts file, you can point the domain at any of the non-master nodes (e.g. `10.0.100.62`, `10.0.100.63`, etc.); they are all running the Traefik ingress controller as a Kubernetes DaemonSet, meaning any single host can direct traffic on port 80 to the `drupal8` service. Technically, you could use DNS round robin to point one domain at all the Pis, but the best solution is to have another load balancer in front of all the Pis, redirecting the traffic to them using a more intelligent load balancing and health monitoring solution.
 
+#### Adding more nodes
+
+You can add more than four nodes, if you desire; add additional hosts in the same sequence in the following files:
+
+  - `setup/networking/inventory`
+  - `setup/networking/vars.yml`
+  - `inventory`
+
+If you need to change the IP subnet (default is `10.0.100.x`), make sure to also update `hosts.j2` to use the new subnet so hostnames resolve correctly.
+
 #### Private Docker Registry Usage
 
 The Pi Dramble includes a built-in Docker registry that is used to host Drupal images for deployment to Kubernetes. To use the Docker Registry manually (to push or pull images):
@@ -88,8 +100,6 @@ The Pi Dramble includes a built-in Docker registry that is used to host Drupal i
          registry.pidramble.test  10.0.100.62
 
   2. Configure Docker to work with `registry.pidramble.test` as an [insecure HTTP registry](https://docs.docker.com/registry/insecure/#deploy-a-plain-http-registry).
-
-Eventually, the registry will be secure (see GitHub issue TODO), but for now the Dramble uses an insecure HTTP registry for ease of installation.
 
 ## Benchmarks - Testing the performance of the Dramble
 

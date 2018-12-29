@@ -26,18 +26,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     { :name => "kube1", :ip => "192.168.77.2" },
     { :name => "kube2", :ip => "192.168.77.3" },
     { :name => "kube3", :ip => "192.168.77.4" },
-    { :name => "kube4", :ip => "192.168.77.5" },
-    { :name => "kube5", :ip => "192.168.77.6" }
+    { :name => "kube4", :ip => "192.168.77.5" }
   ]
 
-  # Provision each of the VMs.
-  boxes.each do |opts|
+  # Configure each of the VMs.
+  boxes.each_with_index do |opts, index|
     config.vm.define opts[:name] do |config|
       config.vm.hostname = opts[:name] + ".pidramble.com"
       config.vm.network :private_network, ip: opts[:ip]
 
       # Provision all the VMs using Ansible after last VM is up.
-      if opts[:name] == "kube5"
+      if index == boxes.size - 1
         config.vm.provision "ansible" do |ansible|
           ansible.compatibility_mode = "2.0"
           ansible.playbook = "../../main.yml"

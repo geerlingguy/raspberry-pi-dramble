@@ -13,9 +13,6 @@ mac_address_mapping:
   "b8:27:eb:09:4f:46":
     name: kube4.pidramble.com
     ip: "10.0.100.64"
-  "b8:27:eb:26:d9:08":
-    name: kube5.pidramble.com
-    ip: "10.0.100.65"
 
 # Nameservers to use in resolv.conf.
 dns_nameservers:
