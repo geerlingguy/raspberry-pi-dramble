@@ -5,38 +5,23 @@ kind: Namespace
 metadata:
   name: registry
 
-# PersistentVolume definition for NFS mount for Docker registry.
+# PersistentVolumeClaim for Docker registry.
 ---
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: docker-registry-pv
-  namespace: registry
-  labels:
-    app: docker-registry
-spec:
-  capacity:
-    storage: 8Gi
-  accessModes:
-    - ReadWriteOnce
-  nfs:
-    path: {{ nfs_share_dir }}/docker-registry
-    server: {{ kubernetes_master_ip }}
-  persistentVolumeReclaimPolicy: Recycle
----
-apiVersion: v1
 kind: PersistentVolumeClaim
+apiVersion: v1
 metadata:
-  name: docker-registry-pvc
+  name: registry-pvc
   namespace: registry
   labels:
     app: docker-registry
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "pidramble-nfs"
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
-      storage: 8Gi
+      storage: 1Mi
 
 # Docker registry Deployment definition.
 ---
@@ -74,7 +59,7 @@ spec:
       volumes:
         - name: docker-registry-data
           persistentVolumeClaim:
-            claimName: docker-registry-pvc
+            claimName: registry-pvc
 
 # Docker registry Service definition.
 ---

@@ -1,35 +1,20 @@
-# PersistentVolume for Drupal 8 MySQL database.
+# PersistentVolumeClaim for Drupal 8 MySQL database.
 ---
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: mysql-db-pv
-  namespace: drupal8
-  labels:
-    app: drupal8
-spec:
-  capacity:
-    storage: 4Gi
-  accessModes:
-    - ReadWriteOnce
-  nfs:
-    path: {{ nfs_share_dir }}/drupal8-db
-    server: {{ kubernetes_master_ip }}
-  persistentVolumeReclaimPolicy: Recycle
----
-apiVersion: v1
 kind: PersistentVolumeClaim
+apiVersion: v1
 metadata:
-  name: mysql-db-pvc
+  name: drupal8-db-pvc
   namespace: drupal8
   labels:
     app: drupal8
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "pidramble-nfs"
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
-      storage: 4Gi
+      storage: 1Mi
 
 # MySQL Deployment.
 ---
@@ -80,7 +65,7 @@ spec:
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
-          claimName: mysql-db-pvc
+          claimName: drupal8-db-pvc
 
 # MySQL Service.
 ---

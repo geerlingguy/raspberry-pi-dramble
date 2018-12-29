@@ -4,6 +4,8 @@
     src: "{{ item }}"
     dest: "~/{{ item | basename }}"
   with_fileglob: "k8s-manifests/kube-system/*.yml"
+  delegate_to: "{{ groups.dramble[0] }}"
+  run_once: True
 
 - name: Apply Ingress-related manifests to the cluster.
   command: kubectl apply -f ~/{{ item }}

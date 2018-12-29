@@ -1,35 +1,20 @@
-# PersistentVolume definition for NFS mount for Drupal 8 files.
+# PersistentVolumeClaim for Drupal 8 files.
 ---
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: drupal8-files-pv
-  namespace: drupal8
-  labels:
-    app: drupal8
-spec:
-  capacity:
-    storage: 4Gi
-  accessModes:
-    - ReadWriteOnce
-  nfs:
-    path: {{ nfs_share_dir }}/drupal8-files
-    server: {{ kubernetes_master_ip }}
-  persistentVolumeReclaimPolicy: Recycle
----
-apiVersion: v1
 kind: PersistentVolumeClaim
+apiVersion: v1
 metadata:
   name: drupal8-files-pvc
   namespace: drupal8
   labels:
     app: drupal8
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "pidramble-nfs"
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
-      storage: 4Gi
+      storage: 1Mi
 
 # Drupal 8 Deployment definition.
 ---
