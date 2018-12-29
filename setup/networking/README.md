@@ -16,7 +16,7 @@ To run the playbook:
 
 Assuming everything went well, the Pis should switch over to their new IP addresses quickly; if they don't, you can forcefully reboot them with the command:
 
-    $ ansible dramble -i inventory -a "reboot" -b
+    $ ansible all -i inventory -m shell -a "sleep 1s; shutdown -r now" -b -B 60 -P 0
 
 Now you should be able to run the main Dramble playbooks on your Pi cluster!
 
