@@ -15,6 +15,6 @@ security_sudoers_passwordless:
   - pi
 
 # Docker configuration.
-docker_registry_image: vsellier/docker-registry-arm:2.6.2
+docker_registry_image: vsellier/docker-registry-arm:2.7.0
 docker_registry_domain: registry.pidramble.test
 docker_registry_http_secret: fdb19409c851605cd6c46615888d4c0e37858121df7c
