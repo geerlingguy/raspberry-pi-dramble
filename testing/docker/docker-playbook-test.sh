@@ -31,6 +31,5 @@ docker exec --tty $container_name env TERM=xterm \
 docker exec --tty $container_name env TERM=xterm \
   ansible-playbook /etc/ansible/pi-dramble/main.yml --connection=local \
   -i /etc/ansible/pi-dramble/testing/docker/inventory \
-  --connection=local \
   --extra-vars "deploy_target=docker" \
   --limit=kube1
