@@ -19,6 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.memory = 1024
     v.cpus = 1
     v.linked_clone = true
+    v.customize ['modifyvm', :id, '--audio', 'none']
   end
 
   # Define five VMs with static private IP addresses.
@@ -42,6 +43,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           ansible.playbook = "../../main.yml"
           ansible.inventory_path = "inventory"
           ansible.limit = "all"
+          # ansible.tags = "nfs"
         end
       end
     end

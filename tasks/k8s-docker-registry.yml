@@ -82,6 +82,8 @@
     src: "{{ item }}"
     dest: "~/{{ item | basename }}"
   with_fileglob: "k8s-manifests/docker-registry/*.yml"
+  delegate_to: "{{ groups.dramble[0] }}"
+  run_once: True
 
 - name: Apply Docker registry manifest to the cluster.
   command: kubectl apply -f ~/{{ item }}

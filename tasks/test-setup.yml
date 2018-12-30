@@ -15,6 +15,7 @@
     mysql_container_image: 'mysql:5.7'
     docker_registry_image: registry:2
     metrics_server_image: k8s.gcr.io/metrics-server-amd64:v0.3.1
+    nfs_client_image: quay.io/external_storage/nfs-client-provisioner:latest
   when: deploy_target != 'pi'
 
 - name: Override vars for single-node Docker environment.

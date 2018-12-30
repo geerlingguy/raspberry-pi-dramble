@@ -1,0 +1,7 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: pidramble-nfs
+provisioner: pidramble.com/nfs # must match deployment's PROVISIONER_NAME env var
+parameters:
+  archiveOnDelete: "false"

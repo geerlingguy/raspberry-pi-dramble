@@ -3,16 +3,16 @@
   template:
     src: "{{ item }}"
     dest: "~/{{ item | basename }}"
-  with_fileglob: "k8s-manifests/drupal8/*.yml"
+  with_fileglob: "k8s-manifests/nfs/*.yml"
   delegate_to: "{{ groups.dramble[0] }}"
   run_once: True
 
-- name: Apply Drupal 8 Kubernetes services to the cluster.
+- name: Apply NFS Kubernetes services to the cluster.
   command: kubectl apply -f ~/{{ item }}
   with_items:
-    - drupal8-metadata.yml
-    - drupal8.yml
-    - drupal8-mysql.yml
+    - nfs-rbac.yml
+    - nfs-deployment.yml
+    - nfs-storageclass.yml
   register: kube_apply_result
   changed_when: "'created' in kube_apply_result.stdout"
   delegate_to: "{{ groups.dramble[0] }}"
