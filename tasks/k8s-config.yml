@@ -1,0 +1,16 @@
+---
+- name: Ensure ~/.kube directory exists.
+  file:
+    path: ~/.kube
+    state: directory
+  delegate_to: localhost
+  become: false
+  run_once: true
+
+- name: Copy K8s config file from master to local.
+  fetch:
+    src: ~/.kube/config
+    dest: "~/.kube/config-dramble-{{ deploy_target }}"
+    flat: true
+  delegate_to: "{{ groups.dramble[0] }}"
+  run_once: true

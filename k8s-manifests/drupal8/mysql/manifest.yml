@@ -1,10 +1,21 @@
+# MySQL Secret.
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-pass
+  namespace: {{ manifest_namespace }}
+data:
+  drupal8-mysql-pass: {{ mysql_drupal_password | b64encode }}
+  drupal8-mysql-root-pass: {{ mysql_root_password | b64encode }}
+
 # PersistentVolumeClaim for Drupal 8 MySQL database.
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: drupal8-db-pvc
-  namespace: drupal8
+  namespace: {{ manifest_namespace }}
   labels:
     app: drupal8
   annotations:
@@ -22,7 +33,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: mysql
-  namespace: drupal8
+  namespace: {{ manifest_namespace }}
   labels:
     app: drupal8
 spec:
@@ -73,7 +84,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql
-  namespace: drupal8
+  namespace: {{ manifest_namespace }}
   labels:
     app: drupal8
 spec:

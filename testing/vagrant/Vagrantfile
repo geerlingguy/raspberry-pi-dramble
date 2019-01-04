@@ -43,6 +43,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           ansible.playbook = "../../main.yml"
           ansible.inventory_path = "inventory"
           ansible.limit = "all"
+          # ansible.raw_arguments = ["-vvv"]
           # ansible.tags = "nfs"
         end
       end

@@ -1,6 +1,6 @@
 ---
 - hosts: dramble
-  become: yes
+  become: true
 
   vars_files:
     - vars/main.yml
@@ -28,10 +28,6 @@
       tags: ['always']
 
   roles:
-    # TODO: Re-enable firewall once I can figure out exactly which ports are
-    # required to get cni, flannel, etc. all working correctly.
-    # - { role: geerlingguy.firewall, tags: ['firewall'] }
-
     - role: geerlingguy.security
       tags: ['security']
 
@@ -66,11 +62,11 @@
     - import_tasks: tasks/k8s-services.yml
       tags: ['kubernetes']
 
-    - import_tasks: tasks/k8s-nfs.yml
-      tags: ['kubernetes', 'nfs']
+    - import_tasks: tasks/k8s-config.yml
+      tags: ['kubernetes']
 
-    - import_tasks: tasks/k8s-docker-registry.yml
-      tags: ['kubernetes', 'docker', 'registry']
-
-    - import_tasks: tasks/k8s-drupal8.yml
-      tags: ['drupal']
+    - import_role:
+        name: geerlingguy.k8s_manifests
+      tags: ['kubernetes', 'nfs', 'drupal', 'registry']
+      delegate_to: "{{ groups.dramble[0] }}"
+      run_once: true

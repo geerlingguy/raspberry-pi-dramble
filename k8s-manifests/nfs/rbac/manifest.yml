@@ -2,6 +2,7 @@ kind: ServiceAccount
 apiVersion: v1
 metadata:
   name: nfs-client-provisioner
+  namespace: default
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
@@ -38,6 +39,7 @@ kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: leader-locking-nfs-client-provisioner
+  namespace: default
 rules:
   - apiGroups: [""]
     resources: ["endpoints"]
@@ -47,10 +49,10 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: leader-locking-nfs-client-provisioner
+  namespace: default
 subjects:
   - kind: ServiceAccount
     name: nfs-client-provisioner
-    # replace with namespace where provisioner is deployed
     namespace: default
 roleRef:
   kind: Role

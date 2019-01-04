@@ -45,39 +45,60 @@ Many people have asked for a basic list of components used in constructing the D
 The process for setting up all the Raspberry Pis is outlined in the Wiki:
 
   1. [Prepare the Raspberry Pis for provisioning](http://www.pidramble.com/wiki/setup/prepare)
-  2. [Rack the Raspberry Pis](http://www.pidramble.com/wiki/setup/rack)
-  3. [Network the Raspberry Pis](http://www.pidramble.com/wiki/setup/network)
-  4. [Test the Ansible configuration](http://www.pidramble.com/wiki/setup/test-ansible)
-  5. [Provision the Raspberry Pis](http://www.pidramble.com/wiki/setup/provision)
+  1. [Rack the Raspberry Pis](http://www.pidramble.com/wiki/setup/rack)
+  1. [Network the Raspberry Pis](http://www.pidramble.com/wiki/setup/network)
+  1. [Test the Ansible configuration](http://www.pidramble.com/wiki/setup/test-ansible)
+  1. [Provision the Raspberry Pis](http://www.pidramble.com/wiki/setup/provision)
     - TODO: This documentation needs updating for Kubernetes.
-  6. [Deploy Drupal to the Raspberry Pis](http://www.pidramble.com/wiki/setup/deploy-drupal)
+  1. [Deploy Drupal to the Raspberry Pis](http://www.pidramble.com/wiki/setup/deploy-drupal)
     - TODO: This documentation needs updating for Kubernetes.
 
 ### Kubernetes Setup Notes
 
 Until the official Pi Dramble Wiki is updated (see TODOs above), this section of the README should suffice for setup steps for someone familiar with command line usage.
 
-  1. Install Ansible role dependencies:
+  1. Install Ansible role dependencies and playbook dependencies:
 
+         ```
          ansible-galaxy install -r requirements.yml --force
+         pip install openshift
+         ```
 
   1. Run the main playbook to install Kubernetes on all the Pis and configure the cluster:
 
+         ```
          ansible-playbook -i inventory main.yml
+         ```
 
-  2. You can SSH into the Kubernetes master (10.0.100.61 by default) and run `kubectl` by switching to the root user (`sudo su`). For example:
+  1. You can SSH into the Kubernetes master (10.0.100.61 by default) and run `kubectl` by switching to the root user (`sudo su`). For example:
 
+         ```
          kubectl get nodes
          kubectl get pods
          ...
+         ```
 
-  3. Edit your `/etc/hosts` file and add the line:
+  1. The Ansible playbook also copies the config file locally, so you can run `kubectl` locally if you have it installed. Just export the path to the file (e.g. `export KUBECONFIG=~/.kube/config-dramble-pi`), then you can run `kubectl` commands.
 
+  1. Edit your `/etc/hosts` file and add the line:
+
+         ```
          cluster.pidramble.test  10.0.100.62
+         ```
 
-  4. After that, you can access the `drupal8` Kubernetes service at the URL: `http://cluster.pidramble.test/`.
+  1. After that, you can access the `drupal8` Kubernetes service at the URL: `http://cluster.pidramble.test/`.
 
-  5. To install Drupal 8, use the database username `drupal`, the database name `drupal`, the MySQL server URL `mysql`, and the database password defined in your `config.yml` file.
+  1. To install Drupal 8, run:
+
+         ```
+         $ DRUPAL_POD=$(kubectl get pods -l app=drupal8 -n drupal8 | grep "^drupal.*Running" | awk '{print $1}' | head -n1)
+         $ kubectl exec -it -n drupal8 $DRUPAL_POD bash
+         
+         (You're now logged into one of the Drupal Pods.)
+         # cd /var/www/html
+         # composer require drush/drush
+         # vendor/bin/drush site-install standard --db-url="mysql://drupal:$DRUPAL_DB_PASSWORD@$DRUPAL_DB_HOST/drupal" --site-name="Pi Dramble" -y
+         ```
 
 > Note that for the hosts file, you can point the domain at any of the non-master nodes (e.g. `10.0.100.62`, `10.0.100.63`, etc.); they are all running the Traefik ingress controller as a Kubernetes DaemonSet, meaning any single host can direct traffic on port 80 to the `drupal8` service. Technically, you could use DNS round robin to point one domain at all the Pis, but the best solution is to have another load balancer in front of all the Pis, redirecting the traffic to them using a more intelligent load balancing and health monitoring solution.
 
@@ -99,7 +120,7 @@ The Pi Dramble includes a built-in Docker registry that is used to host Drupal i
 
          registry.pidramble.test  10.0.100.62
 
-  2. Configure Docker to work with `registry.pidramble.test` as an [insecure HTTP registry](https://docs.docker.com/registry/insecure/#deploy-a-plain-http-registry).
+  1. Configure Docker to work with `registry.pidramble.test` as an [insecure HTTP registry](https://docs.docker.com/registry/insecure/#deploy-a-plain-http-registry).
 
 ## Benchmarks - Testing the performance of the Dramble
 
