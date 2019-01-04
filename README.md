@@ -59,28 +59,46 @@ Until the official Pi Dramble Wiki is updated (see TODOs above), this section of
 
   1. Install Ansible role dependencies and playbook dependencies:
 
+         ```
          ansible-galaxy install -r requirements.yml --force
          pip install openshift
+         ```
 
   1. Run the main playbook to install Kubernetes on all the Pis and configure the cluster:
 
+         ```
          ansible-playbook -i inventory main.yml
+         ```
 
   1. You can SSH into the Kubernetes master (10.0.100.61 by default) and run `kubectl` by switching to the root user (`sudo su`). For example:
 
+         ```
          kubectl get nodes
          kubectl get pods
          ...
+         ```
 
   1. The Ansible playbook also copies the config file locally, so you can run `kubectl` locally if you have it installed. Just export the path to the file (e.g. `export KUBECONFIG=~/.kube/config-dramble-pi`), then you can run `kubectl` commands.
 
   1. Edit your `/etc/hosts` file and add the line:
 
+         ```
          cluster.pidramble.test  10.0.100.62
+         ```
 
   1. After that, you can access the `drupal8` Kubernetes service at the URL: `http://cluster.pidramble.test/`.
 
-  1. To install Drupal 8, use the database username `drupal`, the database name `drupal`, the MySQL server URL `mysql`, and the database password defined in your `config.yml` file.
+  1. To install Drupal 8, run:
+
+         ```
+         $ DRUPAL_POD=$(kubectl get pods -l app=drupal8 -n drupal8 | grep "^drupal.*Running" | awk '{print $1}' | head -n1)
+         $ kubectl exec -it -n drupal8 $DRUPAL_POD bash
+         
+         (You're now logged into one of the Drupal Pods.)
+         # cd /var/www/html
+         # composer require drush/drush
+         # vendor/bin/drush site-install standard --db-url="mysql://drupal:$DRUPAL_DB_PASSWORD@$DRUPAL_DB_HOST/drupal" --site-name="Pi Dramble" -y
+         ```
 
 > Note that for the hosts file, you can point the domain at any of the non-master nodes (e.g. `10.0.100.62`, `10.0.100.63`, etc.); they are all running the Traefik ingress controller as a Kubernetes DaemonSet, meaning any single host can direct traffic on port 80 to the `drupal8` service. Technically, you could use DNS round robin to point one domain at all the Pis, but the best solution is to have another load balancer in front of all the Pis, redirecting the traffic to them using a more intelligent load balancing and health monitoring solution.
 

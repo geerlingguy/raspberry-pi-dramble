@@ -33,5 +33,5 @@
 - name: Override vars for Vagrant environment.
   set_fact:
     kubernetes_flannel_manifest_file: "~/kube-flannel-vagrant.yml"
-    kubernetes_kubelet_extra_args: '--node-ip={{ inventory_hostname }}'
+    kubernetes_kubelet_extra_args: '--node-ip={{ ansible_host }}'
   when: deploy_target == 'vagrant'

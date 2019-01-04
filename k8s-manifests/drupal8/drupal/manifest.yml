@@ -26,7 +26,7 @@ metadata:
   labels:
     app: drupal8
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: drupal8
@@ -45,7 +45,7 @@ spec:
           name: drupal8
           env:
             - name: DRUPAL_DB_HOST
-              value: drupal8-mysql
+              value: mysql
             - name: DRUPAL_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
