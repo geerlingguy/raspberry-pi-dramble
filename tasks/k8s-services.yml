@@ -7,16 +7,6 @@
   delegate_to: "{{ groups.dramble[0] }}"
   run_once: True
 
-- name: Apply Ingress-related manifests to the cluster.
-  command: kubectl apply -f ~/{{ item }}
-  with_items:
-    - ingress-traefik.yml
-    - ingress-traefik-rbac.yml
-  register: kube_apply_result
-  changed_when: "'created' in kube_apply_result.stdout"
-  run_once: True
-  delegate_to: "{{ groups.dramble[0] }}"
-
 - name: Ensure metrics-server directory exists.
   file:
     path: "~/metrics-server"

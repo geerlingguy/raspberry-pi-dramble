@@ -1,17 +1,10 @@
-# Docker registry Namespace.
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: registry
-
 # PersistentVolumeClaim for Docker registry.
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: registry-pvc
-  namespace: registry
+  namespace: {{ manifest_namespace }}
   labels:
     app: docker-registry
   annotations:
@@ -29,7 +22,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: docker-registry
-  namespace: registry
+  namespace: {{ manifest_namespace }}
 spec:
   replicas: 1
   selector:
@@ -67,7 +60,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: docker-registry
-  namespace: registry
+  namespace: {{ manifest_namespace }}
   labels:
     app: docker-registry
 spec:
@@ -88,7 +81,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
   name: docker-registry
-  namespace: registry
+  namespace: {{ manifest_namespace }}
 spec:
   rules:
   - host: {{ docker_registry_domain }}

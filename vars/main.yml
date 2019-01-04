@@ -1,37 +1,4 @@
 ---
-firewall_allowed_tcp_ports:
-  - 22
-  - 80
-  - 443
-  # For NFS.
-  - 111
-  - 2049
-  # For Kubernetes.
-  - 6443
-  - 2379
-  - 2380
-  - 10250
-  - 10251
-  - 10252
-  - 10255
-  # TODO: Ports 30000-32767 for NodePort services?
-  # For Weave.
-  - 6783
-  - 6784
-  # For Flannel.
-  - 8285
-  - 8472
-firewall_allowed_udp_ports:
-  # For NFS.
-  - 111
-  - 2049
-  # For Weave.
-  - 6783
-  - 6784
-  # For Flannel.
-  - 8285
-  - 8472
-
 # Docker configuration.
 docker_install_from_convenience_script: True
 docker_users:
@@ -50,6 +17,25 @@ kubernetes_packages:
     state: present
   - name: kubernetes-cni
     state: present
+
+k8s_manage_namespace: false
+k8s_no_log: false
+k8s_manifests_base_dir: k8s-manifests/
+k8s_manifests:
+  - nfs/rbac
+  - nfs/deployment
+  - kube-system/ingress/rbac
+  - kube-system/ingress/deployment
+  - dir: docker-registry
+    namespace: registry
+  - dir: drupal8/mysql
+    namespace: drupal8
+  - dir: drupal8/drupal
+    namespace: drupal8
+
+# Python dependencies.
+pip_install_packages:
+  - openshift
 
 # Swap configuration.
 swap_file_state: absent
