@@ -10,7 +10,7 @@
 - name: Copy K8s config file from master to local.
   fetch:
     src: ~/.kube/config
-    dest: "{{ k8s_kubeconfig }}"
+    dest: "~/.kube/config-dramble-{{ deploy_target }}"
     flat: true
   delegate_to: "{{ groups.dramble[0] }}"
   run_once: true
