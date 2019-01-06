@@ -28,10 +28,10 @@ k8s_manifests:
   - kube-system/ingress/deployment
   - dir: docker-registry
     namespace: registry
-  - dir: drupal8/mysql
-    namespace: drupal8
-  - dir: drupal8/drupal
-    namespace: drupal8
+  - dir: drupal/mysql
+    namespace: drupal
+  - dir: drupal/drupal
+    namespace: drupal
 
 # Python dependencies.
 pip_install_packages:

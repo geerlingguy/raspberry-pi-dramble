@@ -16,18 +16,18 @@ metadata:
   name: mysql-pass
   namespace: {{ manifest_namespace }}
 data:
-  drupal8-mysql-pass: {{ mysql_drupal_password | b64encode }}
-  drupal8-mysql-root-pass: {{ mysql_root_password | b64encode }}
+  drupal-mysql-pass: {{ mysql_drupal_password | b64encode }}
+  drupal-mysql-root-pass: {{ mysql_root_password | b64encode }}
 
-# PersistentVolumeClaim for Drupal 8 MySQL database.
+# PersistentVolumeClaim for Drupal MySQL database.
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: drupal8-db-pvc
+  name: drupal-db
   namespace: {{ manifest_namespace }}
   labels:
-    app: drupal8
+    app: drupal
   annotations:
     volume.beta.kubernetes.io/storage-class: "pidramble-nfs"
 spec:
@@ -45,18 +45,18 @@ metadata:
   name: mysql
   namespace: {{ manifest_namespace }}
   labels:
-    app: drupal8
+    app: drupal
 spec:
   selector:
     matchLabels:
-      app: drupal8
+      app: drupal
       tier: mysql
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: drupal8
+        app: drupal
         tier: mysql
     spec:
       containers:
@@ -70,12 +70,12 @@ spec:
           valueFrom:
             secretKeyRef:
               name: mysql-pass
-              key: drupal8-mysql-pass
+              key: drupal-mysql-pass
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mysql-pass
-              key: drupal8-mysql-root-pass
+              key: drupal-mysql-root-pass
         ports:
         - containerPort: 3306
           name: mysql
@@ -92,7 +92,7 @@ spec:
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
-          claimName: drupal8-db-pvc
+          claimName: drupal-db
 
 # MySQL Service.
 ---
@@ -102,11 +102,11 @@ metadata:
   name: mysql
   namespace: {{ manifest_namespace }}
   labels:
-    app: drupal8
+    app: drupal
 spec:
   ports:
   - port: 3306
   selector:
-    app: drupal8
+    app: drupal
     tier: mysql
   clusterIP: None

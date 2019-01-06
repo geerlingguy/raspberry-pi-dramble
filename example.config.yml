@@ -1,9 +1,9 @@
 ---
 # Drupal configuration.
-drupal8_domain: cluster.pidramble.test
-drupal8_docker_image: geerlingguy/drupal:latest-arm32v7
+drupal_domain: cluster.pidramble.test
+drupal_docker_image: geerlingguy/drupal:latest-arm32v7
 # Generate a salt with: `php -r "echo bin2hex(random_bytes(25));"`
-drupal8_hash_salt: ef4e7eb18bd889e2c89720e71ea98beaae5f563d8685638d6e
+drupal_hash_salt: ef4e7eb18bd889e2c89720e71ea98beaae5f563d8685638d6e
 
 # MySQL configuration.
 mysql_drupal_password: aaiQyjrcdvkxX6fg7UeM

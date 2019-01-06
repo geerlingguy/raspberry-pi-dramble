@@ -1,25 +1,25 @@
-# Drupal 8 ConfigMap.
+# Drupal ConfigMap.
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: drupal8-config
+  name: drupal-config
   namespace: {{ manifest_namespace }}
 data:
   DRUPAL_DATABASE_HOST: 'mysql'
   DRUPAL_DATABASE_PORT: '3306'
   DRUPAL_DATABASE_NAME: 'drupal'
   DRUPAL_DATABASE_USERNAME: 'drupal'
-  DRUPAL_HASH_SALT: '{{ drupal8_hash_salt }}'
+  DRUPAL_HASH_SALT: '{{ drupal_hash_salt }}'
 
-# PersistentVolumeClaim for Drupal 8 files.
+# PersistentVolumeClaim for Drupal files.
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: drupal8-files-pvc
+  name: drupal-files
   namespace: {{ manifest_namespace }}
   labels:
-    app: drupal8
+    app: drupal
   annotations:
     volume.beta.kubernetes.io/storage-class: "pidramble-nfs"
 spec:
@@ -29,48 +29,48 @@ spec:
     requests:
       storage: 1Mi
 
-# Drupal 8 Deployment definition.
+# Drupal Deployment definition.
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: drupal8
+  name: drupal
   namespace: {{ manifest_namespace }}
   labels:
-    app: drupal8
+    app: drupal
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: drupal8
+      app: drupal
       tier: frontend
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: drupal8
+        app: drupal
         tier: frontend
     spec:
       containers:
-        - image: {{ drupal8_docker_image }}
+        - image: {{ drupal_docker_image }}
           imagePullPolicy: Always
-          name: drupal8
+          name: drupal
           envFrom:
           - configMapRef:
-              name: drupal8-config
+              name: drupal-config
           env:
             - name: DRUPAL_DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: mysql-pass
-                  key: drupal8-mysql-pass
+                  key: drupal-mysql-pass
           ports:
             - containerPort: 80
-              name: drupal8
+              name: drupal
           volumeMounts:
             - mountPath: /var/www/html/sites/default/files
-              name: drupal8-files
+              name: drupal-files
           resources:
             limits:
               cpu: '1'
@@ -79,58 +79,58 @@ spec:
               cpu: '500m'
               memory: '256Mi'
       volumes:
-        - name: drupal8-files
+        - name: drupal-files
           persistentVolumeClaim:
-            claimName: drupal8-files-pvc
+            claimName: drupal-files
 
-# Drupal 8 Service definition.
+# Drupal Service definition.
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: drupal8
+  name: drupal
   namespace: {{ manifest_namespace }}
   labels:
-    app: drupal8
+    app: drupal
 spec:
   ports:
     - port: 80
   selector:
-    app: drupal8
+    app: drupal
     tier: frontend
   type: NodePort
 
-# Drupal 8 Ingress.
+# Drupal Ingress.
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: drupal8-ingress
+  name: drupal-ingress
   namespace: {{ manifest_namespace }}
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: {{ drupal8_domain }}
+  - host: {{ drupal_domain }}
     http:
       paths:
       - path: /
         backend:
-          serviceName: drupal8
+          serviceName: drupal
           servicePort: 80
 
-# Drupal 8 Horizontal Pod Autoscaler.
+# Drupal Horizontal Pod Autoscaler.
 ---
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: drupal8
+  name: drupal
   namespace: {{ manifest_namespace }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: drupal8
+    name: drupal
   minReplicas: 1
   maxReplicas: 10
   targetCPUUtilizationPercentage: 50

@@ -86,11 +86,11 @@ Until the official Pi Dramble Wiki is updated (see TODOs above), this section of
          cluster.pidramble.test  10.0.100.62
          ```
 
-  1. After that, you can access the `drupal8` Kubernetes service at the URL: `http://cluster.pidramble.test/`.
+  1. After that, you can access the `drupal` Kubernetes service at the URL: `http://cluster.pidramble.test/`.
 
   1. To install Drupal, follow the steps in Drupal's installation wizard.
 
-> Note that for the hosts file, you can point the domain at any of the non-master nodes (e.g. `10.0.100.62`, `10.0.100.63`, etc.); they are all running the Traefik ingress controller as a Kubernetes DaemonSet, meaning any single host can direct traffic on port 80 to the `drupal8` service. Technically, you could use DNS round robin to point one domain at all the Pis, but the best solution is to have another load balancer in front of all the Pis, redirecting the traffic to them using a more intelligent load balancing and health monitoring solution.
+> Note that for the hosts file, you can point the domain at any of the non-master nodes (e.g. `10.0.100.62`, `10.0.100.63`, etc.); they are all running the Traefik ingress controller as a Kubernetes DaemonSet, meaning any single host can direct traffic on port 80 to the `drupal` service. Technically, you could use DNS round robin to point one domain at all the Pis, but the best solution is to have another load balancer in front of all the Pis, redirecting the traffic to them using a more intelligent load balancing and health monitoring solution.
 
 #### Adding more nodes
 
