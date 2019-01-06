@@ -1,3 +1,16 @@
+# Drupal 8 ConfigMap.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: drupal8-config
+  namespace: {{ manifest_namespace }}
+data:
+  DRUPAL_DATABASE_HOST: 'mysql'
+  DRUPAL_DATABASE_PORT: '3306'
+  DRUPAL_DATABASE_NAME: 'drupal'
+  DRUPAL_DATABASE_USERNAME: 'drupal'
+  DRUPAL_HASH_SALT: '{{ drupal8_hash_salt }}'
+
 # PersistentVolumeClaim for Drupal 8 files.
 ---
 kind: PersistentVolumeClaim
@@ -26,7 +39,7 @@ metadata:
   labels:
     app: drupal8
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: drupal8
@@ -43,10 +56,11 @@ spec:
         - image: {{ drupal8_docker_image }}
           imagePullPolicy: Always
           name: drupal8
+          envFrom:
+          - configMapRef:
+              name: drupal8-config
           env:
-            - name: DRUPAL_DB_HOST
-              value: mysql
-            - name: DRUPAL_DB_PASSWORD
+            - name: DRUPAL_DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: mysql-pass
@@ -59,9 +73,11 @@ spec:
               name: drupal8-files
           resources:
             limits:
-              cpu: "1"
+              cpu: '1'
+              memory: '512Mi'
             requests:
-              cpu: 500m
+              cpu: '500m'
+              memory: '256Mi'
       volumes:
         - name: drupal8-files
           persistentVolumeClaim:

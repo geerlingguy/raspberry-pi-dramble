@@ -1,3 +1,13 @@
+# MySQL ConfigMap.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+  namespace: {{ manifest_namespace }}
+data:
+  MYSQL_DATABASE: drupal
+  MYSQL_USER: drupal
+
 # MySQL Secret.
 ---
 apiVersion: v1
@@ -52,11 +62,10 @@ spec:
       containers:
       - image: {{ mysql_container_image }}
         name: mysql
+        envFrom:
+        - configMapRef:
+            name: mysql-config
         env:
-        - name: MYSQL_DATABASE
-          value: drupal
-        - name: MYSQL_USER
-          value: drupal
         - name: MYSQL_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -73,6 +82,13 @@ spec:
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
+        resources:
+          limits:
+            cpu: '2'
+            memory: '768Mi'
+          requests:
+            cpu: '1'
+            memory: '512Mi'
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
