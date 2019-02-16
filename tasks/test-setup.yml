@@ -10,7 +10,7 @@
 
 - name: Override vars for non-ARM test environments.
   set_fact:
-    docker_version: 5:18.09.0~3-0~debian-stretch
+    docker_version: 5:18.09.2~3-0~debian-stretch
     drupal_docker_image: geerlingguy/drupal:latest
     mysql_container_image: 'mysql:5.7'
     docker_registry_image: registry:2
