@@ -1,0 +1,24 @@
+---
+- name: Check if Docker Registry cert already exists.
+  stat:
+    path: "{{ playbook_dir }}/k8s-manifests/docker-registry/certs/tls.crt"
+  connection: local
+  become: false
+  run_once: true
+  register: cert_docker_registry_stat
+
+- name: Generate a cert and key for the Docker Registry.
+  command: >
+    openssl req -x509 -nodes -days 3650 -newkey rsa:2048
+    -keyout {{ playbook_dir }}/k8s-manifests/docker-registry/certs/tls.key
+    -out {{ playbook_dir }}/k8s-manifests/docker-registry/certs/tls.crt
+    -subj "/CN={{ docker_registry_domain}}"
+  connection: local
+  become: false
+  run_once: true
+  when: not cert_docker_registry_stat.stat.exists
+
+- name: Set vars for Docker Registry certs (for all hosts).
+  set_fact:
+    docker_registry_key: "{{ lookup('file', playbook_dir  + '/k8s-manifests/docker-registry/certs/tls.key') }}"
+    docker_registry_crt: "{{ lookup('file', playbook_dir  + '/k8s-manifests/docker-registry/certs/tls.crt') }}"

@@ -59,32 +59,32 @@ Until the official Pi Dramble Wiki is updated (see TODOs above), this section of
 
   1. Install Ansible role dependencies and playbook dependencies:
 
-         ```
-         ansible-galaxy install -r requirements.yml --force
-         pip install openshift
-         ```
+     ```
+     ansible-galaxy install -r requirements.yml --force
+     pip install openshift
+     ```
 
   1. Run the main playbook to install Kubernetes on all the Pis and configure the cluster:
 
-         ```
-         ansible-playbook -i inventory main.yml
-         ```
+     ```
+     ansible-playbook -i inventory main.yml
+     ```
 
   1. You can SSH into the Kubernetes master (10.0.100.61 by default) and run `kubectl` by switching to the root user (`sudo su`). For example:
 
-         ```
-         kubectl get nodes
-         kubectl get pods
-         ...
-         ```
+     ```
+     kubectl get nodes
+     kubectl get pods
+     ...
+     ```
 
   1. The Ansible playbook also copies the config file locally, so you can run `kubectl` locally if you have it installed. Just export the path to the file (e.g. `export KUBECONFIG=~/.kube/config-dramble-pi`), then you can run `kubectl` commands.
 
   1. Edit your `/etc/hosts` file and add the line:
 
-         ```
-         cluster.pidramble.test  10.0.100.62
-         ```
+     ```
+     10.0.100.62  cluster.pidramble.test
+     ```
 
   1. After that, you can access the `drupal` Kubernetes service at the URL: `http://cluster.pidramble.test/`.
 
@@ -108,9 +108,17 @@ The Pi Dramble includes a built-in Docker registry that is used to host Drupal i
 
   1. Edit your `/etc/hosts` file and add the line:
 
-         registry.pidramble.test  10.0.100.62
+     ```
+     10.0.100.62  registry.pidramble.test
+     ```
 
-  1. Configure Docker to work with `registry.pidramble.test` as an [insecure HTTP registry](https://docs.docker.com/registry/insecure/#deploy-a-plain-http-registry).
+  1. TODO: Configure TLS cert for a Docker Registry with a self-signed cert.
+  1. Tag your image for the registry and push it:
+
+     ```
+     docker tag my/image:latest registry.pidramble.test/my/image:latest
+     docker push registry.pidramble.test/my/image:latest
+     ```
 
 ## Benchmarks - Testing the performance of the Dramble
 

@@ -69,7 +69,7 @@ spec:
             - containerPort: 80
               name: drupal
           volumeMounts:
-            - mountPath: /var/www/html/sites/default/files
+            - mountPath: {{ drupal_files_dir }}
               name: drupal-files
           resources:
             limits:
@@ -107,8 +107,7 @@ kind: Ingress
 metadata:
   name: drupal-ingress
   namespace: {{ manifest_namespace }}
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+  annotations: {}
 spec:
   rules:
   - host: {{ drupal_domain }}
