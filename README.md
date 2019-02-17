@@ -104,7 +104,7 @@ If you need to change the IP subnet (default is `10.0.100.x`), make sure to also
 
 #### Private Docker Registry Usage
 
-The Pi Dramble includes a built-in Docker registry that is used to host Drupal images for deployment to Kubernetes. To use the Docker Registry manually (to push or pull images):
+The Pi Dramble includes a built-in Docker registry that is used to host Drupal images for deployment to Kubernetes. To use the Docker registry manually (to push or pull images):
 
   1. Edit your `/etc/hosts` file and add the line:
 
@@ -112,7 +112,12 @@ The Pi Dramble includes a built-in Docker registry that is used to host Drupal i
      10.0.100.62  registry.pidramble.test
      ```
 
-  1. TODO: Configure TLS cert for a Docker Registry with a self-signed cert.
+  1. Follow the linked directions to [get Docker to use your self-signed Docker Registry cert](https://docs.docker.com/registry/insecure/#use-self-signed-certificates). For macOS, using the GUI:
+    1. Double-click on `k8s-manifests/docker-registry/certs/tls.crt` to add it to your Keychain
+    1. Select the certificate in Keychain Access, choose 'File' > 'Get Info'
+    1. Expand the 'Trust' section, and choose 'Always Trust' for "When using this certificate:"
+    1. Close the info dialog and enter your password to save the changes.
+    1. Restart Docker for Mac.
   1. Tag your image for the registry and push it:
 
      ```
