@@ -29,6 +29,7 @@
     line: "{{ hostvars[docker_registry_ingress_host].ansible_host }}  {{ docker_registry_domain }}"
     regexp: '.*{{ docker_registry_domain }}$'
     state: present
+  when: deploy_target != 'docker'
 
 - name: Ensure Docker cert store directory exists.
   file:
