@@ -59,32 +59,32 @@ Until the official Pi Dramble Wiki is updated (see TODOs above), this section of
 
   1. Install Ansible role dependencies and playbook dependencies:
 
-         ```
-         ansible-galaxy install -r requirements.yml --force
-         pip install openshift
-         ```
+     ```
+     ansible-galaxy install -r requirements.yml --force
+     pip install openshift
+     ```
 
   1. Run the main playbook to install Kubernetes on all the Pis and configure the cluster:
 
-         ```
-         ansible-playbook -i inventory main.yml
-         ```
+     ```
+     ansible-playbook -i inventory main.yml
+     ```
 
   1. You can SSH into the Kubernetes master (10.0.100.61 by default) and run `kubectl` by switching to the root user (`sudo su`). For example:
 
-         ```
-         kubectl get nodes
-         kubectl get pods
-         ...
-         ```
+     ```
+     kubectl get nodes
+     kubectl get pods
+     ...
+     ```
 
   1. The Ansible playbook also copies the config file locally, so you can run `kubectl` locally if you have it installed. Just export the path to the file (e.g. `export KUBECONFIG=~/.kube/config-dramble-pi`), then you can run `kubectl` commands.
 
   1. Edit your `/etc/hosts` file and add the line:
 
-         ```
-         cluster.pidramble.test  10.0.100.62
-         ```
+     ```
+     10.0.100.62  cluster.pidramble.test
+     ```
 
   1. After that, you can access the `drupal` Kubernetes service at the URL: `http://cluster.pidramble.test/`.
 
@@ -104,13 +104,26 @@ If you need to change the IP subnet (default is `10.0.100.x`), make sure to also
 
 #### Private Docker Registry Usage
 
-The Pi Dramble includes a built-in Docker registry that is used to host Drupal images for deployment to Kubernetes. To use the Docker Registry manually (to push or pull images):
+The Pi Dramble includes a built-in Docker registry that is used to host Drupal images for deployment to Kubernetes. To use the Docker registry manually (to push or pull images):
 
   1. Edit your `/etc/hosts` file and add the line:
 
-         registry.pidramble.test  10.0.100.62
+     ```
+     10.0.100.62  registry.pidramble.test
+     ```
 
-  1. Configure Docker to work with `registry.pidramble.test` as an [insecure HTTP registry](https://docs.docker.com/registry/insecure/#deploy-a-plain-http-registry).
+  1. Follow the linked directions to [get Docker to use your self-signed Docker Registry cert](https://docs.docker.com/registry/insecure/#use-self-signed-certificates). For macOS, using the GUI:
+    1. Double-click on `k8s-manifests/docker-registry/certs/tls.crt` to add it to your Keychain
+    1. Select the certificate in Keychain Access, choose 'File' > 'Get Info'
+    1. Expand the 'Trust' section, and choose 'Always Trust' for "When using this certificate:"
+    1. Close the info dialog and enter your password to save the changes.
+    1. Restart Docker for Mac.
+  1. Tag your image for the registry and push it:
+
+     ```
+     docker tag my/image:latest registry.pidramble.test/my/image:latest
+     docker push registry.pidramble.test/my/image:latest
+     ```
 
 ## Benchmarks - Testing the performance of the Dramble
 

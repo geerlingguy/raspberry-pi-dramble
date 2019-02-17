@@ -71,15 +71,25 @@ spec:
     port: 5000
     targetPort: 5000
 
+# TLS Secret for Docker registry Ingress.
+---
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/tls
+metadata:
+  name: {{ manifest_namespace }}-tls-cert
+  namespace: {{ manifest_namespace }}
+data:
+  tls.key: {{ docker_registry_key | b64encode }}
+  tls.crt: {{ docker_registry_crt | b64encode }}
+
 # Docker registry Ingress definition.
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   annotations:
-    nginx.ingress.kubernetes.io/proxy-body-size: "0"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    kubernetes.io/ingress.class: traefik
   name: docker-registry
   namespace: {{ manifest_namespace }}
 spec:
@@ -91,3 +101,5 @@ spec:
           serviceName: docker-registry
           servicePort: 5000
         path: /
+  tls:
+    - secretName: {{ manifest_namespace }}-tls-cert

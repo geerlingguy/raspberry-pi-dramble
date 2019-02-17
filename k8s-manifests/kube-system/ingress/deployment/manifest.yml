@@ -30,6 +30,9 @@ spec:
         - name: http
           containerPort: 80
           hostPort: 80
+        - name: https
+          containerPort: 443
+          hostPort: 443
         securityContext:
           capabilities:
             drop:
@@ -40,6 +43,9 @@ spec:
         - --api
         - --kubernetes
         - --logLevel=INFO
+        - --defaultentrypoints=http,https
+        - --entrypoints=Name:https Address::443 TLS
+        - --entrypoints=Name:http Address::80
 # A NodePort in front of the service may be simpler for the use case of having
 # an external proxy front everything, just by hitting one IP, then letting K8s
 # do all the routing. But it's slightly annoying in the local Pi setup, because

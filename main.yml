@@ -59,6 +59,9 @@
     - import_tasks: tasks/led-monitor.yml
       tags: ['leds']
 
+    - import_tasks: tasks/k8s-cert-setup.yml
+      tags: ['kubernetes']
+
     - import_tasks: tasks/k8s-services.yml
       tags: ['kubernetes']
 
