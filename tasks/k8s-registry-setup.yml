@@ -26,7 +26,7 @@
 - name: Add registry to hosts file.
   lineinfile:
     dest: /etc/hosts
-    line: "{{ hostvars['kube3'].ansible_host }}  {{ docker_registry_domain }}"
+    line: "{{ hostvars[docker_registry_ingress_host].ansible_host }}  {{ docker_registry_domain }}"
     regexp: '.*{{ docker_registry_domain }}$'
     state: present
 

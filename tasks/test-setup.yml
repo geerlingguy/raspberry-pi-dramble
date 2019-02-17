@@ -22,6 +22,7 @@
   set_fact:
     kubernetes_kubelet_extra_args: '--fail-swap-on=false'
     kubernetes_allow_pods_on_master: True
+    docker_registry_ingress_host: 'kube1'
   when: deploy_target == 'docker'
 
 - name: Copy kube-flannel-vagrant.yml file in place.
