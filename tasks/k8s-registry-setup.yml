@@ -22,3 +22,21 @@
   set_fact:
     docker_registry_key: "{{ lookup('file', playbook_dir  + '/k8s-manifests/docker-registry/certs/tls.key') }}"
     docker_registry_crt: "{{ lookup('file', playbook_dir  + '/k8s-manifests/docker-registry/certs/tls.crt') }}"
+
+- name: Add registry to hosts file.
+  lineinfile:
+    dest: /etc/hosts
+    line: "{{ hostvars['kube3'].ansible_host }}  {{ docker_registry_domain }}"
+    regexp: '.*{{ docker_registry_domain }}$'
+    state: present
+
+- name: Ensure Docker cert store directory exists.
+  file:
+    path: "/etc/docker/certs.d/{{ docker_registry_domain }}/"
+    state: directory
+    recurse: true
+
+- name: Copy Docker Registry cert into Docker cert store.
+  copy:
+    src: "{{ playbook_dir }}/k8s-manifests/docker-registry/certs/tls.crt"
+    dest: "/etc/docker/certs.d/{{ docker_registry_domain }}/ca.crt"
