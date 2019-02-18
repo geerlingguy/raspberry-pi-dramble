@@ -8,7 +8,7 @@
   shell: "/usr/bin/led-log-monitor &"
   async: 45
   poll: 0
-  when: 'led-log-monitor' not in led_monitor_check.stdout
+  when: "'led-log-monitor' not in led_monitor_check.stdout"
 
 - name: Add a cron job to automatically start the log monitor after reboot.
   cron:
