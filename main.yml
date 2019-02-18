@@ -48,16 +48,21 @@
     - role: geerlingguy.kubernetes
       tags: ['kubernetes']
 
-    - role: leds
+    - role: leds-gpio
       tags: ['leds']
+      when:
+        - led_enable_gpio
+        - deploy_target == 'pi'
+
+    - role: leds-blinkstick
+      tags: ['leds']
+      when:
+        - led_enable_blinkstick
 
   tasks:
     - include_tasks: tasks/nfs.yml
       tags: ['nfs']
       when: deploy_target != 'docker'
-
-    - import_tasks: tasks/led-monitor.yml
-      tags: ['leds']
 
     - import_tasks: tasks/k8s-registry-setup.yml
       tags: ['kubernetes']

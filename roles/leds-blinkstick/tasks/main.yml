@@ -1,0 +1,32 @@
+---
+- name: Ensure Pip is installed.
+  apt: name=python-pip state=present
+
+- name: Ensure blinkstick is installed.
+  pip: name=blinkstick state=present
+
+- name: Ensure blinkstick-leds folder exists.
+  file:
+    path: /opt/blinkstick-leds
+    state: directory
+    mode: 0755
+
+- name: Copy Blinkstick control scripts into place.
+  template:
+    src: "{{ item }}.j2"
+    dest: "/opt/blinkstick-leds/{{ item }}"
+    mode: 0755
+  with_items: "{{ blinkstick_scripts }}"
+
+- name: Make Blinkstick control scripts available in the user's PATH.
+  file:
+    path: "/usr/bin/{{ item }}"
+    src: "/opt/gpio-leds/{{ item }}"
+    state: link
+  with_items: "{{ blinkstick_scripts }}"
+
+- name: Set up cron jobs for Blinkstick control.
+  cron: 'name="{{ item.name }}" special_time=reboot job="{{ item.job }}"'
+  with_items:
+    - name: "Set up blinkstick on startup"
+      job: "blinkstick --set-mode 3 && blinkstick --set-color {{ blinkstick_startup_color }}"

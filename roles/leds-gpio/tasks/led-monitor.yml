@@ -3,17 +3,15 @@
   shell: "ps aux | grep led"
   changed_when: false
   register: led_monitor_check
-  when: deploy_target == 'pi'
 
 - name: Start monitoring nginx requests via GPIO LED.
   shell: "/usr/bin/led-log-monitor &"
   async: 45
   poll: 0
-  when: deploy_target == 'pi' and 'led-log-monitor' not in led_monitor_check.stdout
+  when: 'led-log-monitor' not in led_monitor_check.stdout
 
 - name: Add a cron job to automatically start the log monitor after reboot.
   cron:
     name: "Monitor web requests with the RGB LED"
     special_time: reboot
     job: "/usr/bin/led-log-monitor &"
-  when: deploy_target == 'pi'

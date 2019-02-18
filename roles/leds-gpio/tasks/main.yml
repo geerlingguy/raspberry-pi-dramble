@@ -30,3 +30,5 @@
   with_items:
     - { name: "Switch to green on RGB LED", job: "/usr/bin/rgb green" }
     - { name: "Configure onboard Pi LEDs", job: "/usr/bin/onboard-led-setup" }
+
+- import_tasks: led-monitor.yml
