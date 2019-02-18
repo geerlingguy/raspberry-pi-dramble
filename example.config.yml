@@ -5,6 +5,7 @@ drupal_docker_image: geerlingguy/drupal:latest-arm32v7
 # Generate a salt with: `php -r "echo bin2hex(random_bytes(25));"`
 drupal_hash_salt: ef4e7eb18bd889e2c89720e71ea98beaae5f563d8685638d6e
 drupal_files_dir: /var/www/html/sites/default/files
+drupal_download_if_not_present: 'true'
 
 # MySQL configuration.
 mysql_drupal_password: aaiQyjrcdvkxX6fg7UeM

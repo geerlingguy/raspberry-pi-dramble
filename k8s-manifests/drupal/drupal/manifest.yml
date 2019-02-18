@@ -10,7 +10,7 @@ data:
   DRUPAL_DATABASE_NAME: 'drupal'
   DRUPAL_DATABASE_USERNAME: 'drupal'
   DRUPAL_HASH_SALT: '{{ drupal_hash_salt }}'
-  DRUPAL_DOWNLOAD_IF_NOT_PRESENT: 'false'
+  DRUPAL_DOWNLOAD_IF_NOT_PRESENT: '{{ drupal_download_if_not_present }}'
 
 # PersistentVolumeClaim for Drupal files.
 ---
