@@ -3,4 +3,4 @@
 docker_users: []
 
 # Check available versions on a Pi: `apt-cache madison docker-ce`
-docker_version: 5:18.09.2~3-0~raspbian-stretch
+docker_version: 5:18.09.0~3-0~raspbian-stretch
