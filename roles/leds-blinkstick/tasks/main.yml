@@ -21,12 +21,8 @@
 - name: Make Blinkstick control scripts available in the user's PATH.
   file:
     path: "/usr/bin/{{ item }}"
-    src: "/opt/gpio-leds/{{ item }}"
+    src: "/opt/blinkstick-leds/{{ item }}"
     state: link
   with_items: "{{ blinkstick_scripts }}"
 
-- name: Set up cron jobs for Blinkstick control.
-  cron: 'name="{{ item.name }}" special_time=reboot job="{{ item.job }}"'
-  with_items:
-    - name: "Set up blinkstick on startup"
-      job: "blinkstick --set-mode 3 && blinkstick --set-color {{ blinkstick_startup_color }}"
+- include_tasks: systemd-service.yml

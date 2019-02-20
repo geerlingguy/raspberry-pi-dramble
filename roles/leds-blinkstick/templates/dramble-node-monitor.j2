@@ -1,0 +1,73 @@
+#!/usr/bin/env python
+#
+# Kubernetes node monitoring script for the Raspberry Pi Dramble.
+
+from blinkstick import blinkstick
+import urllib2
+import time
+import sys, signal
+
+# Class to handle SIGINT/SIGTERM gracefully.
+class GracefulKiller:
+    kill_now = False
+    def __init__(self):
+        signal.signal(signal.SIGINT, self.exit_gracefully)
+        signal.signal(signal.SIGTERM, self.exit_gracefully)
+
+    def exit_gracefully(self,signum, frame):
+        self.kill_now = True
+
+# Define what to do when script is stopped externally.
+def signal_handler(signal, frame):
+    print "\nStopping node monitor."
+    nano.turn_off()
+    sys.exit(0)
+signal.signal(signal.SIGINT, signal_handler)
+
+# Function to check if Kubernetes node is ready or not.
+def check_node_status():
+    status = False;
+
+    try:
+        contents = urllib2.urlopen(url="http://localhost:10248/healthz", timeout=1).read()
+        if contents == 'ok':
+            status = True
+        else:
+            status = False
+
+    except urllib2.URLError:
+        status = False
+
+    return status
+
+# Function to update Blinkstick light to reflect current node status.
+def update_blinkenlights(nano):
+    current_color = nano.get_color()
+    if check_node_status():
+        if current_color != [0, 128, 0]:
+            nano.set_color(red=0, green=128, blue=0)
+            print 'Blinkstick changed to reflect Ready status.'
+    else:
+        if current_color != [128, 0, 0]:
+            nano.set_color(red=128, green=0, blue=0)
+            print 'Blinkstick changed to reflect NotReady status.'
+    time.sleep(5)
+
+# Main.
+nano = blinkstick.find_first()
+nano.set_mode(3)
+time.sleep(0.05)
+killer = GracefulKiller()
+while True:
+    try:
+        update_blinkenlights(nano)
+        if killer.kill_now:
+            break
+    except Exception, e:
+        nano.turn_off()
+
+        print >> sys.stderr, "Exiting for exception."
+        print >> sys.stderr, "Exception: %s" % str(e)
+        sys.exit(1)
+nano.turn_off()
+print "Exiting gracefully."
