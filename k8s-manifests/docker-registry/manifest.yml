@@ -35,6 +35,7 @@ spec:
     spec:
       containers:
         - name: docker-registry
+          imagePullPolicy: IfNotPresent
           image: {{ docker_registry_image }}
           env:
             - name: REGISTRY_HTTP_SECRET

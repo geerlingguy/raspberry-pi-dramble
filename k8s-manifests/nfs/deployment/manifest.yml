@@ -17,6 +17,7 @@ spec:
       serviceAccountName: nfs-client-provisioner
       containers:
         - name: nfs-client-provisioner
+          imagePullPolicy: IfNotPresent
           image: {{ nfs_client_image }}
           volumeMounts:
             - name: nfs-client-root
