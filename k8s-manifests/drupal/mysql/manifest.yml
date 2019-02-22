@@ -61,6 +61,7 @@ spec:
     spec:
       containers:
       - image: {{ mysql_container_image }}
+        imagePullPolicy: IfNotPresent
         name: mysql
         envFrom:
         - configMapRef:

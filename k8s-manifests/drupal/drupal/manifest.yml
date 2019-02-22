@@ -55,7 +55,7 @@ spec:
     spec:
       containers:
         - image: {{ drupal_docker_image }}
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           name: drupal
           envFrom:
           - configMapRef:

@@ -33,7 +33,7 @@ spec:
       containers:
       - name: metrics-server
         image: {{ metrics_server_image }}
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         volumeMounts:
         - name: tmp-dir
           mountPath: /tmp

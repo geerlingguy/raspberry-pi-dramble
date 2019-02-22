@@ -24,8 +24,9 @@ spec:
       terminationGracePeriodSeconds: 60
       hostNetwork: true
       containers:
-      - image: traefik
+      - image: {{ traefik_image }}
         name: traefik-ingress-lb
+        imagePullPolicy: IfNotPresent
         ports:
         - name: http
           containerPort: 80
