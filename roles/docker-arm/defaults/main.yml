@@ -1,6 +1,0 @@
----
-# A list of users who will be added to the docker group.
-docker_users: []
-
-# Check available versions on a Pi: `apt-cache madison docker-ce`
-docker_version: 5:18.09.0~3-0~raspbian-stretch
