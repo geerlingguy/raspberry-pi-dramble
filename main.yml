@@ -42,7 +42,7 @@
     - role: geerlingguy.pip
       tags: ['pip', 'docker']
 
-    - role: docker-arm
+    - role: geerlingguy.docker_arm
       tags: ['docker']
 
     - role: geerlingguy.kubernetes

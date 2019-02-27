@@ -3,5 +3,6 @@
 - src: geerlingguy.swap
 - src: geerlingguy.nfs
 - src: geerlingguy.pip
+- src: geerlingguy.docker_arm
 - src: geerlingguy.kubernetes
 - src: geerlingguy.k8s_manifests
