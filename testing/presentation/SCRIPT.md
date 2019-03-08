@@ -20,7 +20,7 @@ This script lists some of the commands and actions I may or may not perform duri
   1. `watch kubectl get nodes` (to see how long it takes the Kubernetes master to mark node as `NotReady`)
   1. `watch kubectl get pods --all-namespaces -o wide` (to see when the Pods on `kube3` get shuffled)
 
-> TODO: Right now after Kubernetes marks a node 'NotReady' it doesn't shuffle Pods to another node until the `not-ready` Toleration is hit (current default is `300s`). Need to adjust this for all the main pods so they'll hop to new nodes more quickly.
+> Note: The default toleration timeout for Deployments in the Pi Dramble is set to `300s`. For presentations, this should be overridden so it is `30s`, by deploying with the following variable in `config.yml`: `kubernetes_toleration_not_ready: 30`.
 
 ## Demonstrate Kubernetes Horizontal Pod Autoscaling (HPA)
 
