@@ -94,6 +94,15 @@ spec:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
           claimName: drupal-db
+      tolerations:
+      - effect: NoExecute
+        key: node.kubernetes.io/not-ready
+        operator: Exists
+        tolerationSeconds: {{ kubernetes_toleration_not_ready }}
+      - effect: NoExecute
+        key: node.kubernetes.io/unreachable
+        operator: Exists
+        tolerationSeconds: {{ kubernetes_toleration_not_ready }}
 
 # MySQL Service.
 ---

@@ -33,6 +33,8 @@ k8s_manifests:
   - dir: drupal/drupal
     namespace: drupal
 
+kubernetes_toleration_not_ready: 300
+
 # Python dependencies.
 pip_install_packages:
   - openshift
