@@ -147,6 +147,12 @@ Therefore only the following Pi models are officially supported:
   - Raspberry Pi model 3 B
   - Raspberry Pi model 2
 
+## Presentation Mode
+
+The Raspberry Pi Dramble Kubernetes cluster can function entirely 'air-gapped' from the Internet, and this is in fact how the maintainer uses it in presentations.
+
+See the README in the [`testing/presentation`](testing/presentation) directory for instructions for operating the cluster standalone.
+
 ## Author
 
 This project was started in 2015 by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/) and [Ansible for Kubernetes](https://www.ansibleforkubernetes.com).
