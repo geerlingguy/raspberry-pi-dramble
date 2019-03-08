@@ -47,6 +47,15 @@ spec:
         - --defaultentrypoints=http,https
         - --entrypoints=Name:https Address::443 TLS
         - --entrypoints=Name:http Address::80
+      tolerations:
+      - effect: NoExecute
+        key: node.kubernetes.io/not-ready
+        operator: Exists
+        tolerationSeconds: {{ kubernetes_toleration_not_ready }}
+      - effect: NoExecute
+        key: node.kubernetes.io/unreachable
+        operator: Exists
+        tolerationSeconds: {{ kubernetes_toleration_not_ready }}
 # A NodePort in front of the service may be simpler for the use case of having
 # an external proxy front everything, just by hitting one IP, then letting K8s
 # do all the routing. But it's slightly annoying in the local Pi setup, because

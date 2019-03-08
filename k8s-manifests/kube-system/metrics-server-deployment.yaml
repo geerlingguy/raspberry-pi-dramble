@@ -41,3 +41,12 @@ spec:
         - /metrics-server
         - --kubelet-insecure-tls
         - --kubelet-preferred-address-types=InternalIP
+      tolerations:
+      - effect: NoExecute
+        key: node.kubernetes.io/not-ready
+        operator: Exists
+        tolerationSeconds: {{ kubernetes_toleration_not_ready }}
+      - effect: NoExecute
+        key: node.kubernetes.io/unreachable
+        operator: Exists
+        tolerationSeconds: {{ kubernetes_toleration_not_ready }}

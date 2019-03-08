@@ -1,0 +1,20 @@
+---
+- hosts: dramble
+  become: true
+
+  vars_files:
+    - ../../vars/main.yml
+    - ../../config.yml
+
+  tasks:
+    - name: Ensure all required Docker images are pulled to each node.
+      docker_image:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - "{{ drupal_docker_image }}"
+        - "{{ docker_registry_image }}"
+        - "{{ mysql_container_image }}"
+        - "{{ metrics_server_image }}"
+        - "{{ traefik_image }}"
+        - "{{ nfs_client_image }}"

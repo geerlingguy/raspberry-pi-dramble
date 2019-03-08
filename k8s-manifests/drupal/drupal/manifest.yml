@@ -83,6 +83,15 @@ spec:
         - name: drupal-files
           persistentVolumeClaim:
             claimName: drupal-files
+      tolerations:
+      - effect: NoExecute
+        key: node.kubernetes.io/not-ready
+        operator: Exists
+        tolerationSeconds: {{ kubernetes_toleration_not_ready }}
+      - effect: NoExecute
+        key: node.kubernetes.io/unreachable
+        operator: Exists
+        tolerationSeconds: {{ kubernetes_toleration_not_ready }}
 
 # Drupal Service definition.
 ---
@@ -132,5 +141,5 @@ spec:
     kind: Deployment
     name: drupal
   minReplicas: 1
-  maxReplicas: 10
+  maxReplicas: 3
   targetCPUUtilizationPercentage: 50

@@ -34,6 +34,15 @@ spec:
           nfs:
             server: {{ kubernetes_master_ip }}
             path: {{ nfs_share_dir }}
+      tolerations:
+      - effect: NoExecute
+        key: node.kubernetes.io/not-ready
+        operator: Exists
+        tolerationSeconds: {{ kubernetes_toleration_not_ready }}
+      - effect: NoExecute
+        key: node.kubernetes.io/unreachable
+        operator: Exists
+        tolerationSeconds: {{ kubernetes_toleration_not_ready }}
 
 # NFS StorageClass.
 ---
