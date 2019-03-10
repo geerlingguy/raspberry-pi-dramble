@@ -16,13 +16,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider "virtualbox"
 
   config.vm.provider :virtualbox do |v|
-    v.memory = 1024
+    # Use 1GB + 512MB since amd64 platform uses more RAM per process.
+    v.memory = 1536
     v.cpus = 2
     v.linked_clone = true
     v.customize ['modifyvm', :id, '--audio', 'none']
   end
 
-  # Define five VMs with static private IP addresses.
+  # Define four VMs with static private IP addresses.
   boxes = [
     { :name => "kube1", :ip => "192.168.77.2" },
     { :name => "kube2", :ip => "192.168.77.3" },

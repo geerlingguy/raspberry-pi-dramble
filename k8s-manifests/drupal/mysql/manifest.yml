@@ -88,7 +88,7 @@ spec:
             cpu: '2'
             memory: '768Mi'
           requests:
-            cpu: '1'
+            cpu: '500m'
             memory: '512Mi'
       volumes:
       - name: mysql-persistent-storage
