@@ -49,48 +49,7 @@ The process for setting up all the Raspberry Pis is outlined in the Wiki:
   1. [Network the Raspberry Pis](http://www.pidramble.com/wiki/setup/network)
   1. [Test the Ansible configuration](http://www.pidramble.com/wiki/setup/test-ansible)
   1. [Provision the Raspberry Pis](http://www.pidramble.com/wiki/setup/provision)
-    - TODO: This documentation needs updating for Kubernetes.
   1. [Deploy Drupal to the Raspberry Pis](http://www.pidramble.com/wiki/setup/deploy-drupal)
-    - TODO: This documentation needs updating for Kubernetes.
-
-### Kubernetes Setup Notes
-
-Until the official Pi Dramble Wiki is updated (see TODOs above), this section of the README should suffice for setup steps for someone familiar with command line usage.
-
-  1. Install Ansible role dependencies and playbook dependencies:
-
-     ```
-     ansible-galaxy install -r requirements.yml --force
-     pip install openshift
-     ```
-
-  1. Run the main playbook to install Kubernetes on all the Pis and configure the cluster:
-
-     ```
-     ansible-playbook -i inventory main.yml
-     ```
-
-  1. You can SSH into the Kubernetes master (10.0.100.61 by default) and run `kubectl` by switching to the root user (`sudo su`). For example:
-
-     ```
-     kubectl get nodes
-     kubectl get pods
-     ...
-     ```
-
-  1. The Ansible playbook also copies the config file locally, so you can run `kubectl` locally if you have it installed. Just export the path to the file (e.g. `export KUBECONFIG=~/.kube/config-dramble-pi`), then you can run `kubectl` commands.
-
-  1. Edit your `/etc/hosts` file and add the line:
-
-     ```
-     10.0.100.62  cluster.pidramble.test
-     ```
-
-  1. After that, you can access the `drupal` Kubernetes service at the URL: `http://cluster.pidramble.test/`.
-
-  1. To install Drupal, follow the steps in Drupal's installation wizard.
-
-> Note that for the hosts file, you can point the domain at any of the non-master nodes (e.g. `10.0.100.62`, `10.0.100.63`, etc.); they are all running the Traefik ingress controller as a Kubernetes DaemonSet, meaning any single host can direct traffic on port 80 to the `drupal` service. Technically, you could use DNS round robin to point one domain at all the Pis, but the best solution is to have another load balancer in front of all the Pis, redirecting the traffic to them using a more intelligent load balancing and health monitoring solution.
 
 #### Adding more nodes
 
