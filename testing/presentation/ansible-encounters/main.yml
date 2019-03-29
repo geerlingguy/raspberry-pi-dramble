@@ -1,0 +1,31 @@
+---
+- hosts: dramble
+  gather_facts: false
+  become: true
+
+# For local testing, use this and comment out delegate_to.
+# - hosts: localhost
+#   connection: local
+#   gather_facts: false
+#   become: false
+
+  tasks:
+    - name: G5
+      command: blinkstick --blink --duration=1000 pink
+      # delegate_to: kube1
+
+    - name: A5
+      command: blinkstick --blink --duration=1000 orange
+      # delegate_to: kube2
+
+    - name: F5
+      command: blinkstick --blink --duration=1000 purple
+      # delegate_to: kube3
+
+    - name: F4
+      command: blinkstick --blink --duration=1000 yellow
+      # delegate_to: kube4
+
+    - name: C5
+      command: blinkstick --blink --duration=2000 white
+      # delegate_to: kube3
