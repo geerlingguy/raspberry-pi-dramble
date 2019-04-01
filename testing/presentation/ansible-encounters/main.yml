@@ -1,0 +1,48 @@
+---
+- hosts: dramble
+  gather_facts: false
+  become: true
+
+# For local testing, use this and comment out delegate_to.
+# - hosts: localhost
+#   connection: local
+#   gather_facts: false
+#   become: false
+
+  pre_tasks:
+    - name: Ensure dramble-node-monitor is not running.
+      service:
+        name: dramble-node-monitor
+        state: stopped
+
+  tasks:
+    - name: G5
+      command: blinkstick --blink --delay=750 pink
+      delegate_to: kube1
+      run_once: true
+
+    - name: A5
+      command: blinkstick --blink --delay=750 orange
+      delegate_to: kube2
+      run_once: true
+
+    - name: F5
+      command: blinkstick --blink --delay=750 purple
+      delegate_to: kube3
+      run_once: true
+
+    - name: F4
+      command: blinkstick --blink --delay=750 yellow
+      delegate_to: kube4
+      run_once: true
+
+    - name: C5
+      command: blinkstick --blink --delay=1250 white
+      delegate_to: kube3
+      run_once: true
+
+  post_tasks:
+    - name: Ensure dramble-node-monitor is running.
+      service:
+        name: dramble-node-monitor
+        state: started
