@@ -7,9 +7,11 @@ This script lists some of the commands and actions I may or may not perform duri
   1. `ansible -i inventory all -m service -a "name=dramble-node-monitor state=stopped" -b`
   1. `ansible -i inventory all -a "blinkstick blue" -b`
   1. `ansible -i inventory all -a "blinkstick green" -b`
-  1. `ansible -i inventory all -a "blinkstick blue" -b --forks 1`
-  1. `ansible -i inventory all -a "blinkstick red" -b --forks 1`
-  1. `ansible -i inventory all -m service -a "name=dramble-node-monitor state=started" -b`
+
+### Ansible Encounters of the Third Kind
+
+  1. `ansible-playbook -i inventory testing/presentation/ansible-encounters/main.yml`
+     (This re-enables `dramble-node-monitor` automatically).
 
 ## Demonstrate Kubernetes self-healing
 
