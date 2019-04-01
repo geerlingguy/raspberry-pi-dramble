@@ -7,7 +7,7 @@ You could do this with just one Blinkstick and one computer... or a LED board or
 ## Prerequisites
 
   - Install SoX: `brew install sox`
-  - Install the Blinkstick library: `pip install blinkstick`
+  - Install the Blinkstick library: `pip install blinkstick` (if running on the Pis)
 
 ## Usage
 

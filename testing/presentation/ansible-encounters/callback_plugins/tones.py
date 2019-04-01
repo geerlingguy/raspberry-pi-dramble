@@ -23,6 +23,8 @@ import distutils.spawn
 import platform
 import subprocess
 import os
+import threading
+import time
 
 from ansible.plugins.callback import CallbackBase
 
@@ -48,15 +50,17 @@ class CallbackModule(CallbackBase):
             self.disabled = True
             self._display.warning("Unable to find 'play' executable, plugin %s disabled" % os.path.basename(__file__))
 
-    def tone(self, tone, length):
+    def tone(self, tone, length, delay):
         cmd = [self.synthesizer]
         if tone:
+            time.sleep(delay)
             cmd.extend(('-q', '-n', 'synth', length, 'sin', tone))
         subprocess.call(cmd)
 
     def playbook_on_task_start(self, name, is_conditional):
         # define some defaults
-        length = '1'
+        length = '0.75'
+        delay = 0.5
         notes = {
             'G5': '783.99',
             'A5': '880.00',
@@ -66,7 +70,10 @@ class CallbackModule(CallbackBase):
         }
 
         if name == 'C5':
-            length = '2'
+            length = '1.25'
 
-        # play the tone
-        self.tone(notes[name], length)
+        # play the tone if it exists
+        if name in notes.keys():
+            thread = threading.Thread(target=self.tone, args=(notes[name], length, delay))
+            thread.daemon = True
+            thread.start()
