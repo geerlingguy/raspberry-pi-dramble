@@ -15,6 +15,9 @@
         name: dramble-node-monitor
         state: stopped
 
+    - name: Ensure blinkstick is set to not display a color.
+      command: blinkstick off
+
   tasks:
     - name: G5
       command: blinkstick --blink --delay=750 pink
