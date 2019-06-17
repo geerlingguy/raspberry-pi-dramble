@@ -16,6 +16,8 @@
         name:
           - sudo
           - openssh-server
+          - libffi-dev
+          - libssl-dev
         state: present
 
     - import_tasks: tasks/cgroup-features.yml
