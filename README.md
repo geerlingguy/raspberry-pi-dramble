@@ -98,10 +98,11 @@ If you have only a single Raspberry Pi, you can use the [Drupal Pi](https://gith
 
 ## Using older or slower Raspberry Pi models
 
-The Raspberry Pi 2, 3, and 3 B+ have quad-core processors that make certain operations four to ten times faster than single-core Pis like the A+, B+, Zero, etc. Additionally, cluster members need as much RAM as possible, and any Pi without at least 1 GB of RAM simply [can't be used as a Kubernetes master](https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/memory-constraint-namespace/#before-you-begin).
+The Raspberry Pi 2, 3, 3 B+, and 4 have quad-core processors that make certain operations four to ten times faster than single-core Pis like the A+, B+, Zero, etc. Additionally, cluster members need as much RAM as possible, and any Pi without at least 1 GB of RAM simply [can't be used as a Kubernetes master](https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/memory-constraint-namespace/#before-you-begin).
 
 Therefore only the following Pi models are officially supported:
 
+  - Raspberry Pi model 4 B
   - Raspberry Pi model 3 B+
   - Raspberry Pi model 3 B
   - Raspberry Pi model 2
