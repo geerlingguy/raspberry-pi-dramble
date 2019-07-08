@@ -22,6 +22,9 @@
     - import_tasks: tasks/disable-swap.yml
       tags: ['always']
 
+    - import_tasks: tasks/iptables-legacy.yml
+      when: ansible_distribution_version == "10"
+
     - name: Set the master node IP.
       set_fact:
         kubernetes_master_ip: "{{ hostvars['kube1']['ansible_host'] }}"
