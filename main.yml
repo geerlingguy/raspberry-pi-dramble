@@ -51,13 +51,13 @@
     - role: leds-gpio
       tags: ['leds']
       when:
-        - led_enable_gpio
+        - led_enable_gpio | bool
         - deploy_target == 'pi'
 
     - role: leds-blinkstick
       tags: ['leds']
       when:
-        - led_enable_blinkstick
+        - led_enable_blinkstick | bool
 
   tasks:
     - include_tasks: tasks/nfs.yml

@@ -17,7 +17,7 @@ docker run --detach \
   --name $container_name \
   --privileged \
   --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro \
-  geerlingguy/docker-debian9-ansible:latest \
+  geerlingguy/docker-debian10-ansible:latest \
   /lib/systemd/systemd
 
 # Install requirements.

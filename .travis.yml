@@ -8,7 +8,7 @@ addons:
     - kube1
 
 install:
-  - docker pull geerlingguy/docker-debian9-ansible:latest
+  - docker pull geerlingguy/docker-debian10-ansible:latest
   - cp example.config.yml config.yml
 
 script:

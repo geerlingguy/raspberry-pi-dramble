@@ -11,13 +11,12 @@ end
 vconfig = YAML.load_file("../../config.yml")
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "geerlingguy/debian9"
+  config.vm.box = "geerlingguy/debian10"
   config.ssh.insert_key = false
   config.vm.provider "virtualbox"
 
   config.vm.provider :virtualbox do |v|
-    # Use 1GB + 512MB since amd64 platform uses more RAM per process.
-    v.memory = 1536
+    v.memory = 2048
     v.cpus = 2
     v.linked_clone = true
     v.customize ['modifyvm', :id, '--audio', 'none']
