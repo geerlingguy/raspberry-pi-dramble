@@ -22,7 +22,7 @@
         mode: 0644
 
     - name: Run hostname command
-      command: "hostname {{ bramble_hostname }}"
+      command: "hostname {{ dramble_hostname }}"
 
     - name: Update /etc/dhcpcd.conf
       template:

@@ -61,6 +61,6 @@ slaac private
 # Bramble configuration
 
 interface eth0
-static ip_address={{ bramble_ip_address }}/24
+static ip_address={{ dramble_ip_address }}/24
 static routers={{ default_gateway }}
 static domain_name_servers={{ default_gateway }} {{ dns_nameservers | join(' ') }}
