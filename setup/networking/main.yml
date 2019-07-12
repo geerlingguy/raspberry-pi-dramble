@@ -15,28 +15,23 @@
         dramble_hostname: "{{ mac_address_mapping[dramble_mac_address].name }}"
         dramble_ip_address: "{{ mac_address_mapping[dramble_mac_address].ip }}"
 
-    - name: Set up networking-related files.
+    - name: Update /etc/hostname
       template:
-        src: "templates/{{ item.template }}"
-        dest: "{{ item.dest }}"
+        src: "templates/hostname.j2"
+        dest: "/etc/hostname"
         mode: 0644
-      with_items:
-        - { template: hostname.j2, dest: /etc/hostname }
-        - { template: hosts.j2, dest: /etc/hosts }
-        - { template: resolv.conf.j2, dest: /etc/resolv.conf }
-        - { template: dhcpcd.conf.j2, dest: /etc/dhcpcd.conf }
-      notify:
-        - update hostname
-        - delete dhcp leases
 
-  handlers:
-    - name: update hostname
-      command: "hostname {{ dramble_hostname }}"
+    - name: Run hostname command
+      command: "hostname {{ bramble_hostname }}"
 
-    - name: delete dhcp leases
-      file:
-        path: /var/lib/dhcp/dhclient.leases
-        state: absent
-      with_items:
-        - /var/lib/dhcp/dhclient.leases
-        - /var/lib/dhcpcd5/dhcpcd-eth0.lease
+    - name: Update /etc/dhcpcd.conf
+      template:
+        src: "templates/dhcpcd.conf.j2"
+        dest: "/etc/dhcpcd.conf"
+        mode: 0644
+
+    - name: Update /etc/hosts
+      template:
+        src: "templates/hosts.j2"
+        dest: "/etc/hosts"
+        mode: 0644
