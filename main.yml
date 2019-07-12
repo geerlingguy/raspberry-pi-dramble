@@ -18,6 +18,7 @@
           - openssh-server
         state: present
 
+    - import_tasks: tasks/timezone.yml
     - import_tasks: tasks/cgroup-features.yml
     - import_tasks: tasks/disable-swap.yml
       tags: ['always']
