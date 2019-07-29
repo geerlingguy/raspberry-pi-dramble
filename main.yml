@@ -23,7 +23,9 @@
       tags: ['always']
 
     - import_tasks: tasks/iptables-legacy.yml
-      when: ansible_distribution_version == "10"
+      when:
+        - ansible_distribution_version == "10"
+        - deploy_target != 'docker'
 
     - name: Set the master node IP.
       set_fact:
