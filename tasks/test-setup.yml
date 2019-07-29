@@ -10,7 +10,7 @@
 
 - name: Override vars for non-ARM test environments.
   set_fact:
-    docker_version: 5:18.09.7~3-0~debian-stretch
+    docker_version: 5:19.03.1~3-0~debian-buster
     mysql_container_image: 'mysql:5.7'
     docker_registry_image: registry:2
     metrics_server_image: k8s.gcr.io/metrics-server-amd64:v0.3.2
