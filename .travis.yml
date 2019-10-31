@@ -14,3 +14,7 @@ install:
 script:
   # - "travis_wait 30 ./testing/docker/docker-playbook-test.sh"
   - ./testing/docker/docker-playbook-test.sh
+
+after_failure:
+  - docker exec --tty dramble env TERM=xterm \
+  journalctl --no-pager -u kubelet
