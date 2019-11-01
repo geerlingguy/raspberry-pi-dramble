@@ -7,6 +7,14 @@ import urllib2
 import time
 import sys, signal
 
+# Follow https://www.blinkstick.com/help/tutorials/blinkstick-pro-modes
+NORMAL_MODE  = 0
+INVERSE_MODE = 1
+WS2812_MODE  = 2
+
+# Turn-on per second
+PERIODICIY = 0.05
+
 # Class to handle SIGINT/SIGTERM gracefully.
 class GracefulKiller:
     kill_now = False
@@ -55,8 +63,8 @@ def update_blinkenlights(nano):
 
 # Main.
 nano = blinkstick.find_first()
-nano.set_mode(3)
-time.sleep(0.05)
+nano.set_mode(NORMAL_MODE)
+time.sleep(PERIODICIY)
 killer = GracefulKiller()
 while True:
     try:
