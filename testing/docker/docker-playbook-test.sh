@@ -9,6 +9,8 @@
 
 container_name=dramble
 
+docker info
+
 # Run a Docker container for the playbook to run inside.
 docker run --detach \
   -h kube1 \
@@ -22,6 +24,9 @@ docker run --detach \
 
 # Install requirements.
 docker exec --tty $container_name env TERM=xterm ansible-galaxy install -r /etc/ansible/pi-dramble/requirements.yml
+
+# Check Docker info inside Docker.
+docker exec --tty $container_name env TERM=xterm docker info
 
 # Check the playbook's syntax.
 docker exec --tty $container_name env TERM=xterm \
