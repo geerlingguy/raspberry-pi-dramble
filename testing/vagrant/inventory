@@ -7,5 +7,6 @@ kube4 ansible_host=192.168.77.5 kubernetes_role=node
 [dramble:vars]
 ansible_ssh_user=vagrant
 ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
+ansible_python_interpreter=auto
 deploy_target=vagrant
 kubernetes_apiserver_advertise_address=192.168.77.2

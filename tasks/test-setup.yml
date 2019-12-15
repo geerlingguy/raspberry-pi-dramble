@@ -30,14 +30,7 @@
     kubernetes_allow_pods_on_master: True
   when: deploy_target == 'docker'
 
-- name: Copy kube-flannel-vagrant.yml file in place.
-  copy:
-    src: k8s-manifests/kube-system/kube-flannel-vagrant.yml
-    dest: "~/kube-flannel-vagrant.yml"
-  when: deploy_target == 'vagrant'
-
 - name: Override vars for Vagrant environment.
   set_fact:
-    kubernetes_flannel_manifest_file: "~/kube-flannel-vagrant.yml"
     kubernetes_kubelet_extra_args: '--node-ip={{ ansible_host }}'
   when: deploy_target == 'vagrant'
