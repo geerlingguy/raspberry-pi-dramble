@@ -10,6 +10,15 @@ set -e
 
 container_name=dramble
 
+# If on Travis CI, update Docker's configuration.
+if [ "$TRAVIS" == "true" ]; then
+  echo '{
+    "experimental": true,
+    "storage-driver": "overlay2"
+  }' | sudo tee /etc/docker/daemon.json
+  sudo service docker restart
+fi
+
 # Run a Docker container for the playbook to run inside.
 docker run --detach \
   -h kube1 \
