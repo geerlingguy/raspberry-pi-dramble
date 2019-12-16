@@ -46,4 +46,3 @@ docker exec --tty $container_name env TERM=xterm \
   -i /etc/ansible/pi-dramble/testing/docker/inventory \
   --extra-vars "deploy_target=docker" \
   --limit=kube1 \
-  -vvvv
