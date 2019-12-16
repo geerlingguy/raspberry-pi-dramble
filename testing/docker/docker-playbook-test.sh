@@ -9,6 +9,12 @@
 
 container_name=dramble
 
+# If on Travis CI, update Docker CE.
+if [ "$TRAVIS" == "true" ]; then
+  echo 'Updating Docker CE in Travis CI environment.'
+  source ./docker-latest.sh
+fi
+
 # Run a Docker container for the playbook to run inside.
 docker run --detach \
   -h kube1 \
