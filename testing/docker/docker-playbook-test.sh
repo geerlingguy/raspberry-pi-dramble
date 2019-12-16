@@ -30,7 +30,6 @@ docker run --detach \
   --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro \
   --volume=/etc/docker/daemon.json:/etc/docker/daemon.json:ro \
   --mount type=bind,src=/tmp/docker,dst=/var/lib/docker \
-  --mount type=cgroup,dst=/sys/fs/cgroup \
   geerlingguy/docker-debian10-ansible:latest \
   /lib/systemd/systemd
 
