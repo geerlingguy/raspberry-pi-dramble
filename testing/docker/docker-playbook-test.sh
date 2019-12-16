@@ -12,6 +12,7 @@ container_name=dramble
 
 # If on Travis CI, update Docker's configuration.
 if [ "$TRAVIS" == "true" ]; then
+  mkdir /tmp/docker
   echo '{
     "experimental": true,
     "storage-driver": "overlay2"
@@ -28,6 +29,8 @@ docker run --detach \
   --privileged \
   --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro \
   --volume=/etc/docker/daemon.json:/etc/docker/daemon.json:ro \
+  --mount type=bind,src=/tmp/docker,dst=/var/lib/docker \
+  --mount type=cgroup,dst=/sys/fs/cgroup \
   geerlingguy/docker-debian10-ansible:latest \
   /lib/systemd/systemd
 
