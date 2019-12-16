@@ -27,6 +27,7 @@ docker run --detach \
   --name $container_name \
   --privileged \
   --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro \
+  --volume=/etc/docker/daemon.json:/etc/docker/daemon.json:ro \
   geerlingguy/docker-debian10-ansible:latest \
   /lib/systemd/systemd
 
