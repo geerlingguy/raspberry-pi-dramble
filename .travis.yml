@@ -16,6 +16,4 @@ script:
   - ./testing/docker/docker-playbook-test.sh
 
 after_failure:
-  - docker exec --tty dramble env TERM=xterm systemctl status docker.service
-  - docker exec --tty dramble env TERM=xterm journalctl --no-pager -u docker
   - docker exec --tty dramble env TERM=xterm journalctl --no-pager -u kubelet
