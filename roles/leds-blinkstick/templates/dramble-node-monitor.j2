@@ -66,7 +66,7 @@ def update_blinkenlights(nano):
 
 # Main.
 nano = blinkstick.find_first()
-nano.set_mode(NORMAL_MODE)
+nano.set_mode(WS2812_MODE)
 time.sleep(INIT_SLEEP)
 killer = GracefulKiller()
 while True:
