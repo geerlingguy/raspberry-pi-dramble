@@ -12,8 +12,11 @@ NORMAL_MODE  = 0
 INVERSE_MODE = 1
 WS2812_MODE  = 2
 
+# Initialization wait per second
+INIT_SLEEP = 0.05
+
 # Turn-on per second
-PERIODICIY = 0.05
+PERIODICITY = 5
 
 # Class to handle SIGINT/SIGTERM gracefully.
 class GracefulKiller:
@@ -59,12 +62,12 @@ def update_blinkenlights(nano):
         if current_color != [128, 0, 0]:
             nano.set_color(red=128, green=0, blue=0)
             print 'Blinkstick changed to reflect NotReady status.'
-    time.sleep(5)
+    time.sleep(PERIODICITY)
 
 # Main.
 nano = blinkstick.find_first()
 nano.set_mode(NORMAL_MODE)
-time.sleep(PERIODICIY)
+time.sleep(INIT_SLEEP)
 killer = GracefulKiller()
 while True:
     try:
