@@ -6,7 +6,6 @@ docker_users:
 
 # Kubernetes configuration.
 kubernetes_allow_pods_on_master: false
-kubernetes_pod_network_cidr: '10.244.0.0/16'
 kubernetes_version: '1.15'
 kubernetes_packages:
   - name: kubelet=1.15.0-00
