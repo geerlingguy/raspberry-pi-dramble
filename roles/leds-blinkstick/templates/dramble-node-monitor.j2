@@ -32,10 +32,18 @@ class GracefulKiller:
     def exit_gracefully(self,signum, frame):
         self.kill_now = True
 
+def turn_off_wrapper(nano):
+    nano.turn_off()
+
+    # turn_off doesn't automatically recognize all the leds
+    # follow https://forums.blinkstick.com/t/python-only-first-led-turns-off-turn-off/452/2
+    led_zeros = [0] * 3 * NUM_OF_LEDS
+    nano.set_led_data(0, led_zeros)
+
 # Define what to do when script is stopped externally.
 def signal_handler(signal, frame):
     print "\nStopping node monitor."
-    nano.turn_off()
+    turn_off_wrapper(nano)
     sys.exit(0)
 signal.signal(signal.SIGINT, signal_handler)
 
@@ -79,16 +87,11 @@ while True:
         if killer.kill_now:
             break
     except Exception, e:
-        nano.turn_off()
+        turn_off_wrapper(nano)
 
         print >> sys.stderr, "Exiting for exception."
         print >> sys.stderr, "Exception: %s" % str(e)
         sys.exit(1)
-nano.turn_off()
-
-# turn_off doesn't automatically recognize all the leds
-# follow https://forums.blinkstick.com/t/python-only-first-led-turns-off-turn-off/452/2
-led_zeros = [0] * 3 * NUM_OF_LEDS
-nano.set_led_data(0, led_zeros)
+turn_off_wrapper(nano)
 
 print "Exiting gracefully."
