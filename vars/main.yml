@@ -34,7 +34,9 @@ k8s_manifests:
 
 kubernetes_toleration_not_ready: 300
 
-# Python dependencies.
+# Python settings and dependencies.
+pip_package: python3-pip
+pip_executable: pip3
 pip_install_packages:
   - openshift
 
