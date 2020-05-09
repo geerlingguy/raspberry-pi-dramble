@@ -27,3 +27,6 @@ docker_registry_http_secret: fdb19409c851605cd6c46615888d4c0e37858121df7c
 # LED Configuration.
 led_enable_gpio: false
 led_enable_blinkstick: false
+
+# Set Python3 as the default ansible_interpreter ( for Pis without python 2.7 )
+ansible_python_interpreter: /usr/bin/python3
