@@ -14,7 +14,7 @@
 
 - name: Download the metrics-server project from GitHub.
   unarchive:
-    src: https://github.com/kubernetes-incubator/metrics-server/archive/master.tar.gz
+    src: https://github.com/kubernetes-sigs/metrics-server/archive/{{ metrics_server_version }}.tar.gz
     dest: "~/metrics-server"
     remote_src: yes
     extra_opts: [ "--strip-components=1" ]
@@ -26,13 +26,13 @@
 - name: Overwrite metrics-server deployment manifest.
   template:
     src: k8s-manifests/kube-system/metrics-server-deployment.yaml
-    dest: "~/metrics-server/deploy/kubernetes/metrics-server-deployment.yaml"
+    dest: "~/metrics-server/deploy/1.8+/metrics-server-deployment.yaml"
   run_once: True
   delegate_to: "{{ groups.dramble[0] }}"
 
 # TODO: This task should do an *apply* if the deployment task above was changed.
 - name: Apply metrics-server services to the cluster.
-  command: kubectl create -f ~/metrics-server/deploy/kubernetes/
+  command: kubectl create -f ~/metrics-server/deploy/1.8+/
   when: metrics_server_download is changed
   run_once: True
   delegate_to: "{{ groups.dramble[0] }}"

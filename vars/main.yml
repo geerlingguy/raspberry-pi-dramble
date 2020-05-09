@@ -50,8 +50,10 @@ mysql_container_image: hypriot/rpi-mysql:5.5
 # Image to use for the traefik-ingress-controller daemonset.
 traefik_image: traefik:1.7
 
-# Image to use for the metrics-server deployment.
-metrics_server_image: gcr.io/google_containers/metrics-server-arm:v0.3.2
+# Version and image to use for the metrics-server deployment.
+metrics_server_version: v0.3.6
+# See: https://console.cloud.google.com/gcr/images/google-containers/GLOBAL/metrics-server-arm64?gcrImageListsize=30
+metrics_server_image: gcr.io/google_containers/metrics-server-arm:v0.3.6
 
 # Image to use for nfs-client deployment.
 nfs_client_image: quay.io/external_storage/nfs-client-provisioner-arm:latest
