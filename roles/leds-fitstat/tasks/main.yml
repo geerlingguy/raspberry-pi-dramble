@@ -1,0 +1,26 @@
+---
+- name: Install python-serial  (state=present is optional)
+  apt:
+    name: python-serial
+
+- name: Ensure blinkstick-leds folder exists.
+  file:
+    path: /opt/fitstat-leds
+    state: directory
+    mode: 0755
+
+- name: Copy Fitstat control scripts into place.
+  template:
+    src: "{{ item }}.j2"
+    dest: "/opt/fitstat-leds/{{ item }}"
+    mode: 0755
+  with_items: "{{ fitstat_scripts }}"
+
+- name: Make Fitstat control scripts available in the user's PATH.
+  file:
+    path: "/usr/bin/{{ item }}"
+    src: "/opt/fitstat-leds/{{ item }}"
+    state: link
+  with_items: "{{ fitstat_scripts }}"
+
+- include_tasks: systemd-service.yml

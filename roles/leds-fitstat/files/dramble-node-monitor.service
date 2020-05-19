@@ -1,0 +1,17 @@
+[Unit]
+Description=Start the Pi Dramble Node monitor script.
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/dramble-node-monitor
+RemainAfterExit=true
+Restart=on-failure
+RestartSec=10s
+StandardOutput=journal
+StandardError=journal
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target

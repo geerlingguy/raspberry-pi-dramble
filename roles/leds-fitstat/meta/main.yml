@@ -1,0 +1,15 @@
+---
+dependencies: []
+galaxy_info:
+  author: Jeff Geerling, Chris Theberge
+  description: fit-statUSB LED control setup for Rasbperry Pi.
+  company: Midwestern Mac, LLC
+  license: license (MIT)
+  min_ansible_version: 2.4
+  platforms:
+    - name: Debian
+      versions:
+        - stretch
+  galaxy_tags:
+    - monitoring
+    - system

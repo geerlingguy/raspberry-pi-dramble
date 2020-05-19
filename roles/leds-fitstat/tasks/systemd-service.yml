@@ -1,0 +1,21 @@
+---
+- name: Copy systemd unit file into place.
+  copy:
+    src: dramble-node-monitor.service
+    dest: /lib/systemd/system/dramble-node-monitor.service
+    mode: 0644
+  register: dramble_node_monitor_service
+
+- name: Reload systemd after adding service.
+  systemd:
+    state: stopped
+    daemon_reload: true
+    name: dramble-node-monitor
+  when: dramble_node_monitor_service.changed
+
+- name: Ensure dramble-node-monitor is running and enabled at boot.
+  service:
+    name: dramble-node-monitor
+    state: started
+    enabled: yes
+  when: deploy_target == 'pi'

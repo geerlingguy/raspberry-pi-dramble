@@ -63,6 +63,11 @@
       tags: ['leds']
       when:
         - led_enable_blinkstick | bool
+    
+    - role: leds-fitstat
+      tags: ['leds']
+      when:
+        - led_enable_fitstat | bool
 
   tasks:
     - include_tasks: tasks/nfs.yml
