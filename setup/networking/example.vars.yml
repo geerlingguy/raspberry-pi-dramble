@@ -18,3 +18,5 @@ mac_address_mapping:
 dns_nameservers:
   - "8.8.8.8"
   - "8.8.4.4"
+
+dramble_ip_gateway: 10.0.100.1
