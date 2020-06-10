@@ -3,12 +3,12 @@
 
 interface eth0
 static ip_address={{ dramble_ip_address }}/24
-static routers=10.0.100.1
+static routers={{ dramble_ip_gateway }}
 static domain_name_servers={{ dns_nameservers | join(' ') }}
 
 interface wlan0
 static ip_address={{ dramble_ip_address }}/24
-static routers=10.0.100.1
+static routers={{ dramble_ip_gateway }}
 static domain_name_servers={{ dns_nameservers | join(' ') }}
 
 # Allow users of this group to interact with dhcpcd via the control socket.
