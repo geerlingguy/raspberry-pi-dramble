@@ -15,7 +15,7 @@
 # Another good benchmark:
 #   $ curl http://www.nmacleod.com/public/sdbench.sh | sudo bash
 #
-# Author: Jeff Geerling, 2016
+# Author: Jeff Geerling, 2016 (last updated 2020)
 
 printf "\n"
 printf "Raspberry Pi Dramble microSD benchmarks\n"

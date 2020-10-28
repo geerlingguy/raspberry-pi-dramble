@@ -2,7 +2,7 @@
 
 # Raspberry Pi Dramble
 
-[![Build Status](https://travis-ci.org/geerlingguy/raspberry-pi-dramble.svg?branch=master)](https://travis-ci.org/geerlingguy/raspberry-pi-dramble)
+[![Build Status](https://travis-ci.com/geerlingguy/raspberry-pi-dramble.svg?branch=master)](https://travis-ci.com/geerlingguy/raspberry-pi-dramble)
 
 A cluster ([Bramble](http://elinux.org/Bramble)) of Raspberry Pis on which Drupal is deployed using Ansible and Kubernetes.
 
