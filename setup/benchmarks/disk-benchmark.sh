@@ -30,6 +30,11 @@ USER_HOME_PATH=$(getent passwd $SUDO_USER | cut -d: -f6)
 IOZONE_INSTALL_PATH=$USER_HOME_PATH
 IOZONE_VERSION=iozone3_489
 
+# Create directory if it does not already exist
+if [ ! -d $DEVICE_MOUNT_PATH ]; then
+  mkdir -p $DEVICE_MOUNT_PATH
+fi
+
 cd $IOZONE_INSTALL_PATH
 
 # Install dependencies.
