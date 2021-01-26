@@ -1,7 +1,7 @@
 ---
 # Drupal configuration.
 drupal_domain: cluster.pidramble.test
-drupal_docker_image: geerlingguy/drupal:latest-arm32v7
+drupal_docker_image: geerlingguy/drupal:latest-arm64
 # Generate a salt with: `php -r "echo bin2hex(random_bytes(25));"`
 drupal_hash_salt: ef4e7eb18bd889e2c89720e71ea98beaae5f563d8685638d6e
 drupal_files_dir: /var/www/html/sites/default/files
@@ -19,7 +19,7 @@ security_sudoers_passwordless:
   - pi
 
 # Docker configuration.
-docker_registry_image: vsellier/docker-registry-arm:2.7.0
+docker_registry_image: vsellier/docker-registry-arm:2.7.1
 docker_registry_domain: registry.pidramble.test
 docker_registry_ingress_host: 'kube3'
 docker_registry_http_secret: fdb19409c851605cd6c46615888d4c0e37858121df7c

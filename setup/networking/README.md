@@ -29,12 +29,15 @@ If you ever need to change active Dramble networking info, it's easy! Just chang
 _If you don't want to use the automated playbook, you can do the following on each Raspberry Pi individually_:
 
   1. Set a unique hostname (e.g. `kube1.pidramble.com` for the first server, and `kube2.pidramble.com` for the second server):
-    1. Edit `/etc/hostname` and replace the existing hostname with the new hostname.
-    2. Enter `hostname [new-hostname]` to update the hostname immediately.
-    3. Edit `/etc/hosts` and replace the existing hostname with the new hostname.
+
+     1. Edit `/etc/hostname` and replace the existing hostname with the new hostname.
+     2. Enter `hostname [new-hostname]` to update the hostname immediately.
+     3. Edit `/etc/hosts` and replace the existing hostname with the new hostname.
+
   2. Set up the network settings for our Pi network:
-    1. TODO - these instructions changed with Rasbpian Stretch.
-    2. Restart the Pi: `sudo reboot`
-    3. You'll need to reconnect to the Pi on its new static IP address.
+
+     1. TODO - these instructions changed with Raspbian Stretch.
+     2. Restart the Pi: `sudo reboot`
+     3. You'll need to reconnect to the Pi on its new static IP address.
 
 The networking configuration may need to be a little different depending on the environment in which you're using your own Dramble (whether it's on an isolated private network, connected to another network/router, using bridged WiFi interfaces, etc.).
