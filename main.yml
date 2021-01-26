@@ -22,7 +22,7 @@
     - import_tasks: tasks/disable-swap.yml
       tags: ['always']
 
-    - import_tasks: tasks/iptables-legacy.yml
+    - import_tasks: tasks/net-setup.yml
       when:
         - ansible_distribution_version == "10"
         - deploy_target != 'docker'
@@ -47,8 +47,8 @@
     - role: geerlingguy.pip
       tags: ['pip', 'docker']
 
-    - role: geerlingguy.docker_arm
-      tags: ['docker']
+    - role: geerlingguy.containerd
+      tags: ['containerd']
 
     - role: geerlingguy.kubernetes
       tags: ['kubernetes']

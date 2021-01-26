@@ -18,7 +18,7 @@ spec:
 
 # Docker registry Deployment definition.
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: docker-registry
@@ -86,7 +86,7 @@ data:
 
 # Docker registry Ingress definition.
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
@@ -98,9 +98,12 @@ spec:
   - host: {{ docker_registry_domain }}
     http:
       paths:
-      - backend:
-          serviceName: docker-registry
-          servicePort: 5000
-        path: /
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: docker-registry
+            port:
+              number: 5000
   tls:
     - secretName: {{ manifest_namespace }}-tls-cert

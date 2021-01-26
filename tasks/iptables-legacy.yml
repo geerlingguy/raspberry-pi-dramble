@@ -1,6 +1,0 @@
----
-# See: https://github.com/kubernetes/kubernetes/issues/71305
-- name: Use iptables-legacy instead of nftables.
-  alternatives:
-    name: iptables
-    path: /usr/sbin/iptables-legacy

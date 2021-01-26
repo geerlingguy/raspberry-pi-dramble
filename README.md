@@ -51,6 +51,8 @@ The process for setting up all the Raspberry Pis is outlined in the Wiki:
   1. [Provision the Raspberry Pis](http://www.pidramble.com/wiki/setup/provision)
   1. [Deploy Drupal to the Raspberry Pis](http://www.pidramble.com/wiki/setup/deploy-drupal)
 
+> It is recommended you use the 64-bit version of Raspberry Pi OS, as some of this project's dependencies require it (and may not install on 32-bit Pi OS).
+
 #### Adding more nodes
 
 You can add more than four nodes, if you desire; add additional hosts in the same sequence in the following files:

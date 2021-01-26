@@ -1,0 +1,27 @@
+---
+# See: https://github.com/kubernetes/kubernetes/issues/71305
+- name: Use iptables-legacy instead of nftables.
+  alternatives:
+    name: iptables
+    path: /usr/sbin/iptables-legacy
+
+# See: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#letting-iptables-see-bridged-traffic
+- name: Ensure procps is installed.
+  package:
+    name: procps
+    state: present
+
+- name: Enable the br_netfilter module.
+  modprobe:
+    name: br_netfilter
+    state: present
+
+- name: Let iptables see bridged traffic.
+  sysctl:
+    name: "{{ item }}"
+    value: '1'
+    state: present
+  loop:
+    - net.bridge.bridge-nf-call-iptables
+    - net.bridge.bridge-nf-call-ip6tables
+    - net.ipv4.ip_forward

@@ -15,6 +15,5 @@
         - "{{ drupal_docker_image }}"
         - "{{ docker_registry_image }}"
         - "{{ mysql_container_image }}"
-        - "{{ metrics_server_image }}"
         - "{{ traefik_image }}"
         - "{{ nfs_client_image }}"
