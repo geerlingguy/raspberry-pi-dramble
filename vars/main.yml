@@ -23,8 +23,8 @@ k8s_manifests:
   - nfs/deployment
   - kube-system/ingress/rbac
   - kube-system/ingress/deployment
-  # - dir: docker-registry
-  #   namespace: registry
+  - dir: docker-registry
+    namespace: registry
   - dir: drupal/mysql
     namespace: drupal
   - dir: drupal/drupal

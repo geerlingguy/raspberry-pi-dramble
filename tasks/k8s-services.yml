@@ -7,15 +7,9 @@
   delegate_to: "{{ groups.dramble[0] }}"
   run_once: True
 
-- name: Download metrics-server manifest to the cluster.
-  get_url:
-    url: https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
-    dest: ~/metrics-server.yaml
-    mode: '0664'
-
 - name: Apply metrics-server manifest to the cluster.
   k8s:
     state: present
-    src: ~/metrics-server.yaml
+    src: ~/metrics-server.yml
   run_once: True
   delegate_to: "{{ groups.dramble[0] }}"
