@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Raspberry Pi microSD card benchmark script.
+# Raspberry Pi HDD/SDD benchmark script.
 #
 # A script I use to automate the running and reporting of benchmarks I compile
-# for: http://www.pidramble.com/wiki/benchmarks/microsd-cards
+# for: http://www.pidramble.com/wiki/benchmarks
 #
 # Usage:
 #   # Run it locally.
@@ -12,7 +12,7 @@
 #   # Run it straight from GitHub.
 #   $ curl https://raw.githubusercontent.com/geerlingguy/raspberry-pi-dramble/master/setup/benchmarks/disk-benchmarks.sh | sudo bash
 #
-# Author: Jeff Geerling, 2020
+# Author: Jeff Geerling, 2021
 
 printf "\n"
 printf "Raspberry Pi disk benchmarks\n"
@@ -33,9 +33,9 @@ IOZONE_VERSION=iozone3_489
 cd $IOZONE_INSTALL_PATH
 
 # Install dependencies.
-if [ ! `which hdparm` ]; then
-  printf "Installing hdparm...\n"
-  apt-get install -y hdparm
+if [ ! `which fio` ]; then
+  printf "Installing fio...\n"
+  apt-get install -y fio
   printf "Install complete!\n\n"
 fi
 if [ ! `which curl` ]; then
@@ -61,16 +61,49 @@ else
 fi
 
 # Run benchmarks.
-printf "Running hdparm test...\n"
-hdparm -t $DEVICE_UNDER_TEST
+printf "Running fio sequential read test...\n"
+fio \
+  --filename=${DEVICE_UNDER_TEST} \
+  --direct=1 \
+  --rw=read \
+  --bs=1024k \
+  --ioengine=libaio \
+  --iodepth=64 \
+  --size=4G \
+  --runtime=10 \
+  --numjobs=4 \
+  --group_reporting \
+  --name=fio-rand-read-sequential \
+  --eta-newline=1 \
+  --readonly
 printf "\n"
 
-printf "Running dd test...\n\n"
-dd if=/dev/zero of=${DEVICE_MOUNT_PATH}/test bs=8k count=50k conv=fsync; rm -f ${DEVICE_MOUNT_PATH}/test
+# This test is destructive to a mounted volume.
+# printf "Running fio sequential write test...\n"
+# fio \
+#   --filename=${DEVICE_UNDER_TEST} \
+#   --sync=0 \
+#   --do_verify=0 \
+#   --direct=1 \
+#   --rw=write \
+#   --allow_mounted_write=1 \
+#   --bs=1024k \
+#   --ioengine=libaio \
+#   --iodepth=64 \
+#   --size=4G \
+#   --runtime=10 \
+#   --numjobs=4 \
+#   --group_reporting \
+#   --name=fio-rand-read-sequential \
+#   --eta-newline=1
+# printf "\n"
+
+printf "Running iozone 1024K sequential read and write tests...\n"
+./iozone -e -I -a -s 4G -r 1024k -i 0 -i 1 -f ${DEVICE_MOUNT_PATH}/iozone
 printf "\n"
 
-printf "Running iozone test...\n"
-./iozone -e -I -a -s 100M -r 4k -i 0 -i 1 -i 2 -f ${DEVICE_MOUNT_PATH}/iozone
+printf "Running iozone 4K random read and write tests...\n"
+./iozone -e -I -a -s 100M -r 4k -i 0 -i 2 -f ${DEVICE_MOUNT_PATH}/iozone
 printf "\n"
 
 printf "Disk benchmark complete!\n\n"
