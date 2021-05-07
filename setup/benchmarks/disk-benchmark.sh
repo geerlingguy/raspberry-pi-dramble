@@ -98,8 +98,8 @@ printf "\n"
 #   --eta-newline=1
 # printf "\n"
 
-printf "Running iozone 1024K sequential read and write tests...\n"
-./iozone -e -I -a -s 4G -r 1024k -i 0 -i 1 -f $DEVICE_MOUNT_PATH/iozone
+printf "Running iozone 1024K random read and write tests...\n"
+./iozone -e -I -a -s 100M -r 1024k -i 0 -i 2 -f $DEVICE_MOUNT_PATH/iozone
 printf "\n"
 
 printf "Running iozone 4K random read and write tests...\n"
