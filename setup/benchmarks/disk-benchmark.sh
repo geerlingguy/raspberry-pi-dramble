@@ -6,10 +6,10 @@
 # for: http://www.pidramble.com/wiki/benchmarks
 #
 # Usage:
-#   # Run it locally.
-#   $ sudo ./disk-benchmarks.sh
+#   # Run it locally (overriding device and mount path).
+#   $ sudo DEVICE_UNDER_TEST=/dev/sda1 DEVICE_MOUNT_PATH=/mnt/sda1 ./disk-benchmarks.sh
 #
-#   # Run it straight from GitHub.
+#   # Run it straight from GitHub (with default options).
 #   $ curl https://raw.githubusercontent.com/geerlingguy/raspberry-pi-dramble/master/setup/benchmarks/disk-benchmarks.sh | sudo bash
 #
 # Author: Jeff Geerling, 2021
@@ -24,8 +24,8 @@ if [ -z "$SUDO_USER" ]; then
 fi
 
 # Variables.
-DEVICE_UNDER_TEST=/dev/sda1
-DEVICE_MOUNT_PATH=/mnt/sata-sda
+DEVICE_UNDER_TEST=${DEVICE_UNDER_TEST:-"/dev/sda1"}
+DEVICE_MOUNT_PATH=${DEVICE_MOUNT_PATH:-"/mnt/sda1"}
 USER_HOME_PATH=$(getent passwd $SUDO_USER | cut -d: -f6)
 IOZONE_INSTALL_PATH=$USER_HOME_PATH
 IOZONE_VERSION=iozone3_489
@@ -63,7 +63,7 @@ fi
 # Run benchmarks.
 printf "Running fio sequential read test...\n"
 fio \
-  --filename=${DEVICE_UNDER_TEST} \
+  --filename=$DEVICE_UNDER_TEST \
   --direct=1 \
   --rw=read \
   --bs=1024k \
@@ -81,7 +81,7 @@ printf "\n"
 # This test is destructive to a mounted volume.
 # printf "Running fio sequential write test...\n"
 # fio \
-#   --filename=${DEVICE_UNDER_TEST} \
+#   --filename=$DEVICE_UNDER_TEST \
 #   --sync=0 \
 #   --do_verify=0 \
 #   --direct=1 \
@@ -99,11 +99,11 @@ printf "\n"
 # printf "\n"
 
 printf "Running iozone 1024K sequential read and write tests...\n"
-./iozone -e -I -a -s 4G -r 1024k -i 0 -i 1 -f ${DEVICE_MOUNT_PATH}/iozone
+./iozone -e -I -a -s 4G -r 1024k -i 0 -i 1 -f $DEVICE_MOUNT_PATH/iozone
 printf "\n"
 
 printf "Running iozone 4K random read and write tests...\n"
-./iozone -e -I -a -s 100M -r 4k -i 0 -i 2 -f ${DEVICE_MOUNT_PATH}/iozone
+./iozone -e -I -a -s 100M -r 4k -i 0 -i 2 -f $DEVICE_MOUNT_PATH/iozone
 printf "\n"
 
 printf "Disk benchmark complete!\n\n"
