@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Raspberry Pi HDD/SDD benchmark script.
 #
