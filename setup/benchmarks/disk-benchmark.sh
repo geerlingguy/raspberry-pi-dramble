@@ -7,10 +7,10 @@
 #
 # Usage:
 #   # Run it locally (overriding device and mount path).
-#   $ sudo DEVICE_UNDER_TEST=/dev/sda1 DEVICE_MOUNT_PATH=/mnt/sda1 ./disk-benchmarks.sh
+#   $ sudo DEVICE_UNDER_TEST=/dev/sda1 DEVICE_MOUNT_PATH=/mnt/sda1 ./disk-benchmark.sh
 #
 #   # Run it straight from GitHub (with default options).
-#   $ curl https://raw.githubusercontent.com/geerlingguy/raspberry-pi-dramble/master/setup/benchmarks/disk-benchmarks.sh | sudo bash
+#   $ curl https://raw.githubusercontent.com/geerlingguy/raspberry-pi-dramble/master/setup/benchmarks/disk-benchmark.sh | sudo bash
 #
 # Author: Jeff Geerling, 2021
 
@@ -28,7 +28,7 @@ DEVICE_UNDER_TEST=${DEVICE_UNDER_TEST:-"/dev/sda1"}
 DEVICE_MOUNT_PATH=${DEVICE_MOUNT_PATH:-"/mnt/sda1"}
 USER_HOME_PATH=$(getent passwd $SUDO_USER | cut -d: -f6)
 IOZONE_INSTALL_PATH=$USER_HOME_PATH
-IOZONE_VERSION=iozone3_489
+IOZONE_VERSION=iozone3_492
 
 cd $IOZONE_INSTALL_PATH
 
