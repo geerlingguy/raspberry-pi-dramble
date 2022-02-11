@@ -13,6 +13,7 @@
     docker_version: 5:19.03.1~3-0~debian-buster
     docker_registry_image: registry:2
     nfs_client_image: quay.io/external_storage/nfs-client-provisioner:latest
+    docker_apt_arch: amd64
   when: deploy_target != 'pi'
 
 - name: Override the drupal_docker_image if it's at its default.
@@ -20,7 +21,7 @@
     drupal_docker_image: geerlingguy/drupal:latest
   when:
     - deploy_target != 'pi'
-    - drupal_docker_image == 'geerlingguy/drupal:latest-arm32v7'
+    - drupal_docker_image == 'geerlingguy/drupal:latest-arm64'
 
 - name: Override vars for single-node Docker environment.
   set_fact:
