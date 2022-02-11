@@ -33,7 +33,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Configure each of the VMs.
   boxes.each_with_index do |opts, index|
     config.vm.define opts[:name] do |config|
-      config.vm.hostname = opts[:name] + ".pidramble.com"
+      config.vm.hostname = opts[:name] + ".pidramble.test"
       config.vm.network :private_network, ip: opts[:ip]
 
       # Provision all the VMs using Ansible after last VM is up.
