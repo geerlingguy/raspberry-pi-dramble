@@ -36,8 +36,15 @@ _If you don't want to use the automated playbook, you can do the following on ea
 
   2. Set up the network settings for our Pi network:
 
-     1. TODO - these instructions changed with Raspbian Stretch.
-     2. Restart the Pi: `sudo reboot`
-     3. You'll need to reconnect to the Pi on its new static IP address.
+     1. Change DNS IP address `sudo nano /etc/resolv.conf`
+     2. Set static IP address `sudo nano /etc/dhcpcd.conf`, example
+     ``` 
+     interface eth0 #use wlan0 for Wifi
+     static ip_address=192.168.1.120/24
+     static routers=192.168.1.254
+     static domain_name_servers=192.168.1.254
+     ```
+     3. Restart the Pi: `sudo reboot`
+     4. You'll need to reconnect to the Pi on its new static IP address.
 
 The networking configuration may need to be a little different depending on the environment in which you're using your own Dramble (whether it's on an isolated private network, connected to another network/router, using bridged WiFi interfaces, etc.).
