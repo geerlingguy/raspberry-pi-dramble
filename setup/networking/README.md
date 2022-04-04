@@ -37,7 +37,8 @@ _If you don't want to use the automated playbook, you can do the following on ea
   2. Set up the network settings for our Pi network:
 
      1. Change DNS IP address `sudo nano /etc/resolv.conf`
-     2. Set static IP address `sudo nano /etc/dhcpcd.conf`, example
+     2. Set static IP address `sudo nano /etc/dhcpcd.conf`, for example:
+
      ``` 
      interface eth0 #use wlan0 for Wifi
      static ip_address=192.168.1.120/24
