@@ -1,3 +1,5 @@
+DEPRECATED: Please see my [pi-cluster](https://github.com/geerlingguy/pi-cluster) project for active development.
+
 <a href="http://www.pidramble.com"><img src="https://cdn.rawgit.com/geerlingguy/raspberry-pi-dramble/master/images/logo.svg" width="100%" height="73"></a>
 
 # Raspberry Pi Dramble
